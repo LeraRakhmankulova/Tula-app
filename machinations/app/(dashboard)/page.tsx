@@ -1,6 +1,7 @@
 "use client";
 
 import RootLayout from "./../layout";
+import { BoardList } from "./_components/board-list";
 import { EmptyOrganization } from "./_components/empty-org";
 import { useOrganization } from "@clerk/nextjs";
 
@@ -17,7 +18,11 @@ const DashboardPage = ({ searchParams }: DashboardPageProps) => {
   return (
     <div className="flex-1 h-[calc(100%-80px)] p-6">
       {JSON.stringify(searchParams)}
-      {!organization ? <EmptyOrganization /> : <p>Board list</p>}
+      {!organization ? (
+        <EmptyOrganization />
+      ) : (
+        <BoardList orgId={organization.id} query={searchParams} />
+      )}
     </div>
   );
 };
