@@ -8,10 +8,10 @@ import { RoomProvider } from "@/liveblocks.config";
 interface RoomProps {
   children: React.ReactNode;
   roomId: string;
-//   fallback: NonNullable<React.ReactNode> | null;
+  fallback: NonNullable<React.ReactNode> | null;
 }
 
-export const Room = ({ children, roomId,  }: RoomProps) => {
+export const Room = ({ children, roomId, fallback }: RoomProps) => {
   return (
     <RoomProvider
       id={roomId}
@@ -22,7 +22,7 @@ export const Room = ({ children, roomId,  }: RoomProps) => {
         penColor: null,
       }}
     >
-      <ClientSideSuspense fallback={<div>Loading</div>}>
+      <ClientSideSuspense fallback={fallback}>
         {() => children}
       </ClientSideSuspense>
     </RoomProvider>

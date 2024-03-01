@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { EmptyBoard } from "./empty-board";
 
 interface BoardListProps {
   orgId: string;
@@ -22,12 +23,7 @@ export const BoardList = ({ orgId, query }: BoardListProps) => {
   }
 
   if (!data?.length) {
-    return (
-      <div className="flex flex-col gap-10">
-        No boards at all
-        <Button size="lg">Create board</Button>
-      </div>
-    );
+    return <EmptyBoard />;
   }
 
   return <div>{JSON.stringify(query)}</div>;
