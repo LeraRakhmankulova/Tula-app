@@ -1,8 +1,8 @@
 import { createClient } from "@liveblocks/client";
 import { createLiveblocksContext, createRoomContext } from "@liveblocks/react";
-  
+
 const client = createClient({
-  publicApiKey: "pk_dev_zEnCmSjqWQomtqVFFciUyYjC03O9PEtCyLZ9oVNCC77dW-_ppI0DnWvVL79OJtw-",
+  authEndpoint: "/api/liveblocks-auth",
 });
 
 // Presence represents the properties that exist on every user in the Room
@@ -89,7 +89,7 @@ export const {
     useMarkThreadAsRead,
     useRoomNotificationSettings,
     useUpdateRoomNotificationSettings,
-  
+
     // These hooks can be exported from either context
     // useUser,
     // useRoomInfo
@@ -104,7 +104,7 @@ export const {
     useMarkAllInboxNotificationsAsRead,
     useInboxNotifications,
     useUnreadInboxNotificationsCount,
-  
+
     // These hooks can be exported from either context
     useUser,
     useRoomInfo,
