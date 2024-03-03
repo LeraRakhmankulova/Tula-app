@@ -6,7 +6,7 @@ import { useSelf, useStorage } from "@/liveblocks.config";
 import { LayerType, Side, XYWH } from "@/app/types/canvas";
 import { useSelectionBounds } from "@/app/hooks/use-selection-bounds";
 
-//чтобы я могла выделять нужный объект
+//чтобы я могла выделять нужный объект по контуру с точками для изменения размера
 interface SelectionBoxProps {
   onResizeHandlePointerDown: (corner: Side, initialBounds: XYWH) => void;
 }
@@ -42,7 +42,8 @@ export const SelectionBox = memo(
           width={bounds.width}
           height={bounds.height}
         />
-        {/* {isShowingHandles && (
+        {/* если растянуть объект по размеру(выделяет по контуру и меняет курсок ) */}
+        {isShowingHandles && (
           <>
             <rect
               className="fill-white stroke-1 stroke-blue-500"
@@ -199,7 +200,7 @@ export const SelectionBox = memo(
               }}
             />
           </>
-        )} */}
+        )}
       </>
     );
   }

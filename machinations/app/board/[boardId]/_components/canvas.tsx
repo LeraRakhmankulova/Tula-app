@@ -24,7 +24,11 @@ import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
 import { useCallback, useMemo, useState } from "react";
 import { CursorsPresence } from "./cursors-presence";
-import { connectionIdToColor, pointerEventToCanvasPoint } from "@/lib/utils";
+import {
+  connectionIdToColor,
+  pointerEventToCanvasPoint,
+  resizeBounds,
+} from "@/lib/utils";
 import { LiveObject } from "@liveblocks/client";
 import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
@@ -131,6 +135,27 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     }));
   }, []);
 
+  const resizeSelectedLayer = useMutation(
+    ({ storage, self }, point: Point) => {
+      if (canvasState.mode !== CanvasMode.Resizing) {
+        return;
+      }
+
+      const bounds = resizeBounds(
+        canvasState.initialBounds,
+        canvasState.corner,
+        point
+      );
+
+      const liveLayers = storage.get("layers");
+      const layer = liveLayers.get(self.presence.selection[0]);
+
+      if (layer) {
+        layer.update(bounds);
+      }
+    },
+    [camera, canvasState]
+  );
   const onPointerMove = useMutation(
     ({ setMyPresence }, e: React.PointerEvent) => {
       e.preventDefault();
@@ -142,14 +167,16 @@ export const Canvas = ({ boardId }: CanvasProps) => {
       //     updateSelectionNet(current, canvasState.origin);
       //   } else if (canvasState.mode === CanvasMode.Translating) {
       //     translateSelectedLayers(current);
-      //   } else if (canvasState.mode === CanvasMode.Resizing) {
-      //     resizeSelectedLayer(current);
+      //если меняем размер объекта
+      if (canvasState.mode === CanvasMode.Resizing) {
+        resizeSelectedLayer(current);
+      }
       //   } else if (canvasState.mode === CanvasMode.Pencil) {
       //     continueDrawing(current, e);
 
       setMyPresence({ cursor: current });
     },
-    []
+    [canvasState]
     //   continueDrawing,
     //   camera,
     //   canvasState,
@@ -203,6 +230,18 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     [setCanvasState, camera, history, canvasState.mode]
   );
 
+  const onResizeHandlePointerDown = useCallback(
+    (corner: Side, initialBounds: XYWH) => {
+      history.pause();
+      setCanvasState({
+        mode: CanvasMode.Resizing,
+        initialBounds,
+        corner,
+      });
+    },
+    [history]
+  );
+
   return (
     <main className="h-full w-full relative bg-neutral-100 touch-none">
       <Info boardId={boardId} />
@@ -235,7 +274,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
               selectionColor={layerIdsToColorSelection[layerId]}
             />
           ))}
-          <SelectionBox onResizeHandlePointerDown={() => {}}/>
+          <SelectionBox onResizeHandlePointerDown={onResizeHandlePointerDown} />
           <CursorsPresence />
         </g>
       </svg>
