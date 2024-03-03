@@ -156,19 +156,62 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     },
     [camera, canvasState]
   );
+
+  const startMultiSelection = useCallback((current: Point, origin: Point) => {
+    if (Math.abs(current.x - origin.x) + Math.abs(current.y - origin.y) > 5) {
+      setCanvasState({
+        mode: CanvasMode.SelectionNet,
+        origin,
+        current,
+      });
+    }
+  }, []);
+
+  // перемещение объекта
+  const translateSelectedLayers = useMutation(
+    ({ storage, self }, point: Point) => {
+      if (canvasState.mode !== CanvasMode.Translating) {
+        return;
+      }
+      const offset = {
+        x: point.x - canvasState.current.x,
+        y: point.y - canvasState.current.y,
+      };
+
+      const liveLayers = storage.get("layers");
+
+      for (const id of self.presence.selection) {
+        const layer = liveLayers.get(id);
+
+        if (layer) {
+          layer.update({
+            x: layer.get("x") + offset.x,
+            y: layer.get("y") + offset.y,
+          });
+        }
+      }
+
+      setCanvasState({ mode: CanvasMode.Translating, current: point });
+    },
+    [canvasState]
+  );
+
   const onPointerMove = useMutation(
     ({ setMyPresence }, e: React.PointerEvent) => {
       e.preventDefault();
 
       const current = pointerEventToCanvasPoint(e, camera);
-      //   if (canvasState.mode === CanvasMode.Pressing) {
-      //     startMultiSelection(current, canvasState.origin);
+      if (canvasState.mode === CanvasMode.Pressing) {
+        startMultiSelection(current, canvasState.origin);
+      }
       //   } else if (canvasState.mode === CanvasMode.SelectionNet) {
       //     updateSelectionNet(current, canvasState.origin);
-      //   } else if (canvasState.mode === CanvasMode.Translating) {
-      //     translateSelectedLayers(current);
+      //перетаскивание объекта по канвасу
+      else if (canvasState.mode === CanvasMode.Translating) {
+        translateSelectedLayers(current);
+      }
       //если меняем размер объекта
-      if (canvasState.mode === CanvasMode.Resizing) {
+      else if (canvasState.mode === CanvasMode.Resizing) {
         resizeSelectedLayer(current);
       }
       //   } else if (canvasState.mode === CanvasMode.Pencil) {
