@@ -92,22 +92,27 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     [lastUsedColor]
   );
 
+  const unselectLayers = useMutation(({ self, setMyPresence }) => {
+    if (self.presence.selection.length > 0) {
+      setMyPresence({ selection: [] }, { addToHistory: true });
+    }
+  }, []);
+
   const onPointerUp = useMutation(
     ({}, e) => {
       const point = pointerEventToCanvasPoint(e, camera);
 
-      // if (
-      //   canvasState.mode === CanvasMode.None ||
-      //   canvasState.mode === CanvasMode.Pressing
-      // ) {
-      //   unselectLayers();
-      //   setCanvasState({
-      //     mode: CanvasMode.None,
-      //   });
-      // } else if (canvasState.mode === CanvasMode.Pencil) {
-      //   insertPath();
-      // } else
-      if (canvasState.mode === CanvasMode.Inserting) {
+      if (
+        canvasState.mode === CanvasMode.None ||
+        canvasState.mode === CanvasMode.Pressing
+      ) {
+        unselectLayers();
+        setCanvasState({
+          mode: CanvasMode.None,
+        });
+      } else if (canvasState.mode === CanvasMode.Pencil) {
+        // insertPath();
+      } else if (canvasState.mode === CanvasMode.Inserting) {
         insertLayer(canvasState.layerType, point);
       } else {
         setCanvasState({
@@ -123,7 +128,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
       canvasState,
       history,
       insertLayer,
-      // unselectLayers,
+      unselectLayers,
       // insertPath,
     ]
   );
@@ -285,6 +290,24 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     [history]
   );
 
+  const onPointerDown = useCallback(
+    (e: React.PointerEvent) => {
+      const point = pointerEventToCanvasPoint(e, camera);
+
+      if (canvasState.mode === CanvasMode.Inserting) {
+        return;
+      }
+
+      // if (canvasState.mode === CanvasMode.Pencil) {
+      //   startDrawing(point, e.pressure);
+      //   return;
+      // }
+
+      setCanvasState({ origin: point, mode: CanvasMode.Pressing });
+    },
+    [camera, canvasState.mode, setCanvasState]
+  );
+
   return (
     <main className="h-full w-full relative bg-neutral-100 touch-none">
       <Info boardId={boardId} />
@@ -303,6 +326,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         onPointerMove={onPointerMove}
         onPointerLeave={onPointerLeave}
         onPointerUp={onPointerUp}
+        onPointerDown={onPointerDown}
       >
         <g
           style={{
