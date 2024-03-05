@@ -57,6 +57,7 @@ const Drafts = () => {
 export const CursorsPresence = memo(() => {
   return (
     <>
+    {/* чтобы другие пользователи тоже могли рисовать */}
       <Drafts />
       <Cursors />
     </>

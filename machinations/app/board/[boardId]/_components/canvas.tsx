@@ -22,7 +22,7 @@ import {
 import { Info } from "./info";
 import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CursorsPresence } from "./cursors-presence";
 import {
   colorToCss,
@@ -37,6 +37,8 @@ import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
 import { SelectionTools } from "./selection-tools";
 import { Path } from "./_layer-components.tsx/path";
+import { useDisableScrollBounce } from "@/app/hooks/use-disable-scroll-bounce";
+import { useDeleteLayers } from "@/app/hooks/use-delete-layers";
 
 const MAX_LAYERS = 100;
 
@@ -57,7 +59,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     b: 0,
   });
 
-  // useDisableScrollBounce(); - это что и для чего?
+  useDisableScrollBounce(); //- это что и для чего?
   const history = useHistory();
   const canUndo = useCanUndo();
   const canRedo = useCanRedo();
@@ -396,6 +398,34 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     },
     [camera, canvasState.mode, setCanvasState]
   );
+
+  const deleteLayers = useDeleteLayers();
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      switch (e.key) {
+        case "Backspace":
+          deleteLayers();
+          break;
+        case "z": {
+          if (e.ctrlKey || e.metaKey) {
+            if (e.shiftKey) {
+              history.redo();
+            } else {
+              history.undo();
+            }
+            break;
+          }
+        }
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown)
+    }
+  }, [deleteLayers, history]);
 
   return (
     <main className="h-full w-full relative bg-neutral-100 touch-none">
