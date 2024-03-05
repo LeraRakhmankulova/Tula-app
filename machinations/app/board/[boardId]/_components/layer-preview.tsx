@@ -6,7 +6,8 @@ import { colorToCss } from "@/lib/utils";
 import { useStorage } from "@/liveblocks.config";
 import { LayerType } from "@/app/types/canvas";
 import { Path } from "./path";
-import { Rectangle } from "./rectangle";
+import { Rectangle } from "./_layer-components.tsx/rectangle";
+import { Ellipse } from "./_layer-components.tsx/ellipse";
 
 interface LayerPreviewProps {
   id: string;
@@ -54,15 +55,15 @@ export const LayerPreview = memo(
       //         selectionColor={selectionColor}
       //       />
       //     );
-      //   case LayerType.Ellipse:
-      //     return (
-      //       <Ellipse
-      //         id={id}
-      //         layer={layer}
-      //         onPointerDown={onLayerPointerDown}
-      //         selectionColor={selectionColor}
-      //       />
-      //     );
+        case LayerType.Ellipse:
+          return (
+            <Ellipse
+              id={id}
+              layer={layer}
+              onPointerDown={onLayerPointerDown}
+              selectionColor={selectionColor}
+            />
+          );
       case LayerType.Rectangle:
         return (
           <Rectangle
