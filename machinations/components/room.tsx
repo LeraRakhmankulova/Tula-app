@@ -19,6 +19,7 @@ export const Room = ({ children, roomId, fallback }: RoomProps) => {
       initialPresence={{
         cursor: null,
         selection: [],
+        // для рисования карандашем
         pencilDraft: null,
         penColor: null,
       }}

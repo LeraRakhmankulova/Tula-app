@@ -10,7 +10,7 @@ import {
 import { colorToCss } from "@/lib/utils";
 
 import { Cursor } from "./cursor";
-import { Path } from "./path";
+import { Path } from "./_layer-components.tsx/path";
 
 const Cursors = () => {
   const ids = useOthersConnectionIds();

@@ -5,7 +5,7 @@ import { memo } from "react";
 import { colorToCss } from "@/lib/utils";
 import { useStorage } from "@/liveblocks.config";
 import { LayerType } from "@/app/types/canvas";
-import { Path } from "./path";
+import { Path } from "./_layer-components.tsx/path";
 import { Rectangle } from "./_layer-components.tsx/rectangle";
 import { Ellipse } from "./_layer-components.tsx/ellipse";
 import { TextComponent } from "./_layer-components.tsx/text";

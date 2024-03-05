@@ -1,5 +1,5 @@
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
-import { cn, colorToCss } from "@/lib/utils";
+import { colorToCss } from "@/lib/utils";
 import { useMutation } from "@/liveblocks.config";
 import { Color, NoteLayer } from "@/app/types/canvas";
 

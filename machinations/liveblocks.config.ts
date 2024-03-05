@@ -18,6 +18,7 @@ const client = createClient({
 type Presence = {
   cursor: { x: number, y: number } | null,
   selection: string[];
+  // для рисования карандашем
   pencilDraft: [x: number, y: number, pressure: number][] | null;
   penColor: Color | null;
 };
