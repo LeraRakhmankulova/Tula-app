@@ -8,6 +8,7 @@ import { LayerType } from "@/app/types/canvas";
 import { Path } from "./path";
 import { Rectangle } from "./_layer-components.tsx/rectangle";
 import { Ellipse } from "./_layer-components.tsx/ellipse";
+import { TextComponent } from "./_layer-components.tsx/text";
 
 interface LayerPreviewProps {
   id: string;
@@ -36,7 +37,7 @@ export const LayerPreview = memo(
             fill={layer.fill ? colorToCss(layer.fill) : "#000"}
             stroke={selectionColor}
           />
-        );
+        )
       //   case LayerType.Note:
       //     return (
       //       <Note
@@ -46,24 +47,24 @@ export const LayerPreview = memo(
       //         selectionColor={selectionColor}
       //       />
       //     );
-      //   case LayerType.Text:
-      //     return (
-      //       <Text
-      //         id={id}
-      //         layer={layer}
-      //         onPointerDown={onLayerPointerDown}
-      //         selectionColor={selectionColor}
-      //       />
-      //     );
-        case LayerType.Ellipse:
-          return (
-            <Ellipse
-              id={id}
-              layer={layer}
-              onPointerDown={onLayerPointerDown}
-              selectionColor={selectionColor}
-            />
-          );
+      case LayerType.Text:
+        return (
+          <TextComponent
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
+        );
+      case LayerType.Ellipse:
+        return (
+          <Ellipse
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
+        );
       case LayerType.Rectangle:
         return (
           <Rectangle

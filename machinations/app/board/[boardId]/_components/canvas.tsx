@@ -242,20 +242,21 @@ export const Canvas = ({ boardId }: CanvasProps) => {
       else if (canvasState.mode === CanvasMode.Resizing) {
         resizeSelectedLayer(current);
       }
-      //   } else if (canvasState.mode === CanvasMode.Pencil) {
+      // else if (canvasState.mode === CanvasMode.Pencil) {
       //     continueDrawing(current, e);
+      // }
 
       setMyPresence({ cursor: current });
     },
-    [canvasState]
-    //   continueDrawing,
-    //   camera,
-    //   canvasState,
-    //   resizeSelectedLayer,
-    //   translateSelectedLayers,
-    //   startMultiSelection,
-    //   updateSelectionNet,
-    // ]
+    [canvasState,
+      // continueDrawing,
+      camera,
+      canvasState,
+      resizeSelectedLayer,
+      translateSelectedLayers,
+      startMultiSelection,
+      updateSelectionNet,
+    ]
   );
   //выход за рамки канваса
   const onPointerLeave = useMutation(({ setMyPresence }) => {
