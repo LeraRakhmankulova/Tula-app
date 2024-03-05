@@ -1,26 +1,35 @@
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
-
-import { colorToCss } from "@/lib/utils";
+import { cn, colorToCss } from "@/lib/utils";
 import { useMutation } from "@/liveblocks.config";
-import { TextLayer } from "@/app/types/canvas";
+import { Color, NoteLayer } from "@/app/types/canvas";
+
+const getContrastingTextColor = (color: Color) => {
+  const luminance = 0.299 * color.r + 0.587 * color.g + 0.114 * color.b;
+  return luminance > 182 ? "black" : "white";
+};
 
 const calculateFontSize = (width: number, height: number) => {
   const maxFontSize = 96;
-  const scaleFactor = 0.5;
+  const scaleFactor = 0.15;
   const fontSizeBasedOnHeight = height * scaleFactor;
   const fontSizeBasedOnWidth = width * scaleFactor;
 
   return Math.min(fontSizeBasedOnHeight, fontSizeBasedOnWidth, maxFontSize);
 };
 
-interface TextProps {
+interface NoteProps {
   id: string;
-  layer: TextLayer;
+  layer: NoteLayer;
   onPointerDown: (e: React.PointerEvent, id: string) => void;
   selectionColor?: string;
 }
 
-export const TextComponent = ({ layer,onPointerDown,id,selectionColor }: TextProps) => {
+export const Note = ({
+  layer,
+  onPointerDown,
+  id,
+  selectionColor,
+}: NoteProps) => {
   const { x, y, width, height, fill, value } = layer;
 
   const updateValue = useMutation(({ storage }, newValue: string) => {
@@ -42,15 +51,17 @@ export const TextComponent = ({ layer,onPointerDown,id,selectionColor }: TextPro
       onPointerDown={(e) => onPointerDown(e, id)}
       style={{
         outline: selectionColor ? `1px solid ${selectionColor}` : "none",
+        backgroundColor: fill ? colorToCss(fill) : "#000",
       }}
+      className="shadow-md drop-shadow-xl"
     >
       <ContentEditable
         html={value || "Text"}
         onChange={handleContentChange}
-        className="h-full w-full flex items-center justify-center text-center drop-shadow-md outline-none"
+        className="h-full w-full flex items-center justify-center text-center outline-none"
         style={{
           fontSize: calculateFontSize(width, height),
-          color: fill ? colorToCss(fill) : "#000",
+          color: fill ? getContrastingTextColor(fill) : "#000",
         }}
       />
     </foreignObject>

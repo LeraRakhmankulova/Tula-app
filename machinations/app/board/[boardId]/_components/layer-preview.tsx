@@ -9,6 +9,7 @@ import { Path } from "./path";
 import { Rectangle } from "./_layer-components.tsx/rectangle";
 import { Ellipse } from "./_layer-components.tsx/ellipse";
 import { TextComponent } from "./_layer-components.tsx/text";
+import { Note } from "./_layer-components.tsx/note";
 
 interface LayerPreviewProps {
   id: string;
@@ -37,16 +38,16 @@ export const LayerPreview = memo(
             fill={layer.fill ? colorToCss(layer.fill) : "#000"}
             stroke={selectionColor}
           />
-        )
-      //   case LayerType.Note:
-      //     return (
-      //       <Note
-      //         id={id}
-      //         layer={layer}
-      //         onPointerDown={onLayerPointerDown}
-      //         selectionColor={selectionColor}
-      //       />
-      //     );
+        );
+      case LayerType.Note:
+        return (
+          <Note
+            id={id}
+            layer={layer}
+            onPointerDown={onLayerPointerDown}
+            selectionColor={selectionColor}
+          />
+        );
       case LayerType.Text:
         return (
           <TextComponent
