@@ -26,6 +26,7 @@ import { useCallback, useMemo, useState } from "react";
 import { CursorsPresence } from "./cursors-presence";
 import {
   connectionIdToColor,
+  findIntersectingLayersWithRectangle,
   pointerEventToCanvasPoint,
   resizeBounds,
 } from "@/lib/utils";
@@ -201,6 +202,27 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     },
     [canvasState]
   );
+  const updateSelectionNet = useMutation((
+    { storage, setMyPresence },
+    current: Point,
+    origin: Point,
+  ) => {
+    const layers = storage.get("layers").toImmutable();
+    setCanvasState({
+      mode: CanvasMode.SelectionNet,
+      origin,
+      current,
+    });
+
+    const ids = findIntersectingLayersWithRectangle(
+      layerIds,
+      layers,
+      origin,
+      current,
+    );
+
+    setMyPresence({ selection: ids });
+  }, [layerIds]);
 
   const onPointerMove = useMutation(
     ({ setMyPresence }, e: React.PointerEvent) => {
@@ -209,9 +231,10 @@ export const Canvas = ({ boardId }: CanvasProps) => {
       const current = pointerEventToCanvasPoint(e, camera);
       if (canvasState.mode === CanvasMode.Pressing) {
         startMultiSelection(current, canvasState.origin);
+         //выделение нескольких объектов
+      } else if (canvasState.mode === CanvasMode.SelectionNet) {
+        updateSelectionNet(current, canvasState.origin);
       }
-      //   } else if (canvasState.mode === CanvasMode.SelectionNet) {
-      //     updateSelectionNet(current, canvasState.origin);
       //перетаскивание объекта по канвасу
       else if (canvasState.mode === CanvasMode.Translating) {
         translateSelectedLayers(current);
@@ -321,10 +344,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         undo={history.undo}
         redo={history.redo}
       />
-       <SelectionTools
-        camera={camera}
-        setLastUsedColor={setLastUsedColor}
-      />
+      <SelectionTools camera={camera} setLastUsedColor={setLastUsedColor} />
       <svg
         className="h-[100vh] w-[100vw]"
         onWheel={onWheel}
