@@ -10,6 +10,7 @@ import { Rectangle } from "./_layer-components.tsx/rectangle";
 import { Ellipse } from "./_layer-components.tsx/ellipse";
 import { TextComponent } from "./_layer-components.tsx/text";
 import { Note } from "./_layer-components.tsx/note";
+import { Triangle } from "./_layer-components.tsx/triangle";
 
 interface LayerPreviewProps {
   id: string;
@@ -68,7 +69,7 @@ export const LayerPreview = memo(
         );
       case LayerType.Rectangle:
         return (
-          <Rectangle
+          <Triangle
             id={id}
             layer={layer}
             onPointerDown={onLayerPointerDown}

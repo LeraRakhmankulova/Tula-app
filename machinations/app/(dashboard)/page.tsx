@@ -1,6 +1,5 @@
 "use client";
 
-import RootLayout from "./../layout";
 import { BoardList } from "./_components/board-list";
 import { EmptyOrganization } from "./_components/empty-org";
 import { useOrganization } from "@clerk/nextjs";
