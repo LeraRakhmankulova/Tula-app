@@ -11,12 +11,15 @@ import ReactFlow, {
   MarkerType,
   Controls,
   MiniMap,
+  Background,
 } from "reactflow";
 import { Participants } from "@/app/board/[boardId]/_components/participants";
 import { Info } from "@/app/board/[boardId]/_components/info";
 import { CursorsPresence } from "@/app/board/[boardId]/_components/cursors-presence";
 import CustomNode from "./_structs/poolStruct";
 import CustomEdge from "./edges/customEdge";
+import { useMyPresence, useOthers } from "@/liveblocks.config";
+import { Cursor } from "./cursor";
 
 const nodeTypes = { textUpdater: CustomNode };
 const edgeTypes = {
@@ -107,19 +110,38 @@ const Flow = ({ boardId }: FlowProps) => {
     setNodes((prevNodes) => [...prevNodes, newNode]);
   };
 
+  const [{ cursor }, updateMyPresence] = useMyPresence();
+  const others = useOthers();
+
   return (
-    <main className="fixed inset-0">
-      <Info boardId={boardId} />
-      <Participants />
-      <button onClick={addNode}>Add Node</button>
-      <CursorsPresence />
-      <ReactFlowProvider>
-        <button onClick={addNode}>Add Node</button>
-        <label>label:</label>
-        <input
-          value={nodeName}
-          onChange={(evt) => setNodeName(evt.target.value)}
-        />
+    <main
+      // className="fixed inset-0"
+      className="h-full w-full relative bg-neutral-100 touch-none"
+      onPointerMove={(event) => {
+        updateMyPresence({
+          cursor: {
+            x: Math.round(event.clientX),
+            y: Math.round(event.clientY),
+          },
+        });
+      }}
+      onPointerLeave={() =>
+        updateMyPresence({
+          cursor: null,
+        })
+      }
+    >
+      <div className="z-10 w-full relative">
+        <Info boardId={boardId} />
+        <Participants />
+      </div>
+      {others.map(({ connectionId, presence }) => {
+        if (presence.cursor === null) {
+          return null;
+        }
+        return <Cursor key={connectionId} connectionId={connectionId} />;
+      })}
+      {/* <ReactFlowProvider>
         <ReactFlow
           nodes={nodes}
           nodeTypes={nodeTypes}
@@ -129,10 +151,12 @@ const Flow = ({ boardId }: FlowProps) => {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           elevateEdgesOnSelect
-        />
-        <Controls />
-        <MiniMap />
-      </ReactFlowProvider>
+        >
+          <Controls />
+          <MiniMap />
+          <Background color="blue" gap={16} className="bg-blue-100" />
+        </ReactFlow>
+      </ReactFlowProvider> */}
     </main>
   );
 };
