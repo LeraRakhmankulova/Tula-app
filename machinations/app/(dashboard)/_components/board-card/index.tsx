@@ -11,7 +11,6 @@ import { Footer } from "./footer";
 import { Actions } from "@/components/actions";
 import { useApiMutation } from "@/app/hooks/use-api-mutation";
 import { api } from "@/convex/_generated/api";
-import { useMutation } from "convex/react";
 
 export interface BoardCardProps {
   id: string;
@@ -57,7 +56,7 @@ export const BoardCard = ({
   };
 
   return (
-    <Link href={`/board/${id}`}>
+    <Link href={`/test/${id}`}>
       <div className="group aspect-[100/130] border rounded-lg flex flex-col justify-between overflow-hidden">
         <div className="relative flex-1 bg-amber-50">
           <Image src={imageUrl} alt={title} fill className="object-fit" />
