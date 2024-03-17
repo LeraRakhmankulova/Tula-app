@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import InputField from "./../ui/input";
 import {
   BaseEdge,
@@ -12,6 +12,7 @@ import {
 
 export default function CustomEdge(props: EdgeProps) {
   const [inputValue, setInputValue] = useState<string>("");
+  const [focus, setFocus] = useState<boolean>(true);
 
   const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -38,22 +39,32 @@ export default function CustomEdge(props: EdgeProps) {
 
   return (
     <>
-      <BaseEdge path={edgePath} id="105"/>
+      <StepEdge {...props} />
       <EdgeLabelRenderer>
-        <div
+        <input
+          value={inputValue}
+          autoFocus={focus}
+          onClick={() => setFocus(true)}
+          onChange={(event) => setInputValue(event.target.value)}
+          placeholder="teat"
           style={{
             position: "absolute",
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            background: "red",
-            padding: 10,
+            background: "white",
+            padding: 8,
             borderRadius: 5,
             fontSize: 12,
             fontWeight: 700,
+            zIndex: 1000,
           }}
           className="nodrag nopan"
-        >
-          test
-        </div>
+        />
+        {/* <InputField/> */}
+        {/* <input
+            placeholder="test"
+            className="bg-black outline-none text-white w-16 text-sm z-10"
+          /> */}
+        {/* </input> */}
       </EdgeLabelRenderer>
     </>
   );
