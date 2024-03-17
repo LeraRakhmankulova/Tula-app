@@ -1,4 +1,4 @@
-import { 
+import {
   createClient,
   LiveList,
   LiveMap,
@@ -6,6 +6,7 @@ import {
 } from "@liveblocks/client";
 import { createLiveblocksContext, createRoomContext } from "@liveblocks/react";
 import { Color, Layer } from "./app/types/canvas";
+import { Node } from "reactflow";
 
 const client = createClient({
   throttle: 16,
@@ -19,8 +20,8 @@ type Presence = {
   cursor: { x: number, y: number } | null,
   selection: string[];
   // для рисования карандашем
-  pencilDraft: [x: number, y: number, pressure: number][] | null;
-  penColor: Color | null;
+  // pencilDraft: [x: number, y: number, pressure: number][] | null;
+  // penColor: Color | null;
 };
 
 // Optionally, Storage represents the shared document that persists in the
@@ -28,6 +29,7 @@ type Presence = {
 // LiveList, LiveMap, LiveObject instances, for which updates are
 // automatically persisted and synced to all connected clients.
 type Storage = {
+  // layers: LiveMap<string, LiveObject<Layer>>;
   layers: LiveMap<string, LiveObject<Layer>>;
   layerIds: LiveList<string>;
 };

@@ -72,7 +72,8 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         | LayerType.Ellipse
         | LayerType.Rectangle
         | LayerType.Text
-        | LayerType.Note,
+        | LayerType.Note
+        | LayerType.Arrow,
       position: Point
     ) => {
       const liveLayers = storage.get("layers");

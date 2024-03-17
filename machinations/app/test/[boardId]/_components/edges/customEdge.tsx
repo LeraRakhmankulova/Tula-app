@@ -45,6 +45,7 @@ export default function CustomEdge(props: EdgeProps) {
             position: "absolute",
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
             fontSize: 12,
+            cursor: "pointer"
           }}
         >
           <InputField value={inputValue} onChange={onChange} autoFocus />

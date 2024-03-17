@@ -15,7 +15,8 @@ export enum LayerType {
     Path,
     Text,
     Note,
-    Source
+    Source,
+    Arrow
 };
 
 export type RectangleLayer = {
@@ -46,6 +47,16 @@ export type PathLayer = {
     width: number;
     fill: Color;
     points: number[][];
+    value?: string;
+};
+
+export type ArrowLayer = {
+    type: LayerType.Arrow;
+    x: number;
+    y: number;
+    height: number;
+    width: number;
+    fill: Color;
     value?: string;
 };
 
@@ -113,7 +124,7 @@ export type CanvasState =
     }
     | {
         mode: CanvasMode.Inserting,
-        layerType: LayerType.Ellipse | LayerType.Rectangle | LayerType.Text | LayerType.Note;
+        layerType: LayerType.Ellipse | LayerType.Rectangle | LayerType.Text | LayerType.Note | LayerType.Arrow;
     }
     | {
         mode: CanvasMode.Pencil,
@@ -138,4 +149,4 @@ export enum CanvasMode {
     Pencil,
 };
 
-export type Layer = RectangleLayer | EllipseLayer | PathLayer | TextLayer | NoteLayer | SourceStruct
+export type Layer = RectangleLayer | EllipseLayer | PathLayer | TextLayer | NoteLayer | SourceStruct | ArrowLayer
