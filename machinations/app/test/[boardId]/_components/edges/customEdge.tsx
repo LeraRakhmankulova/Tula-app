@@ -38,17 +38,21 @@ export default function CustomEdge(props: EdgeProps) {
 
   return (
     <>
-      <StepEdge {...props} />
+      <BaseEdge path={edgePath} id="105"/>
       <EdgeLabelRenderer>
         <div
           style={{
             position: "absolute",
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+            background: "red",
+            padding: 10,
+            borderRadius: 5,
             fontSize: 12,
-            cursor: "pointer"
+            fontWeight: 700,
           }}
+          className="nodrag nopan"
         >
-          <InputField value={inputValue} onChange={onChange} autoFocus />
+          test
         </div>
       </EdgeLabelRenderer>
     </>

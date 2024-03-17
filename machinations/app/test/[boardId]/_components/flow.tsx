@@ -23,7 +23,7 @@ import { Cursor } from "./cursor";
 
 const nodeTypes = { textUpdater: CustomNode };
 const edgeTypes = {
-  buttonedge: CustomEdge,
+  custom: CustomEdge,
 };
 
 const initialNodes = [
@@ -48,7 +48,7 @@ const initialEdges = [
     id: "edge-button",
     source: "1",
     target: "2",
-    type: "buttonedge",
+    type: 'custom',
     markerEnd: {
       type: MarkerType.ArrowClosed,
       width: 20,
@@ -60,21 +60,7 @@ const initialEdges = [
 interface FlowProps {
   boardId: string;
 }
-// Так можно вытащить инфу в другой компонент из какого-то стора
-// function Sidebar() {
-//   const nodes = useNodes();
 
-//   return (
-//     <aside>
-//       {nodes.map((node: Node) => (
-//         <div key={node.id}>
-//           Node {node.id} - x: {node.position.x.toFixed(2)}, y:{" "}
-//           {node.position.y.toFixed(2)}
-//         </div>
-//       ))}
-//     </aside>
-//   );
-// }
 const Flow = ({ boardId }: FlowProps) => {
   const [nodeName, setNodeName] = useState("Node 1");
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
@@ -141,22 +127,21 @@ const Flow = ({ boardId }: FlowProps) => {
         }
         return <Cursor key={connectionId} connectionId={connectionId} />;
       })}
-      {/* <ReactFlowProvider>
+      <ReactFlowProvider>
         <ReactFlow
           nodes={nodes}
-          nodeTypes={nodeTypes}
           edges={edges}
+          nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          elevateEdgesOnSelect
         >
           <Controls />
           <MiniMap />
           <Background color="blue" gap={16} className="bg-blue-100" />
         </ReactFlow>
-      </ReactFlowProvider> */}
+      </ReactFlowProvider>
     </main>
   );
 };
