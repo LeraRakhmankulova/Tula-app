@@ -34,12 +34,6 @@ const initialNodes = [
     type: "textUpdater",
     position: { x: 100, y: 400 },
     data: { label: 123 },
-    style: {
-      background: "red",
-      border: "3px solid blue",
-      borderRadius: 50,
-      fontSize: 12,
-    },
   },
 ];
 const initialEdges = [
@@ -49,6 +43,7 @@ const initialEdges = [
     source: "1",
     target: "2",
     type: 'custom',
+    animated: true,
     markerEnd: {
       type: MarkerType.ArrowClosed,
       width: 20,
@@ -101,7 +96,6 @@ const Flow = ({ boardId }: FlowProps) => {
 
   return (
     <main
-      // className="fixed inset-0"
       className="h-full w-full relative bg-neutral-100 touch-none"
       onPointerMove={(event) => {
         updateMyPresence({

@@ -13,10 +13,13 @@ const CustomNode = ({ data, selected }: any) => {
         minHeight={10}
       />
       <Handle type="target" position={Position.Left} />
-      <div>
-        <div style={{ padding: 10 }}>{data.label}</div>
+      <div className="text-sm bg-white px-4 py-1 text-center rounded-sm border border-blue-500 border-solid border-2 h-full w-full flex items-center justify-center">
+        {data.label}
       </div>
       <Handle type="source" position={Position.Right} />
+      <div className="h-full w-full flex justify-center">
+        <span className="font-bold text-xs">Start</span>
+      </div>
     </>
   );
 };
