@@ -41,30 +41,24 @@ export default function CustomEdge(props: EdgeProps) {
     <>
       <StepEdge {...props} />
       <EdgeLabelRenderer>
-        <input
-          value={inputValue}
-          autoFocus={focus}
-          onClick={() => setFocus(true)}
-          onChange={(event) => setInputValue(event.target.value)}
-          placeholder="teat"
+        <div
           style={{
             position: "absolute",
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            background: "white",
-            padding: 8,
-            borderRadius: 5,
             fontSize: 12,
-            fontWeight: 700,
-            zIndex: 1000,
+            // everything inside EdgeLabelRenderer has no pointer events by default
+            // if you have an interactive element, set pointer-events: all
+            pointerEvents: "all",
           }}
           className="nodrag nopan"
-        />
-        {/* <InputField/> */}
-        {/* <input
-            placeholder="test"
-            className="bg-black outline-none text-white w-16 text-sm z-10"
-          /> */}
-        {/* </input> */}
+        >
+          <input
+            className="w-16 h-5 bg-white py-1 px-3 text-center"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="tw"
+          />
+        </div>
       </EdgeLabelRenderer>
     </>
   );
