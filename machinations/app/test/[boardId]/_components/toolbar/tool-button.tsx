@@ -26,6 +26,7 @@ export const ToolButton = ({
         disabled={isDisabled}
         onClick={onClick}
         size="icon"
+        style={{margin: '1px'}}
         variant={isActive ? "outline" : "default"}
       >
         {/* <Icon /> */}
