@@ -1,4 +1,17 @@
 import { ToolButton } from "./tool-button";
+import {
+  ArrowLeftRight,
+  Recycle,
+  Play,
+  Dices,
+  Hourglass,
+  CheckCheck,
+  MoveUpRight,
+  Undo,
+  Redo,
+  BadgePlus,
+  BadgeMinus,
+} from "lucide-react";
 
 interface ToolbarProps {
   canvasState: CanvasState;
@@ -11,20 +24,77 @@ interface ToolbarProps {
 
 export const Toolbar = () => {
   return (
-    <div className="absolute top-40 left-2 flex flex-col gap-y-4">
+    <div className="absolute top-20 left-2 flex flex-col gap-y-4">
       <div className="bg-white rounded-md p-1.5 flex gap-y-1 flex-col items-center shadow-md">
-        <ToolButton label="Select" onClick={() => {}} isActive={false} />
-        <ToolButton label="Text" onClick={() => {}} isActive={false} />
-        <ToolButton label="Sticky note" onClick={() => {}} isActive={false} />
-        <ToolButton label="Rectangle" onClick={() => {}} isActive={false} />
-        <ToolButton label="Arrow" onClick={() => {}} isActive={false} />
-        <ToolButton label="Ellipse" onClick={() => {}} isActive={false} />
-        <ToolButton label="Pen" onClick={() => {}} isActive={false} />
+        <ToolButton
+          label="Source"
+          onClick={() => {}}
+          isActive={false}
+          icon={Play}
+        />
+        <ToolButton
+          label="Pool"
+          onClick={() => {}}
+          isActive={false}
+          icon={BadgePlus}
+        />
+        <ToolButton
+          label="Consumer"
+          onClick={() => {}}
+          isActive={false}
+          icon={BadgeMinus}
+        />
+        <ToolButton
+          label="Converter"
+          onClick={() => {}}
+          isActive={false}
+          icon={Recycle}
+        />
+        <ToolButton
+          label="Gate"
+          onClick={() => {}}
+          isActive={false}
+          icon={ArrowLeftRight}
+        />
+        <ToolButton
+          label="Random"
+          onClick={() => {}}
+          isActive={false}
+          icon={Dices}
+        />
+        <ToolButton
+          label="Delay"
+          onClick={() => {}}
+          isActive={false}
+          icon={Hourglass}
+        />
+        <ToolButton
+          label="End"
+          onClick={() => {}}
+          isActive={false}
+          icon={CheckCheck}
+        />
+        <ToolButton
+          label="Connection"
+          onClick={() => {}}
+          isActive={false}
+          icon={MoveUpRight}
+        />
       </div>
       {/* undo redo */}
       <div className="bg-white rounded-md p-1.5 flex flex-col items-center shadow-md">
-        <ToolButton label="Undo" onClick={() => {}} isActive={false} />
-        <ToolButton label="Redo" onClick={() => {}} isActive={false} />
+        <ToolButton
+          label="Undo"
+          onClick={() => {}}
+          isActive={false}
+          icon={Undo}
+        />
+        <ToolButton
+          label="Redo"
+          onClick={() => {}}
+          isActive={false}
+          icon={Redo}
+        />
       </div>
     </div>
   );

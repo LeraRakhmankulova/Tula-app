@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 interface ToolButtonProps {
   label: string;
-  //   icon: LucideIcon;
+  icon: LucideIcon;
   onClick: () => void;
   isActive?: boolean;
   isDisabled?: boolean;
@@ -15,7 +15,7 @@ interface ToolButtonProps {
 
 export const ToolButton = ({
   label,
-  //   icon: Icon,
+  icon: Icon,
   onClick,
   isActive,
   isDisabled,
@@ -26,11 +26,10 @@ export const ToolButton = ({
         disabled={isDisabled}
         onClick={onClick}
         size="icon"
-        style={{margin: '1px'}}
+        style={{ margin: "1px" }}
         variant={isActive ? "outline" : "default"}
       >
-        {/* <Icon /> */}
-        {label}
+        <Icon />
       </Button>
     </Hint>
   );
