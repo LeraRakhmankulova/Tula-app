@@ -16,10 +16,12 @@ import ReactFlow, {
 import { Participants } from "@/app/board/[boardId]/_components/participants";
 import { Info } from "@/app/board/[boardId]/_components/info";
 import { CursorsPresence } from "@/app/board/[boardId]/_components/cursors-presence";
-import CustomNode from "./_structs/poolStruct";
-import CustomEdge from "./edges/customEdge";
+import CustomNode from "./_structs/custom-node";
+
 import { useMyPresence, useOthers } from "@/liveblocks.config";
 import { Cursor } from "./cursor";
+import CustomEdge from "./_structs/custom-edge";
+import { Toolbar } from "./toolbar/toolbar";
 
 const nodeTypes = { textUpdater: CustomNode };
 const edgeTypes = {
@@ -114,6 +116,7 @@ const Flow = ({ boardId }: FlowProps) => {
       <div className="z-10 w-full relative">
         <Info boardId={boardId} />
         <Participants />
+        <Toolbar/>
       </div>
       {others.map(({ connectionId, presence }) => {
         if (presence.cursor === null) {
