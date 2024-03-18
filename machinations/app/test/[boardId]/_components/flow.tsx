@@ -12,6 +12,7 @@ import ReactFlow, {
   Controls,
   MiniMap,
   Background,
+  Panel,
 } from "reactflow";
 import { Participants } from "@/app/board/[boardId]/_components/participants";
 import { Info } from "@/app/board/[boardId]/_components/info";
@@ -53,6 +54,8 @@ const initialEdges = [
 interface FlowProps {
   boardId: string;
 }
+
+const getNodeId = () => `randomnode_${+new Date()}`;
 
 const Flow = ({ boardId }: FlowProps) => {
   const nodeTypes = useMemo(() => ({ textUpdater: CustomNode }), []);
@@ -99,6 +102,19 @@ const Flow = ({ boardId }: FlowProps) => {
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
 
+  const onAdd = useCallback(() => {
+    const newNode = {
+      id: getNodeId(),
+      data: { label: "Added node" },
+      type: "textUpdater",
+      position: {
+        x: Math.random() * window.innerWidth - 100,
+        y: Math.random() * window.innerHeight,
+      },
+    };
+    setNodes((nds) => nds.concat(newNode));
+  }, [setNodes]);
+
   return (
     <main
       className="h-full w-full relative bg-neutral-100 touch-none"
@@ -119,7 +135,7 @@ const Flow = ({ boardId }: FlowProps) => {
       <div className="z-10 w-full relative">
         <Info boardId={boardId} />
         <Participants />
-        <Toolbar />
+        <Toolbar onClick={onAdd} />
       </div>
       {others.map(({ connectionId, presence }) => {
         if (presence.cursor === null) {
@@ -140,7 +156,12 @@ const Flow = ({ boardId }: FlowProps) => {
           <Controls />
           <MiniMap />
           <Background color="blue" gap={16} className="bg-blue-100" />
-          <DownloadButton />
+
+          <Panel position="top-center">
+            {/* <button onClick={onSave}>save</button>
+            <button onClick={onRestore}>restore</button> */}
+            <DownloadButton />
+          </Panel>
         </ReactFlow>
       </ReactFlowProvider>
     </main>
