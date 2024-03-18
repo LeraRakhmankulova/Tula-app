@@ -26,6 +26,7 @@ import CustomEdge from "./_structs/custom-edge";
 import { Toolbar } from "./panels/toolbar/toolbar";
 import DownloadButton from "./ui/download-button";
 import { BottomPanel } from "./panels/bottom-panel";
+import { TopPanel } from "./panels/top-panel";
 
 const initialNodes = [
   { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
@@ -59,7 +60,6 @@ interface FlowProps {
 
 const getNodeId = () => `randomnode_${+new Date()}`;
 
-
 const Flow = ({ boardId }: FlowProps) => {
   const nodeTypes = useMemo(() => ({ textUpdater: CustomNode }), []);
   const edgeTypes = useMemo(
@@ -71,7 +71,6 @@ const Flow = ({ boardId }: FlowProps) => {
   const [nodeName, setNodeName] = useState("Node 1");
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  
 
   useEffect(() => {
     setNodes((nds) =>
@@ -93,7 +92,6 @@ const Flow = ({ boardId }: FlowProps) => {
     [setEdges]
   );
 
-
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
 
@@ -103,8 +101,8 @@ const Flow = ({ boardId }: FlowProps) => {
       data: { label: "Added node" },
       type: "textUpdater",
       position: {
-        x: Math.random() * window.innerWidth/2,
-        y: Math.random() * window.innerHeight/2,
+        x: (Math.random() * window.innerWidth) / 2,
+        y: (Math.random() * window.innerHeight) / 2,
       },
     };
     setNodes((nds) => nds.concat(newNode));
@@ -148,13 +146,14 @@ const Flow = ({ boardId }: FlowProps) => {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
         >
-          <Controls/>
+          <Controls />
           <MiniMap />
           <Background color="blue" gap={16} className="bg-blue-100" />
-          <BottomPanel/>
-          <Panel position="top-center">
+          <BottomPanel />
+          <TopPanel />
+          {/* <Panel position="top-center">
             <DownloadButton />
-          </Panel>
+          </Panel> */}
         </ReactFlow>
       </ReactFlowProvider>
     </main>
