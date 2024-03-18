@@ -47,7 +47,7 @@ export const Toolbar = () => {
         <ToolButton
           label="Converter"
           onClick={() => {}}
-          isActive={false}
+          isActive={true}
           icon={Recycle}
         />
         <ToolButton
