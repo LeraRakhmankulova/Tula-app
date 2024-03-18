@@ -13,6 +13,7 @@ import ReactFlow, {
   MiniMap,
   Background,
   Panel,
+  useReactFlow,
 } from "reactflow";
 import { Participants } from "@/app/board/[boardId]/_components/participants";
 import { Info } from "@/app/board/[boardId]/_components/info";
@@ -56,6 +57,7 @@ interface FlowProps {
 }
 
 const getNodeId = () => `randomnode_${+new Date()}`;
+const flowKey = 'example-flow';
 
 const Flow = ({ boardId }: FlowProps) => {
   const nodeTypes = useMemo(() => ({ textUpdater: CustomNode }), []);
@@ -68,6 +70,9 @@ const Flow = ({ boardId }: FlowProps) => {
   const [nodeName, setNodeName] = useState("Node 1");
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [rfInstance, setRfInstance] = useState<string | null>(null);
+
+  
 
   useEffect(() => {
     setNodes((nds) =>
@@ -89,15 +94,6 @@ const Flow = ({ boardId }: FlowProps) => {
     [setEdges]
   );
 
-  const addNode = () => {
-    const newNodeId = `new-node-${nodes.length + 1}`;
-    const newNode = {
-      id: newNodeId,
-      position: { x: 200, y: 200 }, // Установите начальные координаты нового узла
-      data: { label: newNodeId },
-    };
-    setNodes((prevNodes) => [...prevNodes, newNode]);
-  };
 
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
@@ -153,13 +149,10 @@ const Flow = ({ boardId }: FlowProps) => {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
         >
-          <Controls />
+          <Controls/>
           <MiniMap />
           <Background color="blue" gap={16} className="bg-blue-100" />
-
           <Panel position="top-center">
-            {/* <button onClick={onSave}>save</button>
-            <button onClick={onRestore}>restore</button> */}
             <DownloadButton />
           </Panel>
         </ReactFlow>
