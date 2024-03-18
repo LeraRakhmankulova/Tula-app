@@ -151,9 +151,6 @@ const Flow = ({ boardId }: FlowProps) => {
           <Background color="blue" gap={16} className="bg-blue-100" />
           <BottomPanel />
           <TopPanel />
-          {/* <Panel position="top-center">
-            <DownloadButton />
-          </Panel> */}
         </ReactFlow>
       </ReactFlowProvider>
     </main>
