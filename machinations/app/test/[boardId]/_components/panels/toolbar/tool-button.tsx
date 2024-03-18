@@ -11,6 +11,7 @@ interface ToolButtonProps {
   onClick?: () => void;
   isActive?: boolean;
   isDisabled?: boolean;
+  background?: string
 }
 
 export const ToolButton = ({
@@ -19,15 +20,15 @@ export const ToolButton = ({
   onClick,
   isActive,
   isDisabled,
+  background = "black"
 }: ToolButtonProps) => {
   return (
-    <Hint label={label} side="right" sideOffset={14}>
+    <Hint label={label}>
       <Button
         disabled={isDisabled}
         onClick={onClick}
         size="icon"
-        style={{ margin: "1px" }}
-        variant={isActive ? "outline" : "default"}
+        style={{ margin: "1px", background: background }}
       >
         <Icon />
       </Button>

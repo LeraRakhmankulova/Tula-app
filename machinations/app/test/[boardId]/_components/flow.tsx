@@ -23,8 +23,9 @@ import CustomNode from "./_structs/custom-node";
 import { useMyPresence, useOthers } from "@/liveblocks.config";
 import { Cursor } from "./cursor";
 import CustomEdge from "./_structs/custom-edge";
-import { Toolbar } from "./toolbar/toolbar";
+import { Toolbar } from "./panels/toolbar/toolbar";
 import DownloadButton from "./ui/download-button";
+import { BottomPanel } from "./panels/bottom-panel";
 
 const initialNodes = [
   { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
@@ -57,7 +58,7 @@ interface FlowProps {
 }
 
 const getNodeId = () => `randomnode_${+new Date()}`;
-const flowKey = 'example-flow';
+
 
 const Flow = ({ boardId }: FlowProps) => {
   const nodeTypes = useMemo(() => ({ textUpdater: CustomNode }), []);
@@ -70,8 +71,6 @@ const Flow = ({ boardId }: FlowProps) => {
   const [nodeName, setNodeName] = useState("Node 1");
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [rfInstance, setRfInstance] = useState<string | null>(null);
-
   
 
   useEffect(() => {
@@ -104,8 +103,8 @@ const Flow = ({ boardId }: FlowProps) => {
       data: { label: "Added node" },
       type: "textUpdater",
       position: {
-        x: Math.random() * window.innerWidth - 100,
-        y: Math.random() * window.innerHeight,
+        x: Math.random() * window.innerWidth/2,
+        y: Math.random() * window.innerHeight/2,
       },
     };
     setNodes((nds) => nds.concat(newNode));
@@ -152,6 +151,7 @@ const Flow = ({ boardId }: FlowProps) => {
           <Controls/>
           <MiniMap />
           <Background color="blue" gap={16} className="bg-blue-100" />
+          <BottomPanel/>
           <Panel position="top-center">
             <DownloadButton />
           </Panel>
