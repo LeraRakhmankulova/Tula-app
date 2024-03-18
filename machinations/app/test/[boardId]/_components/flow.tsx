@@ -22,6 +22,7 @@ import { useMyPresence, useOthers } from "@/liveblocks.config";
 import { Cursor } from "./cursor";
 import CustomEdge from "./_structs/custom-edge";
 import { Toolbar } from "./toolbar/toolbar";
+import DownloadButton from "./ui/download-button";
 
 const initialNodes = [
   { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
@@ -139,6 +140,7 @@ const Flow = ({ boardId }: FlowProps) => {
           <Controls />
           <MiniMap />
           <Background color="blue" gap={16} className="bg-blue-100" />
+          <DownloadButton />
         </ReactFlow>
       </ReactFlowProvider>
     </main>

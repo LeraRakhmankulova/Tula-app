@@ -25,6 +25,7 @@
     "convex": "^1.9.1",
     "convex-helpers": "^0.1.23",
     "date-fns": "^3.3.1",
+    "html-to-image": "^1.11.11",
     "lucide-react": "^0.339.0",
     "nanoid": "^5.0.6",
     "next": "14.1.0",
