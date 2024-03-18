@@ -33,7 +33,7 @@ export const TopPanel = () => {
     );
     //@ts-ignore
     toPng(document.querySelector(".react-flow__viewport"), {
-      backgroundColor: "#1a365d",
+      backgroundColor: "white",
       width: imageWidth,
       height: imageHeight,
       style: {
