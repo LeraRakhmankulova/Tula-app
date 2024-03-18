@@ -1,6 +1,6 @@
 "use client";
 import "reactflow/dist/style.css";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -23,11 +23,6 @@ import { Cursor } from "./cursor";
 import CustomEdge from "./_structs/custom-edge";
 import { Toolbar } from "./toolbar/toolbar";
 
-const nodeTypes = { textUpdater: CustomNode };
-const edgeTypes = {
-  custom: CustomEdge,
-};
-
 const initialNodes = [
   { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
   { id: "2", position: { x: 0, y: 200 }, data: { label: "2" } },
@@ -44,7 +39,7 @@ const initialEdges = [
     id: "edge-button",
     source: "1",
     target: "2",
-    type: 'custom',
+    type: "custom",
     animated: true,
     markerEnd: {
       type: MarkerType.ArrowClosed,
@@ -59,6 +54,13 @@ interface FlowProps {
 }
 
 const Flow = ({ boardId }: FlowProps) => {
+  const nodeTypes = useMemo(() => ({ textUpdater: CustomNode }), []);
+  const edgeTypes = useMemo(
+    () => ({
+      custom: CustomEdge,
+    }),
+    []
+  );
   const [nodeName, setNodeName] = useState("Node 1");
   const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -116,7 +118,7 @@ const Flow = ({ boardId }: FlowProps) => {
       <div className="z-10 w-full relative">
         <Info boardId={boardId} />
         <Participants />
-        <Toolbar/>
+        <Toolbar />
       </div>
       {others.map(({ connectionId, presence }) => {
         if (presence.cursor === null) {

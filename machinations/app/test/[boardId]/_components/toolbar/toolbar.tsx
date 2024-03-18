@@ -6,7 +6,6 @@ import {
   Dices,
   Hourglass,
   CheckCheck,
-  MoveUpRight,
   Undo,
   Redo,
   BadgePlus,
@@ -24,7 +23,7 @@ interface ToolbarProps {
 
 export const Toolbar = () => {
   return (
-    <div className="absolute top-20 left-2 flex flex-col gap-y-4">
+    <div className="absolute top-40 left-2 flex flex-col gap-y-4">
       <div className="bg-white rounded-md p-1.5 flex gap-y-1 flex-col items-center shadow-md">
         <ToolButton
           label="Source"
@@ -73,12 +72,6 @@ export const Toolbar = () => {
           onClick={() => {}}
           isActive={false}
           icon={CheckCheck}
-        />
-        <ToolButton
-          label="Connection"
-          onClick={() => {}}
-          isActive={false}
-          icon={MoveUpRight}
         />
       </div>
       {/* undo redo */}
