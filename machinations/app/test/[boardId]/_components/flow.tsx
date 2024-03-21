@@ -86,8 +86,11 @@ const Flow = ({ boardId }: FlowProps) => {
   }, [nodeName, setNodes]);
 
   const onConnect = useCallback(
-    (params: any) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
+    (connection: any) => {
+      const edge = { ...connection, type: 'custom' };
+      setEdges((eds) => addEdge(edge, eds));
+    },
+    [setEdges],
   );
 
   const [{ cursor }, updateMyPresence] = useMyPresence();
