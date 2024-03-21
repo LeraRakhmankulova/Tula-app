@@ -22,14 +22,7 @@ export type RFState = {
 };
 
 const useStore = create<RFState>((set, get) => ({
-  nodes: [
-    {
-      id: 'root',
-      type: 'textUpdater',
-      data: { label: 'React Flow Mind Map', custom: "Source" },
-      position: { x: 0, y: 0 },
-    },
-  ],
+  nodes: [],
   edges: [],
   onNodesChange: (changes: NodeChange[]) => {
     set({
@@ -45,7 +38,7 @@ const useStore = create<RFState>((set, get) => ({
     const newNode = {
       id: nanoid(),
       type: 'textUpdater',
-      data: { label: 'New Node', custom: "Pool" },
+      data: { label: 'New Node', struct: "Pool" },
       position: {
         x: (Math.random() * window.innerWidth / 2),
         y: (Math.random() * window.innerHeight / 2),
