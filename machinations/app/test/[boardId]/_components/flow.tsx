@@ -27,13 +27,13 @@ import { BottomPanel } from "./panels/bottom-panel";
 import { TopPanel } from "./panels/top-panel";
 
 const initialNodes = [
-  { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
-  { id: "2", position: { x: 0, y: 200 }, data: { label: "2" } },
+  { id: "1", position: { x: 0, y: 0 }, data: { label: "Node 1", struct: "Start"  }, type: "textUpdater" },
+  { id: "2", position: { x: 0, y: 200 }, data: { label: "Node 2",struct: "Pool"  }, type: "textUpdater"  },
   {
     id: "3",
     type: "textUpdater",
     position: { x: 100, y: 400 },
-    data: { label: 123 },
+    data: { label: 123, struct: "Start" },
   },
 ];
 const initialEdges = [
@@ -96,7 +96,7 @@ const Flow = ({ boardId }: FlowProps) => {
   const onAdd = useCallback(() => {
     const newNode = {
       id: getNodeId(),
-      data: { label: "Added node" },
+      data: { label: "Added node", struct: "Start" },
       type: "textUpdater",
       position: {
         x: (Math.random() * window.innerWidth) / 2,

@@ -1,3 +1,4 @@
+import { StructType } from "@/app/types/structs";
 import { ToolButton } from "../ui/tool-button";
 import {
   ArrowLeftRight,
@@ -21,7 +22,18 @@ interface ToolbarProps {
   canRedo: boolean;
 }
 
-export const Toolbar = ({onClick}: any) => {
+export const Toolbar = ({ onClick }: any) => {
+  // onAdd = (type: StructType) => {
+  //   const node = {
+  //     id: +new Date(),
+  //     data: { label: "Added node", struct: type.toString() },
+  //     type: "textUpdater",
+  //     position: {
+  //       x: (Math.random() * window.innerWidth) / 2,
+  //       y: (Math.random() * window.innerHeight) / 2,
+  //     },
+  //   };
+  // };
   return (
     <div className="absolute top-40 left-2 flex flex-col gap-y-4">
       <div className="bg-white rounded-md p-1.5 flex gap-y-1 flex-col items-center shadow-md">
