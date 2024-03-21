@@ -2,8 +2,10 @@ import { Panel } from "reactflow";
 import { ToolButton } from "../ui/tool-button";
 import { Play, RotateCcw, Pause } from "lucide-react";
 import CustomInput from "../ui/custom-input";
+import { useState } from "react";
 
 export const BottomPanel = () => {
+  const [play, setPlay] = useState<boolean>(false)
   return (
     <Panel position="bottom-center">
       <div className="bg-white rounded-md flex gap-x-2 items-center shadow-md py-2 px-3">
@@ -13,14 +15,16 @@ export const BottomPanel = () => {
         </div>
         <ToolButton
           label="Play"
-          onClick={() => {}}
+          isDisabled={play}
+          onClick={() => setPlay(!play)}
           isActive={false}
           icon={Play}
           background="blue"
         />
         <ToolButton
           label="Pause"
-          onClick={() => {}}
+          isDisabled={!play}
+          onClick={() => setPlay(!play)}
           isActive={false}
           icon={Pause}
           background="red"
