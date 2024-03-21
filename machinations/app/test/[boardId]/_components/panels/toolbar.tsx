@@ -12,6 +12,8 @@ import {
   BadgePlus,
   BadgeMinus,
 } from "lucide-react";
+import useStore, { RFState } from "@/app/store/use-store";
+import { shallow } from "zustand/shallow";
 
 interface ToolbarProps {
   canvasState: CanvasState;
@@ -22,24 +24,26 @@ interface ToolbarProps {
   canRedo: boolean;
 }
 
+const selector = (state: RFState) => ({
+  nodes: state.nodes,
+  edges: state.edges,
+  onNodesChange: state.onNodesChange,
+  onEdgesChange: state.onEdgesChange,
+  addNode: state.addNode,
+});
+
 export const Toolbar = ({ onClick }: any) => {
-  // onAdd = (type: StructType) => {
-  //   const node = {
-  //     id: +new Date(),
-  //     data: { label: "Added node", struct: type.toString() },
-  //     type: "textUpdater",
-  //     position: {
-  //       x: (Math.random() * window.innerWidth) / 2,
-  //       y: (Math.random() * window.innerHeight) / 2,
-  //     },
-  //   };
-  // };
+  const { nodes, edges, onNodesChange, onEdgesChange, addNode } = useStore(
+    selector,
+    shallow
+  );
+
   return (
     <div className="absolute top-40 left-2 flex flex-col gap-y-4">
       <div className="bg-white rounded-md p-1.5 flex gap-y-1 flex-col items-center shadow-md">
         <ToolButton
           label="Source"
-          onClick={onClick}
+          onClick={addNode}
           isActive={false}
           icon={Play}
         />
