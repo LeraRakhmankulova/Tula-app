@@ -4,7 +4,7 @@ import {
   useReactFlow,
   getRectOfNodes,
 } from "reactflow";
-import { ToolButton } from "./toolbar/tool-button";
+import { ToolButton } from "../ui/tool-button";
 import { BarChart3, Download } from "lucide-react";
 
 import { toPng } from "html-to-image";

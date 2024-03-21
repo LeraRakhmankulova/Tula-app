@@ -22,7 +22,7 @@ import CustomNode from "./_structs/custom-node";
 import { useMyPresence, useOthers } from "@/liveblocks.config";
 import { Cursor } from "./cursor";
 import CustomEdge from "./_structs/custom-edge";
-import { Toolbar } from "./panels/toolbar/toolbar";
+import { Toolbar } from "./panels/toolbar";
 import { BottomPanel } from "./panels/bottom-panel";
 import { TopPanel } from "./panels/top-panel";
 

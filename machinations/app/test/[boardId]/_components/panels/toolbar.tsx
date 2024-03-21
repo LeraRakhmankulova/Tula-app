@@ -1,4 +1,4 @@
-import { ToolButton } from "./tool-button";
+import { ToolButton } from "../ui/tool-button";
 import {
   ArrowLeftRight,
   Recycle,

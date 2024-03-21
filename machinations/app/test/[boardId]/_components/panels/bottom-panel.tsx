@@ -1,5 +1,5 @@
 import { Panel } from "reactflow";
-import { ToolButton } from "./toolbar/tool-button";
+import { ToolButton } from "../ui/tool-button";
 import { Play, RotateCcw, Pause } from "lucide-react";
 import CustomInput from "../ui/custom-input";
 
