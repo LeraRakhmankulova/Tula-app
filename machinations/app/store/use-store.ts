@@ -11,6 +11,7 @@ import {
 } from 'reactflow';
 import create from 'zustand';
 import { nanoid } from 'nanoid/non-secure';
+import { StructType, Structs } from '../types/structs';
 
 
 export type RFState = {
@@ -18,7 +19,7 @@ export type RFState = {
   edges: Edge[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
-  addNode: () => void;
+  addNode: (struct: StructType) => void;
 };
 
 const useStore = create<RFState>((set, get) => ({
@@ -34,11 +35,11 @@ const useStore = create<RFState>((set, get) => ({
       edges: applyEdgeChanges(changes, get().edges),
     });
   },
-  addNode: () => {
+  addNode: (struct: StructType) => {
     const newNode = {
       id: nanoid(),
       type: 'textUpdater',
-      data: { label: 'New Node', struct: "Pool" },
+      data: { label: '0', struct: struct },
       position: {
         x: (Math.random() * window.innerWidth / 2),
         y: (Math.random() * window.innerHeight / 2),

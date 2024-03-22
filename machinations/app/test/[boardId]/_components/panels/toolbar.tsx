@@ -32,7 +32,7 @@ const selector = (state: RFState) => ({
   addNode: state.addNode,
 });
 
-export const Toolbar = ({ onClick }: any) => {
+export const Toolbar = () => {
   const { nodes, edges, onNodesChange, onEdgesChange, addNode } = useStore(
     selector,
     shallow
@@ -43,49 +43,49 @@ export const Toolbar = ({ onClick }: any) => {
       <div className="bg-white rounded-md p-1.5 flex gap-y-1 flex-col items-center shadow-md">
         <ToolButton
           label="Source"
-          onClick={addNode}
+          onClick={() => addNode(StructType.Source)}
           isActive={false}
           icon={Play}
         />
         <ToolButton
           label="Pool"
-          onClick={() => {}}
+          onClick={() => addNode(StructType.Pool)}
           isActive={false}
           icon={BadgePlus}
         />
         <ToolButton
           label="Consumer"
-          onClick={() => {}}
+          onClick={() => addNode(StructType.Consumer)}
           isActive={false}
           icon={BadgeMinus}
         />
         <ToolButton
           label="Converter"
-          onClick={() => {}}
+          onClick={() => addNode(StructType.Converter)}
           isActive={true}
           icon={Recycle}
         />
         <ToolButton
           label="Gate"
-          onClick={() => {}}
+          onClick={() => addNode(StructType.Gate)}
           isActive={false}
           icon={ArrowLeftRight}
         />
         <ToolButton
           label="Random"
-          onClick={() => {}}
+          onClick={() => addNode(StructType.Random)}
           isActive={false}
           icon={Dices}
         />
         <ToolButton
           label="Delay"
-          onClick={() => {}}
+          onClick={() => addNode(StructType.Delay)}
           isActive={false}
           icon={Hourglass}
         />
         <ToolButton
           label="End"
-          onClick={() => {}}
+          onClick={() => addNode(StructType.End)}
           isActive={false}
           icon={CheckCheck}
         />

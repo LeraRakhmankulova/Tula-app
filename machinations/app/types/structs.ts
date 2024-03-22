@@ -2,14 +2,14 @@ import CustomEdge from "../test/[boardId]/_components/_structs/custom-edge";
 import CustomNode from "./../test/[boardId]/_components/_structs/custom-node";
 
 export enum StructType {
-    Source,
-    Pool,
-    Consumer,
-    Converter,
-    Gate,
-    Random,
-    Delay,
-    End
+    Source = "Source",
+    Pool = "Pool",
+    Consumer = "Consumer",
+    Converter = "Converter",
+    Gate = "Gate",
+    Random = "Random",
+    Delay = "Delay",
+    End = "End"
 };
 
 export type SourceStruct = {

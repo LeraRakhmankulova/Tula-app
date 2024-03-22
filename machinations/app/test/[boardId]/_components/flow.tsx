@@ -47,7 +47,7 @@ const selector = (state: RFState) => ({
   onEdgesChange: state.onEdgesChange,
   addNode: state.addNode
 });
-const nodeOrigin: NodeOrigin = [0.5, 0.5];
+
 interface FlowProps {
   boardId: string;
 }
@@ -110,7 +110,7 @@ const Flow = ({ boardId }: FlowProps) => {
       <div className="z-10 w-full relative">
         <Info boardId={boardId} />
         <Participants />
-        <Toolbar onClick={() => {}} />
+        <Toolbar/>
       </div>
       {others.map(({ connectionId, presence }) => {
         if (presence.cursor === null) {
