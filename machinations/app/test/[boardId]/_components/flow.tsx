@@ -1,6 +1,5 @@
 "use client";
 import "reactflow/dist/style.css";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -28,31 +27,13 @@ import { Toolbar } from "./panels/toolbar";
 import { BottomPanel } from "./panels/bottom-panel";
 import { TopPanel } from "./panels/top-panel";
 import useStore, { RFState } from "@/app/store/use-store";
+import { useCallback } from "react";
 
 
 const nodeTypes = { textUpdater: CustomNode }
 const edgeTypes = { custom: CustomEdge }
 
-// const initialNodes = [
-//   {
-//     id: "1",
-//     position: { x: 0, y: 0 },
-//     data: { label: "Node 1", struct: "Start" },
-//     type: "textUpdater",
-//   },
-//   {
-//     id: "2",
-//     position: { x: 0, y: 200 },
-//     data: { label: "Node 2", struct: "Pool" },
-//     type: "textUpdater",
-//   },
-//   {
-//     id: "3",
-//     type: "textUpdater",
-//     position: { x: 100, y: 400 },
-//     data: { label: 123, struct: "Start" },
-//   },
-// ];
+
 // const initialEdges = [
 //   // { id: "e1-2", source: "1", target: "2", animated: true },
 //   {
@@ -91,7 +72,7 @@ const Flow = ({ boardId }: FlowProps) => {
 
   // const [nodeName, setNodeName] = useState("Node 1");
   // const [nodes, setNodes, onNodesChange] = useNodesState<any>(initialNodes);
-  // const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [ setEdges] = useEdgesState([]);
 
   // useEffect(() => {
   //   setNodes((nds) =>
@@ -111,26 +92,13 @@ const Flow = ({ boardId }: FlowProps) => {
   // const onConnect = useCallback(
   //   (connection: any) => {
   //     const edge = { ...connection, type: "custom" };
-  //     setEdges((eds) => addEdge(edge, eds));
+  //     setEdges((eds: any) => addEdge(edge, eds));
   //   },
-  //   [setEdges]
+  //   [onEdgesChange]
   // );
 
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
-
-  // const onAdd = useCallback(() => {
-  //   const newNode = {
-  //     id: getNodeId(),
-  //     data: { label: "Added node", struct: "Start" },
-  //     type: "textUpdater",
-  //     position: {
-  //       x: (Math.random() * window.innerWidth) / 2,
-  //       y: (Math.random() * window.innerHeight) / 2,
-  //     },
-  //   };
-  //   setNodes((nds) => nds.concat(newNode));
-  // }, [setNodes]);
 
   return (
     <main
@@ -168,7 +136,6 @@ const Flow = ({ boardId }: FlowProps) => {
         edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        nodeOrigin={nodeOrigin}
         // onConnect={onConnect}
       >
         <Controls />
