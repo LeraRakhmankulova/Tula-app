@@ -45,6 +45,7 @@ const selector = (state: RFState) => ({
   edges: state.edges,
   onNodesChange: state.onNodesChange,
   onEdgesChange: state.onEdgesChange,
+  onConnect: state.onConnect,
   addNode: state.addNode
 });
 
@@ -55,7 +56,7 @@ interface FlowProps {
 const getNodeId = () => `randomnode_${+new Date()}`;
 
 const Flow = ({ boardId }: FlowProps) => {
-  const { nodes, edges, onNodesChange, onEdgesChange, addNode } = useStore(
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
     selector,
     shallow
   );
@@ -126,7 +127,7 @@ const Flow = ({ boardId }: FlowProps) => {
         edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        // onConnect={onConnect}
+        onConnect={onConnect}
       >
         <Controls />
         <MiniMap />

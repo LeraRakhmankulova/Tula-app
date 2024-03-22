@@ -12,6 +12,7 @@ import {
 import create from 'zustand';
 import { nanoid } from 'nanoid/non-secure';
 import { StructType, Structs } from '../types/structs';
+import { useCallback } from 'react';
 
 
 export type RFState = {
@@ -19,6 +20,7 @@ export type RFState = {
   edges: Edge[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
+  onConnect: (connection: any) => void;
   addNode: (struct: StructType) => void;
 };
 
@@ -35,6 +37,12 @@ const useStore = create<RFState>((set, get) => ({
       edges: applyEdgeChanges(changes, get().edges),
     });
   },
+  onConnect: (connection: any) => {
+    const newEdge = { ...connection, type: "custom" };
+    set((state) => ({
+      edges: [...get().edges, newEdge],
+    }));
+  },
   addNode: (struct: StructType) => {
     const newNode = {
       id: nanoid(),
@@ -44,12 +52,12 @@ const useStore = create<RFState>((set, get) => ({
         x: (Math.random() * window.innerWidth / 2),
         y: (Math.random() * window.innerHeight / 2),
       },
-      // parentNode: parentNode.id,
     };
 
     // const newEdge = {
     //   id: nanoid(),
-    //   source: parentNode.id,
+    //   type: "custom",
+    //   source: "root",
     //   target: newNode.id,
     // };
 
