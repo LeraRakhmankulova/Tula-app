@@ -1,3 +1,6 @@
+import CustomEdge from "../test/[boardId]/_components/_structs/custom-edge";
+import CustomNode from "./../test/[boardId]/_components/_structs/custom-node";
+
 export enum StructType {
     Source,
     Pool,
@@ -59,3 +62,6 @@ export type EndStruct = {
 
 
 export type Structs = SourceStruct | PoolStruct | ConsumerStruct | ConverterStruct | GateStruct | RandomStruct | DelayStruct | EndStruct
+
+export const nodeTypes = { textUpdater: CustomNode }
+export  const edgeTypes = { custom: CustomEdge }

@@ -1,23 +1,15 @@
 "use client";
 import "reactflow/dist/style.css";
 import ReactFlow, {
-  useNodesState,
   useEdgesState,
-  addEdge,
-  ReactFlowProvider,
-  useNodes,
-  Node,
-  MarkerType,
   Controls,
   MiniMap,
   Background,
-  Panel,
-  useReactFlow,
   NodeOrigin,
 } from "reactflow";
 import { Participants } from "@/app/board/[boardId]/_components/participants";
 import { Info } from "@/app/board/[boardId]/_components/info";
-import CustomNode from "./_structs/custom-node";
+
 import { shallow } from "zustand/shallow";
 
 import { useMyPresence, useOthers } from "@/liveblocks.config";
@@ -27,11 +19,9 @@ import { Toolbar } from "./panels/toolbar";
 import { BottomPanel } from "./panels/bottom-panel";
 import { TopPanel } from "./panels/top-panel";
 import useStore, { RFState } from "@/app/store/use-store";
-import { useCallback } from "react";
+import { edgeTypes, nodeTypes } from "@/app/types/structs";
 
 
-const nodeTypes = { textUpdater: CustomNode }
-const edgeTypes = { custom: CustomEdge }
 
 
 // const initialEdges = [
