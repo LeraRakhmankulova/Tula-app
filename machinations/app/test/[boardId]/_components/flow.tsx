@@ -130,7 +130,7 @@ const Flow = ({ boardId }: FlowProps) => {
         onConnect={onConnect}
       >
         <Controls />
-        <MiniMap />
+        {/* <MiniMap /> */}
         <Background color="blue" gap={16} className="bg-blue-100" />
         <BottomPanel />
         <TopPanel />

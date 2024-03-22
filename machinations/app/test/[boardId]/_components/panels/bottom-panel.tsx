@@ -3,9 +3,11 @@ import { ToolButton } from "../ui/tool-button";
 import { Play, RotateCcw, Pause } from "lucide-react";
 import CustomInput from "../ui/custom-input";
 import { useState } from "react";
+import { useAnimateScheme } from "@/app/store/use-animate-scheme";
 
 export const BottomPanel = () => {
   const [play, setPlay] = useState<boolean>(false)
+  const {isPlay, onPlay, onStop, onReset} = useAnimateScheme()
   return (
     <Panel position="bottom-center">
       <div className="bg-white rounded-md flex gap-x-2 items-center shadow-md py-2 px-3">
@@ -15,23 +17,24 @@ export const BottomPanel = () => {
         </div>
         <ToolButton
           label="Play"
-          isDisabled={play}
-          onClick={() => setPlay(!play)}
+          isDisabled={isPlay}
+          onClick={onPlay}
           isActive={false}
           icon={Play}
           background="blue"
         />
         <ToolButton
           label="Pause"
-          isDisabled={!play}
-          onClick={() => setPlay(!play)}
+          isDisabled={!isPlay}
+          onClick={onStop}
           isActive={false}
           icon={Pause}
           background="red"
         />
         <ToolButton
           label="Reset"
-          onClick={() => {}}
+          isDisabled={!isPlay}
+          onClick={onReset}
           isActive={false}
           icon={RotateCcw}
           background="red"
