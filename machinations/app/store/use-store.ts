@@ -7,13 +7,10 @@ import {
   OnEdgesChange,
   applyNodeChanges,
   applyEdgeChanges,
-  XYPosition,
 } from 'reactflow';
 import create from 'zustand';
 import { nanoid } from 'nanoid/non-secure';
-import { StructType, Structs } from '../types/structs';
-import { useCallback } from 'react';
-
+import { StructType } from '../types/structs';
 
 export type RFState = {
   nodes: Node[];
@@ -38,7 +35,7 @@ const useStore = create<RFState>((set, get) => ({
     });
   },
   onConnect: (connection: any) => {
-    const newEdge = { ...connection, type: "custom" };
+    const newEdge = { ...connection, type: "custom", animated: false };
     set((state) => ({
       edges: [...get().edges, newEdge],
     }));
@@ -54,16 +51,8 @@ const useStore = create<RFState>((set, get) => ({
       },
     };
 
-    // const newEdge = {
-    //   id: nanoid(),
-    //   type: "custom",
-    //   source: "root",
-    //   target: newNode.id,
-    // };
-
     set({
       nodes: [...get().nodes, newNode],
-      // edges: [...get().edges, newEdge],
     });
   },
 }));

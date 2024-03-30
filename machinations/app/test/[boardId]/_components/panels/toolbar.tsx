@@ -33,7 +33,7 @@ const selector = (state: RFState) => ({
 });
 
 export const Toolbar = () => {
-  const { nodes, edges, onNodesChange, onEdgesChange, addNode } = useStore(
+  const { addNode } = useStore(
     selector,
     shallow
   );

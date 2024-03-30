@@ -2,12 +2,25 @@ import { Panel } from "reactflow";
 import { ToolButton } from "../ui/tool-button";
 import { Play, RotateCcw, Pause } from "lucide-react";
 import CustomInput from "../ui/custom-input";
-import { useState } from "react";
 import { useAnimateScheme } from "@/app/store/use-animate-scheme";
+import useStore from "@/app/store/use-store";
+import { useEffect } from "react";
 
 export const BottomPanel = () => {
-  const [play, setPlay] = useState<boolean>(false)
-  const {isPlay, onPlay, onStop, onReset} = useAnimateScheme()
+  const { isPlay, onPlay, onStop, onReset } = useAnimateScheme();
+  const { edges, onEdgesChange } = useStore();
+
+  // useEffect(() => {
+  //   if (isPlay) {
+  //     const updatedEdges = edges.map(edge => ({ type: 'update', edge: { ...edge, animated: true } }));
+  //     onEdgesChange(updatedEdges);
+  //   } else {
+  //     const updatedEdges = edges.map(edge => ({ type: 'update', edge: { ...edge, animated: false } }));
+  //     onEdgesChange(updatedEdges);
+  //   }
+  // }, [isPlay, edges, onEdgesChange]);
+
+
   return (
     <Panel position="bottom-center">
       <div className="bg-white rounded-md flex gap-x-2 items-center shadow-md py-2 px-3">
