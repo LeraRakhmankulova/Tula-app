@@ -17,14 +17,16 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
         <Handle type="target" position={Position.Left} />
       )}
       <div className="text-sm bg-white px-4 py-1 text-center rounded-sm border border-blue-500 border-solid border-2 h-full w-full flex items-center justify-center">
-        {label}
+        {struct === StructType.Source ? "Source" : label}
       </div>
       {struct !== StructType.End && (
         <Handle type="source" position={Position.Right} />
       )}
-      <div className="h-full w-full flex justify-center">
-        <span className="font-bold text-xs">{struct}</span>
-      </div>
+      {struct !== StructType.Source && (
+        <div className="h-full w-full flex justify-center">
+          <span className="font-bold text-xs">{struct}</span>
+        </div>
+      )}
     </>
   );
 };

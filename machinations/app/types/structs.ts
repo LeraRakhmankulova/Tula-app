@@ -1,3 +1,4 @@
+import { Node } from "reactflow";
 import CustomEdge from "../test/[boardId]/_components/_structs/custom-edge";
 import CustomNode from "./../test/[boardId]/_components/_structs/custom-node";
 
@@ -64,4 +65,21 @@ export type EndStruct = {
 export type Structs = SourceStruct | PoolStruct | ConsumerStruct | ConverterStruct | GateStruct | RandomStruct | DelayStruct | EndStruct
 
 export const nodeTypes = { textUpdater: CustomNode }
-export  const edgeTypes = { custom: CustomEdge }
+export const edgeTypes = { custom: CustomEdge }
+
+export interface Graph {
+    id: number;
+    countComponents: number;
+    owner: string;
+    created: string;
+    modified: string;
+    title: string;
+    description: string;
+}
+
+export interface CustomNode extends Node {
+    sourceStruct: SourceStruct;
+    name: string;
+    value: string;
+}
+

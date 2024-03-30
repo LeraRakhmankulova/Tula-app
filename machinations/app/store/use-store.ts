@@ -10,9 +10,10 @@ import {
 } from 'reactflow';
 import create from 'zustand';
 import { nanoid } from 'nanoid/non-secure';
-import { StructType } from '../types/structs';
+import { Graph, StructType } from '../types/structs';
 
 export type RFState = {
+  graph: Graph;
   nodes: Node[];
   edges: Edge[];
   onNodesChange: OnNodesChange;
@@ -21,7 +22,19 @@ export type RFState = {
   addNode: (struct: StructType) => void;
 };
 
+const graph: Graph = {
+  id: 1,
+  countComponents: 1,
+  owner: "mc_Valera",
+  created: "01.01.2002",
+  modified: "01.01.2002",
+  title: "Graph",
+  description: ""
+}
+
+
 const useStore = create<RFState>((set, get) => ({
+  graph: graph,
   nodes: [],
   edges: [],
   onNodesChange: (changes: NodeChange[]) => {

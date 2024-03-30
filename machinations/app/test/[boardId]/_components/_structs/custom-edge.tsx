@@ -8,11 +8,8 @@ import {
 } from "reactflow";
 
 export default function CustomEdge(props: EdgeProps) {
-  const [inputValue, setInputValue] = useState<string>("");
-
-  const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  }, []);
+  const [inputValue, setInputValue] = useState<number>(1);
+  
 
   const { setEdges } = useReactFlow();
   const { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition } =
@@ -40,15 +37,9 @@ export default function CustomEdge(props: EdgeProps) {
           className="nodrag nopan"
         >
           <input
-            placeholder="value"
             className="w-16 h-7 text-center rounded-sm"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            style={
-              inputValue === ""
-                ? { background: "transparent" }
-                : { background: "white" }
-            }
           />
         </div>
       </EdgeLabelRenderer>
