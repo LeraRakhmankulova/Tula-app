@@ -1,6 +1,12 @@
 "use client";
 import "reactflow/dist/style.css";
-import ReactFlow, { Controls, MiniMap, Background, Node } from "reactflow";
+import ReactFlow, {
+  Controls,
+  MiniMap,
+  Background,
+  Node,
+  useKeyPress,
+} from "reactflow";
 import { Participants } from "@/app/board/[boardId]/_components/participants";
 import { Info } from "@/app/board/[boardId]/_components/info";
 
@@ -34,12 +40,13 @@ const Flow = ({ boardId }: FlowProps) => {
 
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
-
+  const deletePressed = useKeyPress("Delete");
   const onNodeContextMenu = useCallback((event: any, node: Node) => {
     event.preventDefault();
-    if (event.key === "Delete") {
+
+    if (deletePressed) {
       deleteNode(node.id);
-    };
+    }
   }, []);
 
   return (

@@ -3,13 +3,29 @@
 import { useTestScore } from "@/app/store/test-score";
 import { useAnimateScheme } from "@/app/store/use-animate-scheme";
 import { StructType } from "@/app/types/structs";
-import { memo } from "react";
-import { Handle, NodeResizer, Position, useNodeId } from "reactflow";
+import { memo, useEffect, useState } from "react";
+import {
+  Edge,
+  Handle,
+  NodeResizer,
+  Position,
+  useEdges,
+  useNodeId,
+} from "reactflow";
 
 const CustomNode = ({ data: { label, struct }, selected }: any) => {
   const { edgeValue } = useTestScore();
   const { isPlay } = useAnimateScheme();
   const nodeId = useNodeId();
+  const [edge, setEdge] = useState("0");
+
+  const edges = useEdges();
+  useEffect(() => {
+    const newEdge: Edge = edges.find((edge: Edge) => edge.target === nodeId);
+    console.log("res",newEdge)
+    if (newEdge) setEdge(newEdge.data);
+  }, [edges]);
+
   return (
     <>
       <NodeResizer
@@ -18,6 +34,7 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
         minWidth={10}
         minHeight={10}
       />
+
       {struct !== StructType.Source && (
         <Handle type="target" position={Position.Left} />
       )}
@@ -28,6 +45,7 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
         <Handle type="source" position={Position.Right} />
       )}
       <div>{nodeId}</div>
+      <div>{edge}</div>
       {struct !== StructType.Source && (
         <div className="h-full w-full flex justify-center">
           <span className="font-bold text-xs">{struct}</span>

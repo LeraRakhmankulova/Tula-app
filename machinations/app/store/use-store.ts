@@ -19,6 +19,7 @@ export type RFState = {
   edges: Edge[];
   onNodesChange: OnNodesChange;
   getEdgeTargetNode: (id: string) => void;
+  setEdgeData: (id: string, data: string) => void;
   onEdgesChange: OnEdgesChange;
   deleteNode: (id: string) => void;
   setEdgeAnimated: (isPlay: boolean) => void;
@@ -53,11 +54,26 @@ const useStore = create<RFState>((set, get) => ({
   },
   onConnect: (connection: any) => {
     const newEdge = {
-      ...connection, key: "id" + new Date(), type: "custom", animated: false, markerEnd: markerEnd
+      ...connection, id: "id" + new Date(), key: "id" + new Date(), type: "custom", animated: false, markerEnd: markerEnd, data: 1
     };
     set((state) => ({
       edges: [...get().edges, newEdge],
     }));
+  },
+  setEdgeData: (id: string, data: string) => {
+    const edges = useStore.getState().edges
+    const edgeIndex = edges.findIndex((edge) => edge.id === id)
+    if (edgeIndex !== -1) {
+      const updatedEdge = {
+        ...edges[edgeIndex],
+        data: data
+      }
+      const updatedEdges = [...edges];
+      updatedEdges[edgeIndex] = updatedEdge;
+      set({
+        edges: updatedEdges,
+      })
+    }
   },
   deleteNode: (id: string) => {
     set((state) => ({
@@ -88,7 +104,7 @@ const useStore = create<RFState>((set, get) => ({
   getEdgeTargetNode: (id: string) => {
     const edges: Edge[] = useStore.getState().edges;
     const edge = edges.find((edge: Edge) => edge.id === id);
-    return edge?.target 
+    return edge?.target
   },
   addNode: (struct: StructType) => {
     const newNode = {

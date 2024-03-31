@@ -1,4 +1,5 @@
 import { useTestScore } from "@/app/store/test-score";
+import useStore from "@/app/store/use-store";
 import React, { useCallback, useState } from "react";
 import {
   EdgeLabelRenderer,
@@ -10,11 +11,17 @@ import {
 
 export default function CustomEdge(props: EdgeProps) {
   const [inputValue, setInputValue] = useState<number>(1);
-  const {setEdgeValue} = useTestScore()
 
-  const { setEdges } = useReactFlow();
-  const { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition } =
-    props;
+  const { setEdgeData } = useStore();
+  const {
+    sourceX,
+    sourceY,
+    sourcePosition,
+    targetX,
+    targetY,
+    targetPosition,
+    id,
+  } = props;
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
@@ -25,9 +32,9 @@ export default function CustomEdge(props: EdgeProps) {
   });
 
   const onChange = (event: any) => {
-    setInputValue(event.target.value)
-    setEdgeValue(event.target.value)
-  }
+    setInputValue(event.target.value);
+    setEdgeData(id, event.target.value)
+  };
 
   return (
     <>
