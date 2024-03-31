@@ -18,6 +18,7 @@ export type RFState = {
   edges: Edge[];
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
+  setEdgeAnimated: (isPlay: boolean) => void;
   onConnect: (connection: any) => void;
   addNode: (struct: StructType) => void;
 };
@@ -52,6 +53,26 @@ const useStore = create<RFState>((set, get) => ({
     set((state) => ({
       edges: [...get().edges, newEdge],
     }));
+  },
+  setEdgeAnimated: (isPlay: boolean) => {
+    if (isPlay) {
+      const edges = useStore.getState().edges.map((edge) => ({
+        ...edge,
+        animated: true,
+      }));
+      set({
+        edges: edges,
+      })
+    }
+    else {
+      const edges = useStore.getState().edges.map((edge) => ({
+        ...edge,
+        animated: false,
+      }));
+      set({
+        edges: edges,
+      })
+    }
   },
   addNode: (struct: StructType) => {
     const newNode = {

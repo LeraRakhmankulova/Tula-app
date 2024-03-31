@@ -8,18 +8,11 @@ import { useEffect } from "react";
 
 export const BottomPanel = () => {
   const { isPlay, onPlay, onStop, onReset } = useAnimateScheme();
-  const { edges, onEdgesChange } = useStore();
-
-  // useEffect(() => {
-  //   if (isPlay) {
-  //     const updatedEdges = edges.map(edge => ({ type: 'update', edge: { ...edge, animated: true } }));
-  //     onEdgesChange(updatedEdges);
-  //   } else {
-  //     const updatedEdges = edges.map(edge => ({ type: 'update', edge: { ...edge, animated: false } }));
-  //     onEdgesChange(updatedEdges);
-  //   }
-  // }, [isPlay, edges, onEdgesChange]);
-
+  const { edges, onEdgesChange, setEdgeAnimated } = useStore();
+  useEffect(() => {
+    setEdgeAnimated(isPlay);
+    console.log(isPlay)
+  }, [isPlay]);
 
   return (
     <Panel position="bottom-center">
@@ -27,6 +20,7 @@ export const BottomPanel = () => {
         <div className="mr-5 flex gap-x-2 items-center">
           <CustomInput label="Iterations" placeholder="10" />
           <CustomInput label="Time" placeholder="1s" />
+          <CustomInput label="Games" placeholder="1" />
         </div>
         <ToolButton
           label="Play"
