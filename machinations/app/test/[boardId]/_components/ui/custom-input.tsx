@@ -1,4 +1,5 @@
-import { memo, useState } from "react";
+import { useAnimateScheme } from "@/app/store/use-animate-scheme";
+import { memo, useEffect, useState } from "react";
 
 interface CustomInputProps {
   label: string;
@@ -6,13 +7,21 @@ interface CustomInputProps {
 }
 
 const CustomInput = ({ label, placeholder }: CustomInputProps) => {
-  const [value, setValue] = useState();
+  const { iterations, setIterations } = useAnimateScheme();
+  const [value, setValue] = useState<number>(0);
+
+  useEffect(() => {
+    if (label === "Iterations") {
+      setIterations(value);
+    }
+  }, [value]);
+
 
   return (
     <div className="flex flex-col mx-1">
       <input
         placeholder={placeholder}
-        className=" w-12 text-sm text-center px-1 border border-black rounded"
+        className="w-12 text-sm text-center px-1 border border-black rounded"
         value={value}
         onChange={(e: any) => setValue(e.target.value)}
       />

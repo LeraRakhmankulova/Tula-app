@@ -49,7 +49,7 @@ const useStore = create<RFState>((set, get) => ({
     });
   },
   onConnect: (connection: any) => {
-    const newEdge = { ...connection, type: "custom", animated: false };
+    const newEdge = { ...connection, key: "id" + new Date(), type: "custom", animated: false };
     set((state) => ({
       edges: [...get().edges, newEdge],
     }));

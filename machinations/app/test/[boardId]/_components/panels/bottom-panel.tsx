@@ -5,13 +5,14 @@ import CustomInput from "../ui/custom-input";
 import { useAnimateScheme } from "@/app/store/use-animate-scheme";
 import useStore from "@/app/store/use-store";
 import { useEffect } from "react";
+import { Iterations } from "../iterations";
 
 export const BottomPanel = () => {
   const { isPlay, onPlay, onStop, onReset } = useAnimateScheme();
   const { edges, onEdgesChange, setEdgeAnimated } = useStore();
   useEffect(() => {
     setEdgeAnimated(isPlay);
-    console.log(isPlay)
+    console.log(isPlay);
   }, [isPlay]);
 
   return (
@@ -46,6 +47,7 @@ export const BottomPanel = () => {
           icon={RotateCcw}
           background="red"
         />
+        <Iterations />
       </div>
     </Panel>
   );
