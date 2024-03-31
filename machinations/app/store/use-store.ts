@@ -7,6 +7,7 @@ import {
   OnEdgesChange,
   applyNodeChanges,
   applyEdgeChanges,
+  MarkerType,
 } from 'reactflow';
 import create from 'zustand';
 import { nanoid } from 'nanoid/non-secure';
@@ -32,7 +33,12 @@ const graph: Graph = {
   title: "Graph",
   description: ""
 }
-
+const markerEnd = {
+  type: MarkerType.ArrowClosed,
+  width: 20,
+  height: 20,
+  color: 'black',
+}
 
 const useStore = create<RFState>((set, get) => ({
   graph: graph,
@@ -49,7 +55,9 @@ const useStore = create<RFState>((set, get) => ({
     });
   },
   onConnect: (connection: any) => {
-    const newEdge = { ...connection, key: "id" + new Date(), type: "custom", animated: false };
+    const newEdge = {
+      ...connection, key: "id" + new Date(), type: "custom", animated: false, markerEnd: markerEnd
+    };
     set((state) => ({
       edges: [...get().edges, newEdge],
     }));
