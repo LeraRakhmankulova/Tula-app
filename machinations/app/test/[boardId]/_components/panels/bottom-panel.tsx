@@ -1,4 +1,4 @@
-import { Panel } from "reactflow";
+import { Panel, useEdges, useNodes } from "reactflow";
 import { ToolButton } from "../ui/tool-button";
 import { Play, RotateCcw, Pause } from "lucide-react";
 import CustomInput from "../ui/custom-input";
@@ -9,11 +9,14 @@ import { Iterations } from "../iterations";
 
 export const BottomPanel = () => {
   const { isPlay, onPlay, onStop, onReset } = useAnimateScheme();
-  const { edges, onEdgesChange, setEdgeAnimated } = useStore();
+  const { setEdgeAnimated } = useStore();
   useEffect(() => {
     setEdgeAnimated(isPlay);
     console.log(isPlay);
   }, [isPlay]);
+
+  const edges = useEdges();
+  const nodes = useNodes();
 
   return (
     <Panel position="bottom-center">
@@ -48,6 +51,10 @@ export const BottomPanel = () => {
           background="red"
         />
         <Iterations />
+        <div className="text-xs text-center px-1">
+          <label>Total count</label>
+          <div>{edges.length + nodes.length}</div>
+        </div>
       </div>
     </Panel>
   );

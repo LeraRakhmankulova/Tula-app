@@ -10,6 +10,7 @@ const CustomInput = ({ label, placeholder }: CustomInputProps) => {
   const { iterations, setIterations } = useAnimateScheme();
   const [value, setValue] = useState<number>(0);
 
+
   useEffect(() => {
     if (label === "Iterations") {
       setIterations(value);

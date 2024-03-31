@@ -7,18 +7,20 @@ import {
   OnEdgesChange,
   applyNodeChanges,
   applyEdgeChanges,
-  MarkerType,
 } from 'reactflow';
 import create from 'zustand';
 import { nanoid } from 'nanoid/non-secure';
 import { Graph, StructType } from '../types/structs';
+import { markerEnd } from '@/lib/utils';
 
 export type RFState = {
   graph: Graph;
   nodes: Node[];
   edges: Edge[];
   onNodesChange: OnNodesChange;
+  getEdgeTargetNode: (id: string) => void;
   onEdgesChange: OnEdgesChange;
+  deleteNode: (id: string) => void;
   setEdgeAnimated: (isPlay: boolean) => void;
   onConnect: (connection: any) => void;
   addNode: (struct: StructType) => void;
@@ -33,12 +35,7 @@ const graph: Graph = {
   title: "Graph",
   description: ""
 }
-const markerEnd = {
-  type: MarkerType.ArrowClosed,
-  width: 20,
-  height: 20,
-  color: 'black',
-}
+
 
 const useStore = create<RFState>((set, get) => ({
   graph: graph,
@@ -62,6 +59,12 @@ const useStore = create<RFState>((set, get) => ({
       edges: [...get().edges, newEdge],
     }));
   },
+  deleteNode: (id: string) => {
+    set((state) => ({
+      nodes: state.nodes.filter((node) => node.id !== id),
+      edges: state.edges.filter((edge) => edge.source !== id && edge.target !== id),
+    }));
+  },
   setEdgeAnimated: (isPlay: boolean) => {
     if (isPlay) {
       const edges = useStore.getState().edges.map((edge) => ({
@@ -81,6 +84,11 @@ const useStore = create<RFState>((set, get) => ({
         edges: edges,
       })
     }
+  },
+  getEdgeTargetNode: (id: string) => {
+    const edges: Edge[] = useStore.getState().edges;
+    const edge = edges.find((edge: Edge) => edge.id === id);
+    return edge?.target 
   },
   addNode: (struct: StructType) => {
     const newNode = {

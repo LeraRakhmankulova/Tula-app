@@ -1,6 +1,6 @@
 "use client";
 import "reactflow/dist/style.css";
-import ReactFlow, { Controls, MiniMap, Background } from "reactflow";
+import ReactFlow, { Controls, MiniMap, Background, Node } from "reactflow";
 import { Participants } from "@/app/board/[boardId]/_components/participants";
 import { Info } from "@/app/board/[boardId]/_components/info";
 
@@ -13,10 +13,12 @@ import { BottomPanel } from "./panels/bottom-panel";
 import { TopPanel } from "./panels/top-panel";
 import useStore, { RFState } from "@/app/store/use-store";
 import { edgeTypes, nodeTypes } from "@/app/types/structs";
+import { useCallback, useEffect } from "react";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
   edges: state.edges,
+  deleteNode: state.deleteNode,
   onNodesChange: state.onNodesChange,
   onEdgesChange: state.onEdgesChange,
   onConnect: state.onConnect,
@@ -27,15 +29,18 @@ interface FlowProps {
 }
 
 const Flow = ({ boardId }: FlowProps) => {
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } = useStore(
-    selector,
-    shallow
-  );
-
-  // const [ setEdges] = useEdgesState([]);
+  const { nodes, edges, onNodesChange, onEdgesChange, onConnect, deleteNode } =
+    useStore(selector, shallow);
 
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
+
+  const onNodeContextMenu = useCallback((event: any, node: Node) => {
+    event.preventDefault();
+    if (event.key === "Delete") {
+      deleteNode(node.id);
+    };
+  }, []);
 
   return (
     <main
@@ -74,6 +79,7 @@ const Flow = ({ boardId }: FlowProps) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onNodeContextMenu={onNodeContextMenu}
       >
         <Controls />
         <MiniMap />

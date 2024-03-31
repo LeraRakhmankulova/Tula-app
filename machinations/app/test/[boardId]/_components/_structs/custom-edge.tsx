@@ -1,3 +1,4 @@
+import { useTestScore } from "@/app/store/test-score";
 import React, { useCallback, useState } from "react";
 import {
   EdgeLabelRenderer,
@@ -9,7 +10,7 @@ import {
 
 export default function CustomEdge(props: EdgeProps) {
   const [inputValue, setInputValue] = useState<number>(1);
-  
+  const {setEdgeValue} = useTestScore()
 
   const { setEdges } = useReactFlow();
   const { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition } =
@@ -22,6 +23,11 @@ export default function CustomEdge(props: EdgeProps) {
     targetY,
     targetPosition,
   });
+
+  const onChange = (event: any) => {
+    setInputValue(event.target.value)
+    setEdgeValue(event.target.value)
+  }
 
   return (
     <>
@@ -39,7 +45,7 @@ export default function CustomEdge(props: EdgeProps) {
           <input
             className="w-16 h-7 text-center rounded-sm"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={onChange}
           />
         </div>
       </EdgeLabelRenderer>
