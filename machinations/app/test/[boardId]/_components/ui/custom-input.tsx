@@ -7,16 +7,17 @@ interface CustomInputProps {
 }
 
 const CustomInput = ({ label, placeholder }: CustomInputProps) => {
-  const { iterations, setIterations } = useAnimateScheme();
+  const { setIterations, setTime } = useAnimateScheme();
   const [value, setValue] = useState<number>(0);
-
 
   useEffect(() => {
     if (label === "Iterations") {
       setIterations(value);
     }
+    if (label === "Time(s)") {
+      setTime(value);
+    }
   }, [value]);
-
 
   return (
     <div className="flex flex-col mx-1">

@@ -5,6 +5,8 @@ interface IAnimateScheme {
   count: number;
   isPlay: boolean;
   intervalId: any;
+  time: number;
+  setTime: (count: number) => void;
   setIterations: (count: number) => void;
   onPlay: () => void;
   onStop: () => void;
@@ -12,11 +14,14 @@ interface IAnimateScheme {
 }
 
 export const useAnimateScheme = create<IAnimateScheme>((set) => ({
-  iterations: 0,
+  iterations: 1,
   isPlay: false,
   count: 0,
   intervalId: null,
-
+  time: 1,
+  setTime: (count: number) => {
+    set({ time: count });
+  },
   setIterations: (count: number) => {
     set({
       iterations: count,
@@ -39,7 +44,7 @@ export const useAnimateScheme = create<IAnimateScheme>((set) => ({
             }
             return { ...state, count: newCount };
           });
-        }, 1000);
+        }, state.time * 1000);
         return { ...state, isPlay: true, intervalId: newIntervalId };
       }
       return state;

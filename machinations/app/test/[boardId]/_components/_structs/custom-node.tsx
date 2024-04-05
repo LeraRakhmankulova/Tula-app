@@ -12,14 +12,13 @@ import {
 } from "reactflow";
 
 const CustomNode = ({ data: { label, struct }, selected }: any) => {
-  const { isPlay } = useAnimateScheme();
   const nodeId = useNodeId();
   const [edge, setEdge] = useState("0");
 
   const edges = useEdges();
   useEffect(() => {
     const newEdge: Edge = edges.find((edge: Edge) => edge.target === nodeId);
-    console.log("res",newEdge)
+    // console.log("res",newEdge)
     if (newEdge) setEdge(newEdge.data);
   }, [edges]);
 
