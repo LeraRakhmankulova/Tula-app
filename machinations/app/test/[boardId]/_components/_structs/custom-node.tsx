@@ -12,15 +12,35 @@ import {
 } from "reactflow";
 
 const CustomNode = ({ data: { label, struct }, selected }: any) => {
+  const { isPlay, time, onReset, isReset } = useAnimateScheme();
   const nodeId = useNodeId();
   const [edge, setEdge] = useState("0");
-
   const edges = useEdges();
+
   useEffect(() => {
-    const newEdge: Edge = edges.find((edge: Edge) => edge.target === nodeId);
-    // console.log("res",newEdge)
-    if (newEdge) setEdge(newEdge.data);
-  }, [edges]);
+    const newEdge = edges.find((edge) => edge.target === nodeId);
+    let intervalId: any;
+
+    const intervalCallback = () => {
+      setEdge((prevEdge) =>
+        (parseInt(prevEdge) + parseInt(newEdge?.data || 0)).toString()
+      );
+    };
+
+    if (isPlay) {
+      intervalId = setInterval(intervalCallback, time * 1000);
+    }
+
+    if (isReset) {
+      setEdge("0")
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [edges, nodeId, isPlay, onReset]);
 
   return (
     <>
