@@ -26,9 +26,21 @@ export const useAnimateScheme = create<IAnimateScheme>((set) => ({
     set((state) => {
       if (!state.isPlay && state.count < state.iterations) {
         const newIntervalId = setInterval(() => {
-          set((state) => ({ count: state.count + 1 }));
-        }, 1000); // Вызываем функцию каждую секунду
-        return { isPlay: true, intervalId: newIntervalId };
+          set((state) => {
+            const newCount = state.count + 1;
+            if (newCount === +state.iterations) {
+              clearInterval(state.intervalId);
+              return {
+                ...state,
+                count: newCount,
+                isPlay: false,
+                intervalId: null,
+              };
+            }
+            return { ...state, count: newCount };
+          });
+        }, 1000);
+        return { ...state, isPlay: true, intervalId: newIntervalId };
       }
       return state;
     });
@@ -36,7 +48,7 @@ export const useAnimateScheme = create<IAnimateScheme>((set) => ({
   onStop: () => {
     set((state) => {
       if (state.intervalId) {
-        clearInterval(state.intervalId); // Останавливаем интервал
+        clearInterval(state.intervalId);
         return { isPlay: false, intervalId: null };
       }
       return state;
@@ -44,10 +56,7 @@ export const useAnimateScheme = create<IAnimateScheme>((set) => ({
   },
   onReset: () =>
     set((state) => {
-      if (state.intervalId) {
-        clearInterval(state.intervalId); // Останавливаем интервал
-        return { isPlay: false, intervalId: null };
-      }
-      return state;
+      clearInterval(state.intervalId);
+      return { isPlay: false, intervalId: null, count: 0 };
     }),
 }));

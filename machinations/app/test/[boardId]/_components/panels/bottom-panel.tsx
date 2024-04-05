@@ -44,7 +44,7 @@ export const BottomPanel = () => {
         />
         <ToolButton
           label="Reset"
-          isDisabled={!isPlay}
+          // isDisabled={!isPlay}
           onClick={onReset}
           isActive={false}
           icon={RotateCcw}
