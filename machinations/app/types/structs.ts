@@ -13,6 +13,12 @@ export enum StructType {
     End = "End"
 };
 
+export enum EdgesTypes {
+    Default,
+    SmoothStep,
+    Bezier,
+  }
+
 export type SourceStruct = {
     id: number | string;
     type: StructType.Source;

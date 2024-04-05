@@ -6,6 +6,7 @@ import ReactFlow, {
   Background,
   Node,
   useKeyPress,
+  Panel,
 } from "reactflow";
 import { Participants } from "@/app/board/[boardId]/_components/participants";
 import { Info } from "@/app/board/[boardId]/_components/info";
@@ -18,8 +19,9 @@ import { Toolbar } from "./panels/toolbar";
 import { BottomPanel } from "./panels/bottom-panel";
 import { TopPanel } from "./panels/top-panel";
 import useStore, { RFState } from "@/app/store/use-store";
-import { edgeTypes, nodeTypes } from "@/app/types/structs";
+import { EdgesTypes, edgeTypes, nodeTypes } from "@/app/types/structs";
 import { useCallback, useEffect } from "react";
+
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -38,6 +40,7 @@ const Flow = ({ boardId }: FlowProps) => {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, deleteNode } =
     useStore(selector, shallow);
 
+  // const { onSetType } = useEdgeTypes();
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
   const deletePressed = useKeyPress("Delete");
@@ -86,13 +89,29 @@ const Flow = ({ boardId }: FlowProps) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onNodeContextMenu={onNodeContextMenu}
-      >
+        onNodeContextMenu={onNodeContextMenu}>
         <Controls />
         <MiniMap />
         <Background color="blue" gap={16} className="bg-blue-100" />
         <BottomPanel />
         <TopPanel />
+        {/* <Panel position="top-right" className="flex gap-x-2 items-center">
+          <button
+            className="bg-white rounded-md"
+            onClick={() => onSetType(EdgesTypes.Default)}>
+            Default
+          </button>
+          <button
+            className="bg-white rounded-md"
+            onClick={() => onSetType(EdgesTypes.SmoothStep)} >
+            SmoothStep
+          </button>
+          <button
+            className="bg-white rounded-md mr-16"
+            onClick={() => onSetType(EdgesTypes.Bezier)}>
+            Bezier
+          </button>
+        </Panel> */}
       </ReactFlow>
     </main>
   );

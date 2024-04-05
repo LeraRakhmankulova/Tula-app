@@ -1,7 +1,9 @@
-import { useTestScore } from "@/app/store/test-score";
+// import { useEdgeTypes } from "@/app/store/use-edge-type";
 import useStore from "@/app/store/use-store";
+import { EdgesTypes } from "@/app/types/structs";
 import React, { useCallback, useState } from "react";
 import {
+  BaseEdge,
   EdgeLabelRenderer,
   EdgeProps,
   StepEdge,
@@ -33,12 +35,17 @@ export default function CustomEdge(props: EdgeProps) {
 
   const onChange = (event: any) => {
     setInputValue(event.target.value);
-    setEdgeData(id, event.target.value)
+    setEdgeData(id, event.target.value);
   };
+
+  // const { edgeType } = useEdgeTypes();
 
   return (
     <>
       <StepEdge {...props} />
+      {/* {edgeType == EdgesTypes.SmoothStep && <StepEdge {...props} />} */}
+      {/* {edgeType == EdgesTypes.Default && <BaseEdge {...props} />} */}
+      {/* {edgeType == EdgesTypes.SmoothStep && <StepEdge {...props} />} */}
       <EdgeLabelRenderer>
         <div
           style={{
