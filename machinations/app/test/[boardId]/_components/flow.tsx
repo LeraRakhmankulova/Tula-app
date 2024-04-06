@@ -20,8 +20,8 @@ import { BottomPanel } from "./panels/bottom-panel";
 import { TopPanel } from "./panels/top-panel";
 import useStore, { RFState } from "@/app/store/use-store";
 import { EdgesTypes, edgeTypes, nodeTypes } from "@/app/types/structs";
-import { useCallback, useEffect } from "react";
-
+import { useCallback, useEffect, useRef, useState } from "react";
+import ContextMenu from "./context-menu";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -36,21 +36,45 @@ interface FlowProps {
   boardId: string;
 }
 
+interface IContextMenu {
+  id: string;
+  top: number;
+  left: number;
+  right: number | boolean;
+  bottom: number | boolean;
+}
+
 const Flow = ({ boardId }: FlowProps) => {
+  // const 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, deleteNode } =
     useStore(selector, shallow);
-
-  // const { onSetType } = useEdgeTypes();
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
-  const deletePressed = useKeyPress("Delete");
-  const onNodeContextMenu = useCallback((event: any, node: Node) => {
-    event.preventDefault();
 
-    if (deletePressed) {
-      deleteNode(node.id);
-    }
-  }, []);
+  const [menu, setMenu] = useState<IContextMenu | null>(null);
+  const ref = useRef(null);
+
+  const onNodeContextMenu = useCallback(
+    (event: any, node: any) => {
+      event.preventDefault();
+      const pane = ref.current?.getBoundingClientRect();
+      let menu = {
+        id: node.id,
+        top: event.clientY < pane.height - 200 && event.clientY,
+        left: event.clientX < pane.width - 200 && event.clientX,
+        right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
+        bottom:
+          event.clientY >= pane.height - 200 && pane.height - event.clientY,
+      }
+      console.log(menu);
+      setMenu(menu);
+    },
+    [setMenu]
+  );
+
+  const onPaneClick = useCallback(() => {
+    setMenu(null);
+  }, [setMenu]);
 
   return (
     <main
@@ -82,6 +106,7 @@ const Flow = ({ boardId }: FlowProps) => {
       })}
 
       <ReactFlow
+        ref={ref}
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
@@ -89,10 +114,14 @@ const Flow = ({ boardId }: FlowProps) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onNodeContextMenu={onNodeContextMenu}>
+        onPaneClick={onPaneClick}
+        onNodeContextMenu={onNodeContextMenu}
+      >
+        {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
         <Controls />
         <MiniMap />
         <Background color="blue" gap={16} className="bg-blue-100" />
+
         <BottomPanel />
         <TopPanel />
         {/* <Panel position="top-right" className="flex gap-x-2 items-center">
