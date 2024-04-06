@@ -19,9 +19,10 @@ import { Toolbar } from "./panels/toolbar";
 import { BottomPanel } from "./panels/bottom-panel";
 import { TopPanel } from "./panels/top-panel";
 import useStore, { RFState } from "@/app/store/use-store";
-import { EdgesTypes, edgeTypes, nodeTypes } from "@/app/types/structs";
+import { CustomEdgesTypes, edgeTypes, nodeTypes } from "@/app/types/structs";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ContextMenu from "./context-menu";
+import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -45,9 +46,9 @@ interface IContextMenu {
 }
 
 const Flow = ({ boardId }: FlowProps) => {
-  // const 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, deleteNode } =
     useStore(selector, shallow);
+  const { onChangeType } = useChangeEdgeType();
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
 
@@ -65,7 +66,7 @@ const Flow = ({ boardId }: FlowProps) => {
         right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
         bottom:
           event.clientY >= pane.height - 200 && pane.height - event.clientY,
-      }
+      };
       console.log(menu);
       setMenu(menu);
     },
@@ -124,23 +125,26 @@ const Flow = ({ boardId }: FlowProps) => {
 
         <BottomPanel />
         <TopPanel />
-        {/* <Panel position="top-right" className="flex gap-x-2 items-center">
+        <Panel position="top-right" className="flex gap-x-2 items-center">
           <button
             className="bg-white rounded-md"
-            onClick={() => onSetType(EdgesTypes.Default)}>
+            onClick={() => onChangeType("Default")}
+          >
             Default
           </button>
           <button
             className="bg-white rounded-md"
-            onClick={() => onSetType(EdgesTypes.SmoothStep)} >
+            onClick={() => onChangeType("SmoothStep")}
+          >
             SmoothStep
           </button>
           <button
             className="bg-white rounded-md mr-16"
-            onClick={() => onSetType(EdgesTypes.Bezier)}>
+            onClick={() => onChangeType("Bezier")}
+          >
             Bezier
           </button>
-        </Panel> */}
+        </Panel>
       </ReactFlow>
     </main>
   );

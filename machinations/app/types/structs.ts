@@ -13,10 +13,10 @@ export enum StructType {
     End = "End"
 };
 
-export enum EdgesTypes {
-    Default,
-    SmoothStep,
-    Bezier,
+export enum CustomEdgesTypes {
+    Default = "Default",
+    SmoothStep = "SmoothStep",
+    Bezier = "Bezier",
   }
 
 export type SourceStruct = {

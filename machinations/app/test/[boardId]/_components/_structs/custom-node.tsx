@@ -19,12 +19,22 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
   const edges = useEdges();
 
   useEffect(() => {
-    const newEdge = edges.find((edge) => edge.target === nodeId);
+    const newEdges = edges.filter((edge) => edge.target === nodeId);
+
+    //эТО ЗНАЧЕНИЯ РЕСУРСА НОДЫ Т.Е. ЕСЛИ ЭТО ЗНАЧЕНИЕ МЕНЬШЕ ЧЕМ, еекюзначение попускать суммирование
+    const arrNodeIds = newEdges.map(el => el.source)
+    console.log(arrNodeIds)
+
+
+    const sumOfData = newEdges.reduce((accumulator, currentEdge) => {
+      return accumulator + (+currentEdge.data || 0); // Если значение data не является числом, прибавляем 0
+    }, 0); 
+
     let intervalId: any;
 
     const intervalCallback = () => {
       setEdge((prevEdge) =>
-        (parseInt(prevEdge) + parseInt(newEdge?.data || 0)).toString()
+        (parseInt(prevEdge) + parseInt(sumOfData || 0)).toString()
       );
     };
 

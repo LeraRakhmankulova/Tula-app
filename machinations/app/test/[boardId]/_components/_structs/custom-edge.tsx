@@ -1,6 +1,7 @@
 // import { useEdgeTypes } from "@/app/store/use-edge-type";
+import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import useStore from "@/app/store/use-store";
-import { EdgesTypes } from "@/app/types/structs";
+import { CustomEdgesTypes } from "@/app/types/structs";
 import React, { useCallback, useState } from "react";
 import {
   BaseEdge,
@@ -8,11 +9,13 @@ import {
   EdgeProps,
   StepEdge,
   getBezierPath,
+  getStraightPath,
   useReactFlow,
 } from "reactflow";
 
 export default function CustomEdge(props: EdgeProps) {
   const [inputValue, setInputValue] = useState<number>(1);
+  const { onChangeType, currentType } = useChangeEdgeType();
 
   const { setEdgeData } = useStore();
   const {
@@ -33,19 +36,23 @@ export default function CustomEdge(props: EdgeProps) {
     targetPosition,
   });
 
+  const [basePath] = getStraightPath({
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+  });
+
   const onChange = (event: any) => {
     setInputValue(event.target.value);
     setEdgeData(id, event.target.value);
   };
 
-  // const { edgeType } = useEdgeTypes();
-
   return (
     <>
-      <StepEdge {...props} />
-      {/* {edgeType == EdgesTypes.SmoothStep && <StepEdge {...props} />} */}
-      {/* {edgeType == EdgesTypes.Default && <BaseEdge {...props} />} */}
-      {/* {edgeType == EdgesTypes.SmoothStep && <StepEdge {...props} />} */}
+      {currentType === "SmoothStep" && <StepEdge {...props} />}
+      {currentType === "Default" && <BaseEdge path={basePath} {...props} />}
+      {/* {edgeType == EdgesTypes.Bezier && <StepEdge {...props} />} */}
       <EdgeLabelRenderer>
         <div
           style={{
