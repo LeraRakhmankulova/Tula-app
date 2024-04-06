@@ -10,6 +10,7 @@ import {
   useEdges,
   useNodeId,
 } from "reactflow";
+import "./struct-style.css";
 
 const CustomNode = ({ data: { label, struct }, selected }: any) => {
   const { isPlay, time, onReset, isReset } = useAnimateScheme();
@@ -32,7 +33,7 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
     }
 
     if (isReset) {
-      setEdge("0")
+      setEdge("0");
     }
 
     return () => {
@@ -54,8 +55,14 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
       {struct !== StructType.Source && (
         <Handle type="target" position={Position.Left} />
       )}
-      <div className="text-sm bg-white px-4 py-1 text-center rounded-sm border border-blue-500 border-solid border-2 h-full w-full flex items-center justify-center">
-        {struct === StructType.Source ? "Source" : edge}
+      <div
+        className={
+          struct === StructType.Pool
+            ? "poolNode"
+            : "simpleNode"
+        }
+      >
+        {struct === StructType.Source ? "Source" : struct === StructType.Gate ? "Gate" : edge}
       </div>
       {struct !== StructType.End && (
         <Handle type="source" position={Position.Right} />
