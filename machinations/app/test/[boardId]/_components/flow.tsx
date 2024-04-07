@@ -127,19 +127,19 @@ const Flow = ({ boardId }: FlowProps) => {
         <TopPanel />
         <Panel position="top-right" className="flex gap-x-2 items-center">
           <button
-            className="bg-white rounded-md"
+            className="bg-white rounded-md p-2"
             onClick={() => onChangeType("Default")}
           >
             Default
           </button>
           <button
-            className="bg-white rounded-md"
+            className="bg-white rounded-md p-2"
             onClick={() => onChangeType("SmoothStep")}
           >
             SmoothStep
           </button>
           <button
-            className="bg-white rounded-md mr-16"
+            className="bg-white rounded-md mr-16 p-2"
             onClick={() => onChangeType("Bezier")}
           >
             Bezier

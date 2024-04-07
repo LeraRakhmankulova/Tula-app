@@ -37,7 +37,6 @@ const graph: Graph = {
   description: ""
 }
 
-
 const useStore = create<RFState>((set, get) => ({
   graph: graph,
   nodes: [],
@@ -54,7 +53,11 @@ const useStore = create<RFState>((set, get) => ({
   },
   onConnect: (connection: any) => {
     const newEdge = {
-      ...connection, id: "id" + new Date(), key: "id" + new Date(), type: "custom", animated: false, markerEnd: markerEnd, data: 1
+      ...connection, id: "id" + new Date(),
+      key: "id" + new Date(),
+      type: "custom", animated: false,
+      markerEnd: markerEnd,
+      data: 1,
     };
     set((state) => ({
       edges: [...get().edges, newEdge],
@@ -86,6 +89,7 @@ const useStore = create<RFState>((set, get) => ({
       const edges = useStore.getState().edges.map((edge) => ({
         ...edge,
         animated: true,
+        style: { stroke: "red" }
       }));
       set({
         edges: edges,
@@ -95,6 +99,7 @@ const useStore = create<RFState>((set, get) => ({
       const edges = useStore.getState().edges.map((edge) => ({
         ...edge,
         animated: false,
+        style: { stroke: "black" }
       }));
       set({
         edges: edges,

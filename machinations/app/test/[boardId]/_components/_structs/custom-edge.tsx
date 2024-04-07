@@ -1,10 +1,10 @@
-// import { useEdgeTypes } from "@/app/store/use-edge-type";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import useStore from "@/app/store/use-store";
 import { CustomEdgesTypes } from "@/app/types/structs";
 import React, { useCallback, useState } from "react";
 import {
   BaseEdge,
+  BezierEdge,
   EdgeLabelRenderer,
   EdgeProps,
   StepEdge,
@@ -52,7 +52,7 @@ export default function CustomEdge(props: EdgeProps) {
     <>
       {currentType === "SmoothStep" && <StepEdge {...props} />}
       {currentType === "Default" && <BaseEdge path={basePath} {...props} />}
-      {/* {edgeType == EdgesTypes.Bezier && <StepEdge {...props} />} */}
+      {currentType == "Bezier" && <BezierEdge {...props} />} 
       <EdgeLabelRenderer>
         <div
           style={{
