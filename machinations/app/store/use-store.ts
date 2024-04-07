@@ -23,6 +23,7 @@ export type RFState = {
   onEdgesChange: OnEdgesChange;
   deleteNode: (id: string) => void;
   setEdgeAnimated: (isPlay: boolean) => void;
+  setNodeLabel: (count: string, id: string) => void;
   onConnect: (connection: any) => void;
   addNode: (struct: StructType) => void;
 };
@@ -111,6 +112,26 @@ const useStore = create<RFState>((set, get) => ({
     const edge = edges.find((edge: Edge) => edge.id === id);
     return edge?.target
   },
+  setNodeLabel: ( id: string, count: string) => {
+    const nodes = useStore.getState().nodes;
+    const nodeIndex = nodes.findIndex((node) => node.id === id);
+
+    if (nodeIndex !== -1) {
+      const updatedNodes = [...nodes];
+      updatedNodes[nodeIndex] = {
+        ...updatedNodes[nodeIndex],
+        data: {
+          ...updatedNodes[nodeIndex].data,
+          label: count
+        }
+      };
+
+      set({
+        nodes: updatedNodes,
+      })
+    }
+  },
+
   addNode: (struct: StructType) => {
     const newNode = {
       id: nanoid(),

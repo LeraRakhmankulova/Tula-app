@@ -9,21 +9,24 @@ import {
   Position,
   useEdges,
   useNodeId,
+  useNodes,
 } from "reactflow";
 import "./struct-style.css";
+import useStore from "@/app/store/use-store";
 
 const CustomNode = ({ data: { label, struct }, selected }: any) => {
   const { isPlay, time, onReset, isReset } = useAnimateScheme();
+  const {setNodeLabel} = useStore()
   const nodeId = useNodeId();
-  const [edge, setEdge] = useState("0");
+  const nodes = useNodes();
+  // const [edge, setEdge] = useState("0");
   const edges = useEdges();
 
   useEffect(() => {
     const newEdges = edges.filter((edge) => edge.target === nodeId);
-
+    const node = nodes.find(el => el.id === nodeId)
     //эТО ЗНАЧЕНИЯ РЕСУРСА НОДЫ Т.Е. ЕСЛИ ЭТО ЗНАЧЕНИЕ МЕНЬШЕ ЧЕМ, еекюзначение попускать суммирование
-    const arrNodeIds = newEdges.map(el => el.source)
-    console.log(arrNodeIds)
+    // const arrNodeIds = newEdges.map(el => el.source)
 
 
     const sumOfData = newEdges.reduce((accumulator, currentEdge) => {
@@ -31,19 +34,17 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
     }, 0); 
 
     let intervalId: any;
-
     const intervalCallback = () => {
-      setEdge((prevEdge) =>
-        (parseInt(prevEdge) + parseInt(sumOfData || 0)).toString()
-      );
+      setNodeLabel(nodeId!, (parseInt(label) + sumOfData).toString());
     };
+
 
     if (isPlay) {
       intervalId = setInterval(intervalCallback, time * 1000);
     }
 
     if (isReset) {
-      setEdge("0");
+      setNodeLabel(nodeId!, "0");
     }
 
     return () => {
@@ -51,7 +52,7 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
         clearInterval(intervalId);
       }
     };
-  }, [edges, nodeId, isPlay, onReset]);
+  }, [label, nodeId, isPlay, onReset, setNodeLabel]);
 
   return (
     <>
@@ -72,7 +73,7 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
             : "simpleNode"
         }
       >
-        {struct === StructType.Source ? "Source" : struct === StructType.Gate ? "Gate" : edge}
+        {struct === StructType.Source ? "Source" : struct === StructType.Gate ? "Gate" : label}
       </div>
       {struct !== StructType.End && (
         <Handle type="source" position={Position.Right} />
