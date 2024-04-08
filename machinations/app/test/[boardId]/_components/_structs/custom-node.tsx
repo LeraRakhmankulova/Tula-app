@@ -1,6 +1,5 @@
 "use client";
 import { useAnimateScheme } from "@/app/store/use-animate-scheme";
-import { StructType } from "@/app/types/structs";
 import { memo, useEffect } from "react";
 import {
   Edge,
@@ -11,20 +10,26 @@ import {
   useNodeId,
   useNodes,
 } from "reactflow";
-import "./struct-style.css";
 import useStore from "@/app/store/use-store";
+import { StyledNode } from "./nodeComponents/styled-node";
+import { StructType } from "@/app/types/structs";
 
-const CustomNode = ({ data: { label, struct }, selected }: any) => {
+interface DataProps {
+  data: {
+    label: string;
+    struct: StructType;
+  };
+  selected: boolean;
+}
+
+const CustomNode = ({ data: { label, struct }, selected }: DataProps) => {
   const { isPlay, time, onReset, isReset } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
-  const nodes = useNodes();
   const edges = useEdges();
-  // let newEdges =[]
 
   useEffect(() => {
     let newEdges = edges.filter((edge) => edge.target === nodeId);
-    // if (newEdges) {
     let { sourceStruct, sourceValue, targetValue } = getEdgeValues(
       newEdges[0]?.id
     );
@@ -67,28 +72,10 @@ const CustomNode = ({ data: { label, struct }, selected }: any) => {
       <NodeResizer
         color="blue"
         isVisible={selected}
-        minWidth={10}
-        minHeight={10}
+        minWidth={45}
+        minHeight={45}
       />
-
-      {struct !== StructType.Source && (
-        <Handle type="target" position={Position.Left} />
-      )}
-      <div className={struct === StructType.Pool ? "poolNode" : "simpleNode"}>
-        {struct === StructType.Source
-          ? "Source"
-          : struct === StructType.Gate
-          ? "Gate"
-          : label}
-      </div>
-      {struct !== StructType.End && (
-        <Handle type="source" position={Position.Right} />
-      )}
-      {struct !== StructType.Source && (
-        <div className="h-full w-full flex justify-center">
-          <span className="font-bold text-xs">{struct}</span>
-        </div>
-      )}
+      <StyledNode struct={struct} label={label} />
     </>
   );
 };

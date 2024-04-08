@@ -1,8 +1,7 @@
 import { Node } from "reactflow";
 import CustomEdge from "../test/[boardId]/_components/_structs/custom-edge";
 import CustomNode from "./../test/[boardId]/_components/_structs/custom-node";
-
-export enum StructType {
+ enum StructType {
     Source = "Source",
     Pool = "Pool",
     Consumer = "Consumer",
@@ -12,6 +11,7 @@ export enum StructType {
     Delay = "Delay",
     End = "End"
 };
+export { StructType };
 
 export enum CustomEdgesTypes {
     Default = "Default",

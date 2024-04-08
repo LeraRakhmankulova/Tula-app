@@ -68,13 +68,14 @@ const Flow = ({ boardId }: FlowProps) => {
           event.clientY >= pane.height - 200 && pane.height - event.clientY,
       };
       setMenu(menu);
+      // setAnalytics(true);
     },
     [setMenu]
   );
 
   const onPaneClick = useCallback(() => {
     setMenu(null);
-    setAnalytics(true);
+    // setAnalytics(true);
   }, [setMenu]);
 
   return (
