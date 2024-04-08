@@ -8,7 +8,7 @@ import {
   applyNodeChanges,
   applyEdgeChanges,
 } from 'reactflow';
-import create from 'zustand';
+import {create} from 'zustand';
 import { nanoid } from 'nanoid/non-secure';
 import { Graph, StructType } from '../types/structs';
 import { markerEnd } from '@/lib/utils';
@@ -26,6 +26,7 @@ export type RFState = {
   setNodeLabel: (count: string, id: string) => void;
   onConnect: (connection: any) => void;
   addNode: (struct: StructType) => void;
+  getEdgeValues: (id: string) => {sourceStruct: any, sourceValue: any, targetValue: any};
 };
 
 const graph: Graph = {
@@ -112,7 +113,21 @@ const useStore = create<RFState>((set, get) => ({
     const edge = edges.find((edge: Edge) => edge.id === id);
     return edge?.target
   },
-  setNodeLabel: ( id: string, count: string) => {
+  getEdgeValues: (id: string) => {
+    const edges: Edge[] = useStore.getState().edges;
+    const edge = edges.find((edge: Edge) => edge.id === id);
+    const nodes: Node[] = useStore.getState().nodes
+
+    const sourceNode = nodes.find(node => node.id === edge?.source)
+    const targetNode = nodes.find(node => node.id === edge?.target)
+
+    return {
+      sourceStruct: sourceNode?.data.struct,
+      sourceValue: sourceNode?.data.label || "0",
+      targetValue: targetNode?.data.label || "0"
+    }
+  },
+  setNodeLabel: (id: string, count: string) => {
     const nodes = useStore.getState().nodes;
     const nodeIndex = nodes.findIndex((node) => node.id === id);
 
