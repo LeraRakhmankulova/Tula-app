@@ -60,12 +60,11 @@ const Flow = ({ boardId }: FlowProps) => {
       let menu = {
         id: node.id,
         top: event.clientY < pane.height - 200 && event.clientY,
-        left: event.clientX < pane.width - 200 && event.clientX,
+        left: event.clientX < pane.width + 200 && event.clientX - 120,
         right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
         bottom:
           event.clientY >= pane.height - 200 && pane.height - event.clientY,
       };
-      console.log(menu);
       setMenu(menu);
     },
     [setMenu]
