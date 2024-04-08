@@ -1,9 +1,13 @@
-import { Info } from "@/app/board/[boardId]/_components/info";
 import Link from "next/link";
 import React from "react";
+import { InfoBoard } from "../info-board";
 
-
-const BoardSidebar = () => {
+interface TestIdPageProps {
+  params: {
+    boardId: string;
+  };
+}
+const BoardSidebar = ({ params }: TestIdPageProps) => {
   return (
     <aside
       id="sidebar"
@@ -11,6 +15,7 @@ const BoardSidebar = () => {
                 transform md:relative md:translate-x-0 md:flex
                  md:flex-col gap-y-6"
       data-dev-hint="sidebar">
+         <InfoBoard boardId={params.boardId} />
           <Link href="/alerts">
             <span>Alerts</span>
           </Link>

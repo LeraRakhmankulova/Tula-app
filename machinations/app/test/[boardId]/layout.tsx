@@ -2,12 +2,15 @@ import BoardSidebar from "./_components/sidebar/sidebar-board";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
+  params: {
+    boardId: string;
+  };
 }
 
-const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+const DashboardLayout = ({ children, params }: DashboardLayoutProps) => {
   return (
     <main className="relative min-h-screen md:flex overflow-hidden">
-      <BoardSidebar/>
+      <BoardSidebar params={params}/>
       <main
         id="content"
         className="flex-1 bg-gray-100 max-h-screen overflow-y-auto"

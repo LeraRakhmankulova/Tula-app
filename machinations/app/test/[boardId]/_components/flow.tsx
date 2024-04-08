@@ -9,7 +9,6 @@ import ReactFlow, {
   Panel,
 } from "reactflow";
 import { Participants } from "@/app/board/[boardId]/_components/participants";
-import { Info } from "@/app/board/[boardId]/_components/info";
 
 import { shallow } from "zustand/shallow";
 
@@ -22,7 +21,7 @@ import useStore, { RFState } from "@/app/store/use-store";
 import { CustomEdgesTypes, edgeTypes, nodeTypes } from "@/app/types/structs";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ContextMenu from "./context-menu";
-import { useChangeEdgeType } from "@/app/store/use-custom-edge";
+import { EdgeTypePanel } from "./panels/edge-type-panel";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -48,7 +47,6 @@ interface IContextMenu {
 const Flow = ({ boardId }: FlowProps) => {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, deleteNode } =
     useStore(selector, shallow);
-  const { onChangeType } = useChangeEdgeType();
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
 
@@ -95,7 +93,6 @@ const Flow = ({ boardId }: FlowProps) => {
       }
     >
       <div className="z-10 w-full relative">
-        <Info boardId={boardId} />
         <Participants />
         <Toolbar />
       </div>
@@ -125,26 +122,7 @@ const Flow = ({ boardId }: FlowProps) => {
 
         <BottomPanel />
         <TopPanel />
-        <Panel position="top-right" className="flex gap-x-2 items-center">
-          <button
-            className="bg-white rounded-md p-2"
-            onClick={() => onChangeType("Default")}
-          >
-            Default
-          </button>
-          <button
-            className="bg-white rounded-md p-2"
-            onClick={() => onChangeType("SmoothStep")}
-          >
-            SmoothStep
-          </button>
-          <button
-            className="bg-white rounded-md mr-16 p-2"
-            onClick={() => onChangeType("Bezier")}
-          >
-            Bezier
-          </button>
-        </Panel>
+        <EdgeTypePanel/>
       </ReactFlow>
     </main>
   );
