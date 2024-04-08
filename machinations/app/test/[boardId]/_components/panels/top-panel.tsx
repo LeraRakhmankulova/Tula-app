@@ -5,7 +5,7 @@ import {
   getRectOfNodes,
 } from "reactflow";
 import { ToolButton } from "../ui/tool-button";
-import { BarChart3, Download } from "lucide-react";
+import { Download } from "lucide-react";
 
 import { toPng } from "html-to-image";
 
@@ -50,11 +50,6 @@ export const TopPanel = () => {
           onClick={onDownload}
           isActive={false}
           icon={Download}
-        />
-        <ToolButton
-          label="Analytics"
-          icon={BarChart3}
-          background="green"
         />
       </div>
     </Panel>

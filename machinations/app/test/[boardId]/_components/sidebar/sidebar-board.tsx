@@ -16,10 +16,10 @@ const BoardSidebar = ({ params }: TestIdPageProps) => {
                  md:flex-col gap-y-6"
       data-dev-hint="sidebar">
          <InfoBoard boardId={params.boardId} />
-          <Link href="/alerts">
-            <span>Alerts</span>
+          <Link href="/editor">
+            <span>Editor</span>
           </Link>
-          <Link href="/lineage">
+          {/* <Link href="/lineage">
             <span>Lineage</span>
           </Link>
           <Link href="/tests">
@@ -30,7 +30,7 @@ const BoardSidebar = ({ params }: TestIdPageProps) => {
           </Link>
           <Link href="/macros">
             <span>Macros</span>
-          </Link>
+          </Link> */}
     </aside>
   );
 };

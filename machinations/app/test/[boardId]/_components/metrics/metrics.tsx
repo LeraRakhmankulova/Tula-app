@@ -3,6 +3,7 @@
 import { Panel } from "reactflow";
 import { Chart } from "./chart";
 import { nanoid } from "nanoid";
+import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 const data = [
   {
     iteration: "1",
@@ -47,11 +48,13 @@ const data = [
 ];
 
 export const Metrics = () => {
+  const { analytics, setAnalytics } = useChangeEdgeType();
   return (
     <Panel
       position="top-right"
       className="bg-white p-2 rounded overflow-y-auto h-[750px]"
     >
+      <button className="bg-black rounded py-1 px-2 text-white" onClick={() => setAnalytics(false)}>Close analytics</button>
       <Chart data={data} title="Max(value)" key="qw" />
       <Chart data={data} title="Min(value)" key="qw2" />
       <Chart data={data} title="AVR(value)" key="qw3" />
