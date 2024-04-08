@@ -38,6 +38,7 @@
     "react-dom": "^18",
     "react-monaco-editor": "^0.55.0",
     "reactflow": "^11.10.4",
+    "recharts": "^2.12.4",
     "sonner": "^1.4.2",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",

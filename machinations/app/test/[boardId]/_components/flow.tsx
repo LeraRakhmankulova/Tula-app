@@ -22,6 +22,8 @@ import { CustomEdgesTypes, edgeTypes, nodeTypes } from "@/app/types/structs";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ContextMenu from "./context-menu";
 import { EdgeTypePanel } from "./panels/edge-type-panel";
+import { useChangeEdgeType } from "@/app/store/use-custom-edge";
+import { Metrics } from "./metrics/metrics";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -49,7 +51,7 @@ const Flow = ({ boardId }: FlowProps) => {
     useStore(selector, shallow);
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
-
+  const { analytics, setAnalytics } = useChangeEdgeType();
   const [menu, setMenu] = useState<IContextMenu | null>(null);
   const ref = useRef(null);
 
@@ -72,6 +74,7 @@ const Flow = ({ boardId }: FlowProps) => {
 
   const onPaneClick = useCallback(() => {
     setMenu(null);
+    setAnalytics(true);
   }, [setMenu]);
 
   return (
@@ -118,10 +121,10 @@ const Flow = ({ boardId }: FlowProps) => {
         <Controls />
         <MiniMap />
         <Background color="blue" gap={16} className="bg-blue-100" />
-
+        {analytics && <Metrics/>}
         <BottomPanel />
         <TopPanel />
-        <EdgeTypePanel/>
+        <EdgeTypePanel />
       </ReactFlow>
     </main>
   );

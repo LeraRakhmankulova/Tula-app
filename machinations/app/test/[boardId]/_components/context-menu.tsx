@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { Node, useReactFlow } from "reactflow";
 import "./../style-test.css"
+import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 
 export default function ContextMenu({
   id,
@@ -11,6 +12,7 @@ export default function ContextMenu({
   ...props
 }) {
   const { getNode, setNodes, addNodes, setEdges } = useReactFlow();
+  const {setAnalytics} = useChangeEdgeType()
   const duplicateNode = useCallback(() => {
     const node: any = getNode(id);
     const position = {
@@ -32,6 +34,7 @@ export default function ContextMenu({
     setEdges((edges) => edges.filter((edge) => edge.source !== id));
   }, [id, setNodes, setEdges]);
 
+
   return (
     <div
       style={{ top, left, right, bottom }}
@@ -40,6 +43,7 @@ export default function ContextMenu({
     >
       <button onClick={duplicateNode}>Copy</button>
       <button onClick={deleteNode}>Delete</button>
+      <button onClick={() => setAnalytics(true)}>Analytics</button>
     </div>
   );
 }

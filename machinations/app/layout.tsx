@@ -5,7 +5,6 @@ import { Inter } from "next/font/google";
 import { ConvexClientProvider } from "@/providers/convex-client-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ModalProvider } from "@/providers/modal-provider";
-import { ReactFlowProvider } from "reactflow";
 
 const inter = Inter({ subsets: ["latin"] });
 
