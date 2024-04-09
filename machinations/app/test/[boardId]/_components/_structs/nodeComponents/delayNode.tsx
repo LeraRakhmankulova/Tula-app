@@ -23,32 +23,31 @@ interface DataProps {
 }
 
 const DelayNode = ({ data: { label, struct, name }, selected }: DataProps) => {
-  const { isPlay } = useAnimateScheme();
+  const { isPlay, onStop, onReset } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
   const edges = useEdges();
   const nodes = useNodes();
 
   useEffect(() => {
-    if (!isPlay) return;
-    let sourceEdge: Edge = edges.find((edge) => edge.target === nodeId);
+    if (!isPlay) {
+      setNodeLabel(nodeId, "not");
+    } else {
+      setNodeLabel(nodeId, "worked");
+    }
+    let sourceEdge: Edge = edges.find((edge) => edge?.target === nodeId);
 
     // тут в sourceEdge.data хранится значение количество ресурсов
-    let targetEdge: Edge = edges.find((edge) => edge.source === nodeId);
+    let targetEdge: Edge = edges.find((edge) => edge?.source === nodeId);
 
     // тут в targetEdge.data хранится значение количества млсекунд * 1000 - то что задержка
 
     let targetNodeId: Node = nodes.find(
-      (node) => node.id === targetEdge.target
+      (node) => node.id === targetEdge?.target
     );
 
-    //
-    const delay = setTimeout(() => {
-      setNodeLabel(targetNodeId.id!, sourceEdge?.data);
-    }, +targetEdge.data * 1000);
 
-    return () => clearTimeout(delay); // Очистка таймера при размонтировании компонента
-  }, [edges, nodes, nodeId, isPlay]);
+  }, [isPlay, onStop, onReset]);
 
   return (
     <>
@@ -58,6 +57,7 @@ const DelayNode = ({ data: { label, struct, name }, selected }: DataProps) => {
         minWidth={45}
         minHeight={45}
       />
+      {label}
       <StyledNode struct={struct} label={label} name={name} />
     </>
   );
