@@ -53,7 +53,8 @@ export const StyledNode = ({ struct, label }: ITestNodeProps) => {
     <div>
       {struct !== "Source" && <Handle type="target" position={Position.Left} />}
       <div className={styleNode[struct]}>
-        {struct in styleNodeIcon ? styleNodeIcon[struct] : label}
+        {/* {struct in styleNodeIcon ? styleNodeIcon[struct] : label} */}
+        {label}
       </div>
       {struct !== StructType.End && (
         <Handle type="source" position={Position.Right} />

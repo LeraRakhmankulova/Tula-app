@@ -30,6 +30,7 @@ const CustomNode = ({ data: { label, struct }, selected }: DataProps) => {
 
   useEffect(() => {
     let newEdges = edges.filter((edge) => edge.target === nodeId);
+
     let { sourceStruct, sourceValue, targetValue } = getEdgeValues(
       newEdges[0]?.id
     );
@@ -48,9 +49,11 @@ const CustomNode = ({ data: { label, struct }, selected }: DataProps) => {
 
     let intervalId: any;
     const intervalCallback = () => {
-      if (sourceValue >= targetValue || sourceStruct === "Source")
+      // if (sourceValue <= targetValue + 1)
         setNodeLabel(nodeId!, (parseInt(label) + sumOfData).toString());
     };
+
+    
 
     if (isPlay) {
       intervalId = setInterval(intervalCallback, time * 1000);
