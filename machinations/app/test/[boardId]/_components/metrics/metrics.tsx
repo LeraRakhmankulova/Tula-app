@@ -2,7 +2,6 @@
 
 import { Panel } from "reactflow";
 import { Chart } from "./chart";
-import { nanoid } from "nanoid";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 const data = [
   {

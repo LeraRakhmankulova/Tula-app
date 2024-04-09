@@ -27,6 +27,7 @@ export type RFState = {
   onConnect: (connection: any) => void;
   addNode: (struct: StructType) => void;
   getEdgeValues: (id: string) => {sourceStruct: any, sourceValue: any, targetValue: any};
+  setNodeName: (id: string, name: string) => void
 };
 
 const graph: Graph = {
@@ -146,12 +147,31 @@ const useStore = create<RFState>((set, get) => ({
       })
     }
   },
+  setNodeName: (id: string, name: string) => {
+    const nodes = useStore.getState().nodes;
+    const nodeIndex = nodes.findIndex((node) => node.id === id);
+
+    if (nodeIndex !== -1) {
+      const updatedNodes = [...nodes];
+      updatedNodes[nodeIndex] = {
+        ...updatedNodes[nodeIndex],
+        data: {
+          ...updatedNodes[nodeIndex].data,
+          name: name
+        }
+      };
+
+      set({
+        nodes: updatedNodes,
+      })
+    }
+  },
 
   addNode: (struct: StructType) => {
     const newNode = {
       id: nanoid(),
       type: 'textUpdater',
-      data: { label: '0', struct: struct },
+      data: { label: '0', struct: struct, name: null },
       position: {
         x: (Math.random() * window.innerWidth / 2),
         y: (Math.random() * window.innerHeight / 2),

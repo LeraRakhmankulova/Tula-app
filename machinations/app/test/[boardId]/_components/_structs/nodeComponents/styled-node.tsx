@@ -10,13 +10,14 @@ import {
 } from "lucide-react";
 import "./nodeStyle.css";
 import { StructType } from "@/app/types/structs";
-import { Handle, Position } from "reactflow";
-import { Button } from "@/components/ui/button";
+import { Handle, Position, useNodeId } from "reactflow";
 import { useState } from "react";
+import useStore from "@/app/store/use-store";
 
 interface ITestNodeProps {
   struct: StructType;
   label: string;
+  name: string;
 }
 
 type StructStyles = {
@@ -47,8 +48,14 @@ const styleNodeIcon: any = {
   End: <CheckCheck />,
 };
 
-export const StyledNode = ({ struct, label }: ITestNodeProps) => {
-  const [value, setValue] = useState("")
+export const StyledNode = ({ struct, label, name }: ITestNodeProps) => {
+  const {  setNodeName } = useStore();
+  const nodeId = useNodeId();
+  const [value, setValue] = useState(name)
+  const onChange = (event: any) => {
+    setValue(event.target.value);
+    setNodeName(nodeId, event.target.value);
+  };
   return (
     <div>
       {struct !== "Source" && <Handle type="target" position={Position.Left} />}
@@ -60,7 +67,7 @@ export const StyledNode = ({ struct, label }: ITestNodeProps) => {
         <Handle type="source" position={Position.Right} />
       )}
       <div className="h-full w-full flex justify-center">
-        <input className="bg-transparent w-[50px] border-none text-xs font-bold text-center" value={value} onChange={(e) => setValue(e.target.value)}/>
+        <input className="bg-transparent w-[50px] border-none text-xs font-bold text-center" value={value} onChange={onChange}/>
       </div>
     </div>
   );

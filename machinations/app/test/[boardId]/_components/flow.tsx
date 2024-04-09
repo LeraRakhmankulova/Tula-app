@@ -119,8 +119,8 @@ const Flow = ({ boardId }: FlowProps) => {
         onNodeContextMenu={onNodeContextMenu}
       >
         {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
-        <Controls />
-        <MiniMap />
+        <Controls position="bottom-right"/>
+        {/* <MiniMap /> */}
         <Background color="blue" gap={16} className="bg-blue-100" />
         {analytics && <Metrics/>}
         <BottomPanel />

@@ -18,11 +18,12 @@ interface DataProps {
   data: {
     label: string;
     struct: StructType;
+    name: string
   };
   selected: boolean;
 }
 
-const CustomNode = ({ data: { label, struct }, selected }: DataProps) => {
+const CustomNode = ({ data: { label, struct, name }, selected }: DataProps) => {
   const { isPlay, time, onReset, isReset } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
@@ -53,7 +54,7 @@ const CustomNode = ({ data: { label, struct }, selected }: DataProps) => {
         setNodeLabel(nodeId!, (parseInt(label) + sumOfData).toString());
     };
 
-    
+
 
     if (isPlay) {
       intervalId = setInterval(intervalCallback, time * 1000);
@@ -78,7 +79,7 @@ const CustomNode = ({ data: { label, struct }, selected }: DataProps) => {
         minWidth={45}
         minHeight={45}
       />
-      <StyledNode struct={struct} label={label} />
+      <StyledNode struct={struct} label={label} name={name}/>
     </>
   );
 };
