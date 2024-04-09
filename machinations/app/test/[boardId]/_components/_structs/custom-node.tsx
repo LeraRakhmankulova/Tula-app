@@ -2,13 +2,9 @@
 import { useAnimateScheme } from "@/app/store/use-animate-scheme";
 import { memo, useEffect } from "react";
 import {
-  Edge,
-  Handle,
   NodeResizer,
-  Position,
   useEdges,
   useNodeId,
-  useNodes,
 } from "reactflow";
 import useStore from "@/app/store/use-store";
 import { StyledNode } from "./nodeComponents/styled-node";
@@ -35,22 +31,21 @@ const CustomNode = ({ data: { label, struct, name }, selected }: DataProps) => {
     let { sourceStruct, sourceValue, targetValue } = getEdgeValues(
       newEdges[0]?.id
     );
-    console.log(
-      "nodeId",
-      nodeId,
-      "sourceValue",
-      sourceValue,
-      "targetValue",
-      targetValue
-    );
+    // console.log(
+    //   "nodeId",
+    //   nodeId,
+    //   "sourceValue",
+    //   sourceValue,
+    //   "targetValue",
+    //   targetValue
+    // );
 
     const sumOfData = newEdges.reduce((accumulator, currentEdge) => {
-      return accumulator + (+currentEdge.data || 0); // Если значение data не является числом, прибавляем 0
+      return accumulator + (+currentEdge.data || 0); 
     }, 0);
 
     let intervalId: any;
     const intervalCallback = () => {
-      // if (sourceValue <= targetValue + 1)
         setNodeLabel(nodeId!, (parseInt(label) + sumOfData).toString());
     };
 
@@ -60,9 +55,9 @@ const CustomNode = ({ data: { label, struct, name }, selected }: DataProps) => {
       intervalId = setInterval(intervalCallback, time * 1000);
     }
 
-    if (isReset) {
-      setNodeLabel(nodeId!, "0");
-    }
+    // if (isReset) {
+    //   setNodeLabel(nodeId!, "0");
+    // }
 
     return () => {
       if (intervalId) {

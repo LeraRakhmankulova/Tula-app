@@ -1,6 +1,8 @@
 import { Node } from "reactflow";
 import CustomEdge from "../test/[boardId]/_components/_structs/custom-edge";
 import CustomNode from "./../test/[boardId]/_components/_structs/custom-node";
+import DelayNode from "./../test/[boardId]/_components/_structs/nodeComponents/delayNode";
+
  enum StructType {
     Source = "Source",
     Pool = "Pool",
@@ -70,7 +72,7 @@ export type EndStruct = {
 
 export type Structs = SourceStruct | PoolStruct | ConsumerStruct | ConverterStruct | GateStruct | RandomStruct | DelayStruct | EndStruct
 
-export const nodeTypes = { textUpdater: CustomNode }
+export const nodeTypes = { textUpdater: CustomNode, delayNode: DelayNode }
 export const edgeTypes = { custom: CustomEdge }
 
 export interface Graph {

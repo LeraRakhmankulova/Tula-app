@@ -8,7 +8,7 @@ import {
   applyNodeChanges,
   applyEdgeChanges,
 } from 'reactflow';
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { nanoid } from 'nanoid/non-secure';
 import { Graph, StructType } from '../types/structs';
 import { markerEnd } from '@/lib/utils';
@@ -26,7 +26,7 @@ export type RFState = {
   setNodeLabel: (count: string, id: string) => void;
   onConnect: (connection: any) => void;
   addNode: (struct: StructType) => void;
-  getEdgeValues: (id: string) => {sourceStruct: any, sourceValue: any, targetValue: any};
+  getEdgeValues: (id: string) => { sourceStruct: any, sourceValue: any, targetValue: any };
   setNodeName: (id: string, name: string) => void
 };
 
@@ -168,15 +168,29 @@ const useStore = create<RFState>((set, get) => ({
   },
 
   addNode: (struct: StructType) => {
-    const newNode = {
-      id: nanoid(),
-      type: 'textUpdater',
-      data: { label: '0', struct: struct, name: null },
-      position: {
-        x: (Math.random() * window.innerWidth / 2),
-        y: (Math.random() * window.innerHeight / 2),
-      },
-    };
+    let newNode;
+    if (struct === "Delay") {
+      newNode = {
+        id: nanoid(),
+        type: 'delayNode',
+        data: { label: '0', struct: struct, name: null },
+        position: {
+          x: (Math.random() * window.innerWidth / 2),
+          y: (Math.random() * window.innerHeight / 2),
+        },
+      }
+    }
+    else {
+      newNode = {
+        id: nanoid(),
+        type: 'textUpdater',
+        data: { label: '0', struct: struct, name: null },
+        position: {
+          x: (Math.random() * window.innerWidth / 2),
+          y: (Math.random() * window.innerHeight / 2),
+        },
+      };
+    }
 
     set({
       nodes: [...get().nodes, newNode],
