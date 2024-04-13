@@ -54,10 +54,10 @@ export const Metrics = () => {
       className="bg-white p-2 rounded overflow-y-auto h-[750px]"
     >
       <button className="bg-black rounded py-1 px-2 text-white" onClick={() => setAnalytics(false)}>Close analytics</button>
-      <Chart data={data} title="Max(value)" key="qw" />
-      <Chart data={data} title="Min(value)" key="qw2" />
-      <Chart data={data} title="AVR(value)" key="qw3" />
-      <Chart data={data} title="Median(value)" key="qw4" />
+      <Chart data={data} title="Max(wood)" key="qw" />
+      <Chart data={data} title="Min(wood)" key="qw2" />
+      <Chart data={data} title="AVR(wood)" key="qw3" />
+      <Chart data={data} title="Median(wood)" key="qw4" />
     </Panel>
   );
 };
