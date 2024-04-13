@@ -30,26 +30,7 @@ const PoolNode = ({ data: { label, struct, name }, selected, id }: DataProps) =>
   const edges = useEdges();
   const nodes = useNodes();
 
-  // useEffect(() => {
-  //   let intervalId = null;
-  //   if (isPlay) {
-  //     let targetEdge: Edge = edges.find((edge) => edge?.source === nodeId);
 
-  //     let targetNodeId: Node = nodes.find(
-  //       (node) => node.id === targetEdge?.target
-  //     );
-  //     let initialData =  0;
-
-  //     intervalId = setInterval(() => {
-  //       // Увеличиваем значение sourceEdge.data каждую секунду на 1
-  //       initialData += +targetEdge?.data;
-
-
-  //       setNodeLabel(targetNodeId?.id, +initialData);
-  //     }, 1000);
-  //   }
-  //   return () => clearInterval(intervalId);
-  // }, [isPlay, onStop, onReset, label]);
 
   useEffect(() => {
     let intervalId = null;
@@ -58,8 +39,6 @@ const PoolNode = ({ data: { label, struct, name }, selected, id }: DataProps) =>
       const sumOfData = newEdges.reduce((accumulator, currentEdge) => {
         return accumulator + (+currentEdge.data || 0); 
       }, 0);
-  
-
       intervalId = setInterval(() => {
 
 
@@ -77,7 +56,6 @@ const PoolNode = ({ data: { label, struct, name }, selected, id }: DataProps) =>
         minWidth={45}
         minHeight={45}
       />
-      <div>id {nodeId}</div>
       
       <StyledNode struct={struct} label={label} name={name} />
     </>

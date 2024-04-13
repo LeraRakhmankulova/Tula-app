@@ -1,13 +1,7 @@
 "use client";
 import { useAnimateScheme } from "@/app/store/use-animate-scheme";
 import { memo, useEffect } from "react";
-import {
-  Edge,
-  NodeResizer,
-  useEdges,
-  useNodeId,
-  useNodes,
-} from "reactflow";
+import { Edge, NodeResizer, useEdges, useNodeId, useNodes } from "reactflow";
 import useStore from "@/app/store/use-store";
 import { StructType } from "@/app/types/structs";
 import { StyledNode } from "./styled-node";
@@ -16,12 +10,15 @@ interface DataProps {
   data: {
     label: string;
     struct: StructType;
-    name: string
+    name: string;
   };
   selected: boolean;
 }
 
-const ConverterNode = ({ data: { label, struct, name }, selected }: DataProps) => {
+const ConverterNode = ({
+  data: { label, struct, name },
+  selected,
+}: DataProps) => {
   const { isPlay, onStop, onReset } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
@@ -29,31 +26,20 @@ const ConverterNode = ({ data: { label, struct, name }, selected }: DataProps) =
   const nodes = useNodes();
 
   useEffect(() => {
-    let intervalIds = [];
-    if (!isPlay) {
-      setNodeLabel(nodeId, "not");
-    } else {
-      setNodeLabel(nodeId, "worked");
+    let intervalId = null;
+    if (isPlay) {
+      let newEdges = edges.filter((edge) => edge.target === nodeId)
+      const sumOfData = newEdges.reduce((accumulator, currentEdge) => {
+        return accumulator + (+currentEdge.data || 0); 
+      }, 0);
+      intervalId = setInterval(() => {
 
 
-      let targetEdges: Edge[] = edges.filter((edge) => edge?.source === nodeId);
-
-      targetEdges.forEach((edge) => {
-        const targetNodeId = nodes.find((node) => node.id === edge.target);
-  
-        let initialData = 0;
-  
-        const intervalId = setInterval(() => {
-          initialData += +edge.data;
-          setNodeLabel(targetNodeId?.id, +initialData);
-        }, 1000);
-        intervalIds.push(intervalId);
-      });
-    } 
-    return () => {
-      intervalIds.forEach((intervalId) => clearInterval(intervalId));
-    };
-  }, [isPlay, onStop, onReset]);
+        setNodeLabel(nodeId, (parseInt(label) + sumOfData).toString());
+      }, 1000);
+    }
+    return () => clearInterval(intervalId);
+  }, [isPlay, onStop, onReset, label]);
 
   return (
     <>
@@ -63,7 +49,8 @@ const ConverterNode = ({ data: { label, struct, name }, selected }: DataProps) =
         minWidth={45}
         minHeight={45}
       />
-      <StyledNode struct={struct} label={label} name={name}/>
+      <div>converter</div>
+      <StyledNode struct={struct} label={label} name={name} />
     </>
   );
 };
