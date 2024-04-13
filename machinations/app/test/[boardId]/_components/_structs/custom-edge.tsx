@@ -1,6 +1,7 @@
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import useStore from "@/app/store/use-store";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import "./edge-style.css"
 import {
   BaseEdge,
   BezierEdge,
@@ -9,12 +10,12 @@ import {
   StepEdge,
   getBezierPath,
   getStraightPath,
-
 } from "reactflow";
 
 export default function CustomEdge(props: EdgeProps) {
   const [inputValue, setInputValue] = useState<number>(1);
   const { currentType } = useChangeEdgeType();
+  const [error, setError] = useState<string | null>(null);
 
   const { setEdgeData } = useStore();
   const {
@@ -47,11 +48,17 @@ export default function CustomEdge(props: EdgeProps) {
     setEdgeData(id, event.target.value);
   };
 
+  useEffect(() => {
+    if (typeof +inputValue !== "number" || isNaN(+inputValue)) {
+      setError("Must be a numeric");
+    } else setError(null);
+  }, [inputValue]);
+
   return (
     <>
       {currentType === "SmoothStep" && <StepEdge {...props} />}
       {currentType === "Default" && <BaseEdge path={basePath} {...props} />}
-      {currentType == "Bezier" && <BezierEdge {...props} />} 
+      {currentType == "Bezier" && <BezierEdge {...props} />}
       <EdgeLabelRenderer>
         <div
           style={{
@@ -63,10 +70,11 @@ export default function CustomEdge(props: EdgeProps) {
           className="nodrag nopan"
         >
           <input
-            className="w-16 h-7 text-center rounded-sm"
+            className={error? "border-2 border-red-500 w-16 h-7 text-center rounded-sm": "w-16 h-7 text-center rounded-sm"}
             value={inputValue}
             onChange={onChange}
           />
+          {error && <p className="text-center text-2 font-bold text-red-500">{error}</p>}
         </div>
       </EdgeLabelRenderer>
     </>
