@@ -21,7 +21,7 @@ interface DataProps {
   selected: boolean;
 }
 
-const SourceNode = ({ data: { label, struct, name }, selected }: DataProps) => {
+const ConverterNode = ({ data: { label, struct, name }, selected }: DataProps) => {
   const { isPlay, onStop, onReset } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
@@ -30,7 +30,12 @@ const SourceNode = ({ data: { label, struct, name }, selected }: DataProps) => {
 
   useEffect(() => {
     let intervalIds = [];
-    if (isPlay)  {
+    if (!isPlay) {
+      setNodeLabel(nodeId, "not");
+    } else {
+      setNodeLabel(nodeId, "worked");
+
+
       let targetEdges: Edge[] = edges.filter((edge) => edge?.source === nodeId);
 
       targetEdges.forEach((edge) => {
@@ -63,4 +68,4 @@ const SourceNode = ({ data: { label, struct, name }, selected }: DataProps) => {
   );
 };
 
-export default memo(SourceNode);
+export default memo(ConverterNode);

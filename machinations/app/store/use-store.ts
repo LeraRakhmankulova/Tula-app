@@ -202,6 +202,17 @@ const useStore = create<RFState>((set, get) => ({
         },
       }
     }
+    else if (struct === "Converter") {
+      newNode = {
+        id: nanoid(),
+        type: 'converterNode',
+        data: { label: '0', struct: struct, name: null },
+        position: {
+          x: (Math.random() * window.innerWidth / 2),
+          y: (Math.random() * window.innerHeight / 2),
+        },
+      }
+    }
     else {
       newNode = {
         id: nanoid(),
