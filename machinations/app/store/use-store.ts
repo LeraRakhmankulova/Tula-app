@@ -23,7 +23,7 @@ export type RFState = {
   onEdgesChange: OnEdgesChange;
   deleteNode: (id: string) => void;
   setEdgeAnimated: (isPlay: boolean) => void;
-  setNodeLabel: (count: string, id: string) => void;
+  setNodeLabel: (id: string, count: number, ) => void;
   onConnect: (connection: any) => void;
   addNode: (struct: StructType) => void;
   getEdgeValues: (id: string) => { sourceStruct: any, sourceValue: any, targetValue: any };
@@ -128,7 +128,7 @@ const useStore = create<RFState>((set, get) => ({
       targetValue: targetNode?.data.label || "0"
     }
   },
-  setNodeLabel: (id: string, count: string) => {
+  setNodeLabel: (id: string, count: number) => {
     const nodes = useStore.getState().nodes;
     const nodeIndex = nodes.findIndex((node) => node.id === id);
 
@@ -173,6 +173,17 @@ const useStore = create<RFState>((set, get) => ({
       newNode = {
         id: nanoid(),
         type: 'delayNode',
+        data: { label: '0', struct: struct, name: null },
+        position: {
+          x: (Math.random() * window.innerWidth / 2),
+          y: (Math.random() * window.innerHeight / 2),
+        },
+      }
+    }
+    else if (struct === "Pool") {
+      newNode = {
+        id: nanoid(),
+        type: 'poolNode',
         data: { label: '0', struct: struct, name: null },
         position: {
           x: (Math.random() * window.innerWidth / 2),

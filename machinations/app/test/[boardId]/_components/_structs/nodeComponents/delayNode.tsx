@@ -30,11 +30,12 @@ const DelayNode = ({ data: { label, struct, name }, selected }: DataProps) => {
   const nodes = useNodes();
 
   useEffect(() => {
+    let intervalId = null;
     if (!isPlay) {
       setNodeLabel(nodeId, "not");
     } else {
+      setNodeLabel(nodeId, "worked");
       let sourceEdge: Edge = edges.find((edge) => edge?.target === nodeId);
-
       // тут в sourceEdge.data хранится значение количество ресурсов
       let targetEdge: Edge = edges.find((edge) => edge?.source === nodeId);
 
@@ -43,9 +44,17 @@ const DelayNode = ({ data: { label, struct, name }, selected }: DataProps) => {
       let targetNodeId: Node = nodes.find(
         (node) => node.id === targetEdge?.target
       );
-      setNodeLabel(nodeId, "worked");
-      setNodeLabel(targetNodeId.id, sourceEdge.data);
+      let initialData = +sourceEdge?.data || 0;
+
+      intervalId = setInterval(() => {
+        // Увеличиваем значение sourceEdge.data каждую секунду на 1
+        initialData += +sourceEdge?.data;
+
+        // Обновляем метку узла с новым значением sourceEdge.data
+        setNodeLabel(targetNodeId?.id, +initialData);
+      }, 1000); // Интервал в миллисекундах (1000 миллисекунд = 1 секунда)
     }
+    return () => clearInterval(intervalId);
   }, [isPlay, onStop, onReset]);
 
   return (
@@ -57,7 +66,7 @@ const DelayNode = ({ data: { label, struct, name }, selected }: DataProps) => {
         minHeight={45}
       />
       {label}
-      
+
       <StyledNode struct={struct} label={label} name={name} />
     </>
   );
