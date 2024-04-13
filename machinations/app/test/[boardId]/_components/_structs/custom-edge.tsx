@@ -1,7 +1,7 @@
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import useStore from "@/app/store/use-store";
 import React, { useEffect, useState } from "react";
-import "./edge-style.css"
+
 import {
   BaseEdge,
   BezierEdge,
@@ -14,8 +14,7 @@ import {
 
 export default function CustomEdge(props: EdgeProps) {
   const [inputValue, setInputValue] = useState<number>(1);
-  const { currentType } = useChangeEdgeType();
-  const [error, setError] = useState<string | null>(null);
+  const { error, setError, currentType } = useChangeEdgeType();
 
   const { setEdgeData } = useStore();
   const {

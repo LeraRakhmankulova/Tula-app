@@ -6,6 +6,7 @@ import { useAnimateScheme } from "@/app/store/use-animate-scheme";
 import useStore from "@/app/store/use-store";
 import { useEffect } from "react";
 import { Iterations } from "../iterations";
+import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 
 export const BottomPanel = () => {
   const { isPlay, onPlay, onStop, onReset } = useAnimateScheme();
@@ -17,6 +18,7 @@ export const BottomPanel = () => {
 
   const edges = useEdges();
   const nodes = useNodes();
+  const { error, setError } = useChangeEdgeType();
 
   return (
     <Panel position="bottom-center">
@@ -28,7 +30,7 @@ export const BottomPanel = () => {
         </div>
         <ToolButton
           label="Play"
-          isDisabled={isPlay}
+          isDisabled={error ? true : isPlay}
           onClick={onPlay}
           isActive={false}
           icon={Play}
