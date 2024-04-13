@@ -23,7 +23,7 @@ interface DataProps {
 }
 
 const DelayNode = ({ data: { label, struct, name }, selected }: DataProps) => {
-  const { isPlay, onStop, onReset } = useAnimateScheme();
+  const { isPlay, onStop, onReset, time } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
   const edges = useEdges();
@@ -52,7 +52,7 @@ const DelayNode = ({ data: { label, struct, name }, selected }: DataProps) => {
 
         // Обновляем метку узла с новым значением sourceEdge.data
         setNodeLabel(targetNodeId?.id, +initialData);
-      }, 1000); // Интервал в миллисекундах (1000 миллисекунд = 1 секунда)
+      }, time * 1000); // Интервал в миллисекундах (1000 миллисекунд = 1 секунда)
     }
     return () => clearInterval(intervalId);
   }, [isPlay, onStop, onReset]);

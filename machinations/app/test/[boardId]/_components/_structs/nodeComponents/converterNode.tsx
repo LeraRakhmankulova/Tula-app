@@ -19,7 +19,7 @@ const ConverterNode = ({
   data: { label, struct, name },
   selected,
 }: DataProps) => {
-  const { isPlay, onStop, onReset } = useAnimateScheme();
+  const { isPlay, onStop, onReset, time } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
   const edges = useEdges();
@@ -52,7 +52,7 @@ const ConverterNode = ({
 
 
         setNodeLabel(nodeId, (parseInt(label) + sumOfData).toString());
-      }, 1000);
+      }, time * 1000);
     }
 
     return () => clearInterval(intervalId);

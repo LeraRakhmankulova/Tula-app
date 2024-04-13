@@ -24,7 +24,7 @@ interface DataProps {
 }
 
 const PoolNode = ({ data: { label, struct, name }, selected, id }: DataProps) => {
-  const { isPlay, onStop, onReset } = useAnimateScheme();
+  const { isPlay, onStop, onReset, time } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
   const edges = useEdges();
@@ -43,7 +43,7 @@ const PoolNode = ({ data: { label, struct, name }, selected, id }: DataProps) =>
 
 
         setNodeLabel(nodeId, (parseInt(label) + sumOfData).toString());
-      }, 1000);
+      }, time * 1000);
     }
     return () => clearInterval(intervalId);
   }, [isPlay, onStop, onReset, label]);

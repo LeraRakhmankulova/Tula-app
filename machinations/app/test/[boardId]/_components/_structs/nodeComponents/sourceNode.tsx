@@ -22,7 +22,7 @@ interface DataProps {
 }
 
 const SourceNode = ({ data: { label, struct, name }, selected }: DataProps) => {
-  const { isPlay, onStop, onReset } = useAnimateScheme();
+  const { isPlay, onStop, onReset, time } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
   const edges = useEdges();
@@ -41,7 +41,7 @@ const SourceNode = ({ data: { label, struct, name }, selected }: DataProps) => {
         const intervalId = setInterval(() => {
           initialData += +edge.data;
           setNodeLabel(targetNodeId?.id, +initialData);
-        }, 1000);
+        }, time * 1000);
         intervalIds.push(intervalId);
       });
     } 
