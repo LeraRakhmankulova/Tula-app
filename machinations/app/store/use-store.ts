@@ -169,61 +169,15 @@ const useStore = create<RFState>((set, get) => ({
 
   addNode: (struct: StructType) => {
     let newNode;
-    if (struct === "Delay") {
       newNode = {
         id: nanoid(),
-        type: 'delayNode',
-        data: { label: '0', struct: struct, name: null },
-        position: {
-          x: (Math.random() * window.innerWidth / 2),
-          y: (Math.random() * window.innerHeight / 2),
-        },
-      }
-    }
-    else if (struct === "Pool") {
-      newNode = {
-        id: nanoid(),
-        type: 'poolNode',
-        data: { label: '0', struct: struct, name: null },
-        position: {
-          x: (Math.random() * window.innerWidth / 2),
-          y: (Math.random() * window.innerHeight / 2),
-        },
-      }
-    }
-    else if (struct === "Source") {
-      newNode = {
-        id: nanoid(),
-        type: 'sourceNode',
-        data: { label: '0', struct: struct, name: null },
-        position: {
-          x: (Math.random() * window.innerWidth / 2),
-          y: (Math.random() * window.innerHeight / 2),
-        },
-      }
-    }
-    else if (struct === "Converter") {
-      newNode = {
-        id: nanoid(),
-        type: 'converterNode',
-        data: { label: '0', struct: struct, name: null },
-        position: {
-          x: (Math.random() * window.innerWidth / 2),
-          y: (Math.random() * window.innerHeight / 2),
-        },
-      }
-    }
-    else {
-      newNode = {
-        id: nanoid(),
-        type: 'textUpdater',
+        type: struct.toLowerCase() + "Node",
         data: { label: '0', struct: struct, name: null },
         position: {
           x: (Math.random() * window.innerWidth / 2),
           y: (Math.random() * window.innerHeight / 2),
         },
       };
-    }
 
     set({
       nodes: [...get().nodes, newNode],

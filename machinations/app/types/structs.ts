@@ -1,12 +1,18 @@
 import { Node } from "reactflow";
 import CustomEdge from "../test/[boardId]/_components/_structs/custom-edge";
 import CustomNode from "./../test/[boardId]/_components/_structs/custom-node";
-import DelayNode from "./../test/[boardId]/_components/_structs/nodeComponents/delayNode";
-import PoolNode from "./../test/[boardId]/_components/_structs/nodeComponents/poolNode";
 import SourceNode from "./../test/[boardId]/_components/_structs/nodeComponents/sourceNode";
+import PoolNode from "./../test/[boardId]/_components/_structs/nodeComponents/poolNode";
+import ConsumerNode from "./../test/[boardId]/_components/_structs/nodeComponents/consumerNode";
 import ConverterNode from "./../test/[boardId]/_components/_structs/nodeComponents/converterNode";
+import GateNode from "./../test/[boardId]/_components/_structs/nodeComponents/gateNode";
+import RandomNode from "./../test/[boardId]/_components/_structs/nodeComponents/randomNode";
+import DelayNode from "./../test/[boardId]/_components/_structs/nodeComponents/delayNode";
+import EndNode from "./../test/[boardId]/_components/_structs/nodeComponents/endNode";
+import consumerNode from "./../test/[boardId]/_components/_structs/nodeComponents/consumerNode";
 
- enum StructType {
+
+enum StructType {
     Source = "Source",
     Pool = "Pool",
     Consumer = "Consumer",
@@ -22,7 +28,7 @@ export enum CustomEdgesTypes {
     Default = "Default",
     SmoothStep = "SmoothStep",
     Bezier = "Bezier",
-  }
+}
 
 export type SourceStruct = {
     id: number | string;
@@ -75,7 +81,17 @@ export type EndStruct = {
 
 export type Structs = SourceStruct | PoolStruct | ConsumerStruct | ConverterStruct | GateStruct | RandomStruct | DelayStruct | EndStruct
 
-export const nodeTypes = { textUpdater: CustomNode, delayNode: DelayNode, poolNode: PoolNode, sourceNode: SourceNode, converterNode: ConverterNode }
+export const nodeTypes = {
+    textUpdater: CustomNode,
+    sourceNode: SourceNode,
+    poolNode: PoolNode,
+    consumerNode: ConsumerNode,
+    converterNode: ConverterNode,
+    gateNode: GateNode,
+    randomNode: RandomNode,
+    delayNode: DelayNode,
+    endNode: EndNode,
+}
 export const edgeTypes = { custom: CustomEdge }
 
 export interface Graph {
