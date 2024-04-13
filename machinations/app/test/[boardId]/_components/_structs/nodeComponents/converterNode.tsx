@@ -28,7 +28,23 @@ const ConverterNode = ({
   useEffect(() => {
     let intervalId = null;
     if (isPlay) {
-      let newEdges = edges.filter((edge) => edge.target === nodeId)
+
+
+      let newEdges: Edge[] = edges.filter((edge) => edge.target === nodeId)
+      let nodeIds: string[] = newEdges.map((edge) => edge.source);
+
+      if (nodeIds.length > 0) {
+        nodeIds.forEach(nodeId => {
+            let foundNode = nodes.find(node => node.id === nodeId);
+            let edge = edges.find(edge => edge.source === foundNode?.id)
+            if (foundNode) {
+                if (+foundNode.data?.label > edge.data) {
+                    setNodeLabel(foundNode.id, foundNode.data?.label - edge.data);
+                }
+            }
+        });
+    }
+
       const sumOfData = newEdges.reduce((accumulator, currentEdge) => {
         return accumulator + (+currentEdge.data || 0); 
       }, 0);
@@ -38,7 +54,9 @@ const ConverterNode = ({
         setNodeLabel(nodeId, (parseInt(label) + sumOfData).toString());
       }, 1000);
     }
+
     return () => clearInterval(intervalId);
+
   }, [isPlay, onStop, onReset, label]);
 
   return (
