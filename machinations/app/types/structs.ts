@@ -3,6 +3,7 @@ import CustomEdge from "../test/[boardId]/_components/_structs/custom-edge";
 import CustomNode from "./../test/[boardId]/_components/_structs/custom-node";
 import DelayNode from "./../test/[boardId]/_components/_structs/nodeComponents/delayNode";
 import PoolNode from "./../test/[boardId]/_components/_structs/nodeComponents/poolNode";
+import SourceNode from "./../test/[boardId]/_components/_structs/nodeComponents/sourceNode";
 
  enum StructType {
     Source = "Source",
@@ -73,7 +74,7 @@ export type EndStruct = {
 
 export type Structs = SourceStruct | PoolStruct | ConsumerStruct | ConverterStruct | GateStruct | RandomStruct | DelayStruct | EndStruct
 
-export const nodeTypes = { textUpdater: CustomNode, delayNode: DelayNode, poolNode: PoolNode }
+export const nodeTypes = { textUpdater: CustomNode, delayNode: DelayNode, poolNode: PoolNode, sourceNode: SourceNode }
 export const edgeTypes = { custom: CustomEdge }
 
 export interface Graph {
