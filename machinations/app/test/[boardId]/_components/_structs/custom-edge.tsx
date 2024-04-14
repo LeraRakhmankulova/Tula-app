@@ -15,6 +15,7 @@ import {
 export default function CustomEdge(props: EdgeProps) {
   const [inputValue, setInputValue] = useState<number>(1);
   const { error, setError, currentType } = useChangeEdgeType();
+  const [localError, setLocalError] = useState<string | null>(null);
 
   const { setEdgeData } = useStore();
   const {
@@ -49,8 +50,12 @@ export default function CustomEdge(props: EdgeProps) {
 
   useEffect(() => {
     if (typeof +inputValue !== "number" || isNaN(+inputValue)) {
-      setError("Must be a numeric");
-    } else setError(null);
+      setLocalError("Must be a numeric");
+      setError("error");
+    } else {
+      setLocalError(null);
+      setError(null);
+    }
   }, [inputValue]);
 
   return (
@@ -69,11 +74,19 @@ export default function CustomEdge(props: EdgeProps) {
           className="nodrag nopan"
         >
           <input
-            className={error? "border-2 border-red-500 w-16 h-7 text-center rounded-sm": "w-16 h-7 text-center rounded-sm"}
+            className={
+              localError
+                ? "border-2 border-red-500 w-16 h-7 text-center rounded-sm"
+                : "w-16 h-7 text-center rounded-sm"
+            }
             value={inputValue}
             onChange={onChange}
           />
-          {error && <p className="text-center text-2 font-bold text-red-500">{error}</p>}
+          {localError && (
+            <p className="text-center text-2 font-bold text-red-500">
+              {localError}
+            </p>
+          )}
         </div>
       </EdgeLabelRenderer>
     </>

@@ -29,33 +29,24 @@ const RandomNode = ({ data: { label, struct, name }, selected }: DataProps) => {
   const edges = useEdges();
   const nodes = useNodes();
 
+
+
   useEffect(() => {
     let intervalId = null;
-    if (!isPlay) {
-      setNodeLabel(nodeId, "not");
-    } else {
-      setNodeLabel(nodeId, "worked");
-      let sourceEdge: Edge = edges.find((edge) => edge?.target === nodeId);
-      // тут в sourceEdge.data хранится значение количество ресурсов
-      let targetEdge: Edge = edges.find((edge) => edge?.source === nodeId);
+    if (isPlay) {
+      const initialValue = label || null
+      let newEdges: Edge[] = edges.filter((edge) => edge.source === nodeId)
+      let nodeIds: string[] = newEdges.map(edge => edge.target)      //идишники нод
+      
+    //   intervalId = setInterval(() => {
 
-      // тут в targetEdge.data хранится значение количества млсекунд * 1000 - то что задержка
+    //     setNodeLabel(nodeId, (parseInt(label) + sumOfData).toString());
+    //   }, time * 1000);
 
-      let targetNodeId: Node = nodes.find(
-        (node) => node.id === targetEdge?.target
-      );
-      let initialData = +sourceEdge?.data || 0;
-
-      intervalId = setInterval(() => {
-        // Увеличиваем значение sourceEdge.data каждую секунду на 1
-        initialData += +sourceEdge?.data;
-
-        // Обновляем метку узла с новым значением sourceEdge.data
-        setNodeLabel(targetNodeId?.id, +initialData);
-      }, time * 1000); // Интервал в миллисекундах (1000 миллисекунд = 1 секунда)
+    
     }
     return () => clearInterval(intervalId);
-  }, [isPlay, onStop, onReset]);
+  }, [isPlay, onStop, onReset, label]);
 
   return (
     <>
@@ -65,8 +56,6 @@ const RandomNode = ({ data: { label, struct, name }, selected }: DataProps) => {
         minWidth={45}
         minHeight={45}
       />
-      {label}
-
       <StyledNode struct={struct} label={label} name={name} />
     </>
   );
