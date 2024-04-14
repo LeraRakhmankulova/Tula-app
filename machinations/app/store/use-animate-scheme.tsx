@@ -2,13 +2,16 @@ import { create } from "zustand";
 
 interface IAnimateScheme {
   iterations: number;
-  count: number;
+  games: number;
+  iterationsCount: number;
+  gamesCount: number;
   isPlay: boolean;
   isReset: boolean,
   intervalId: any;
   time: number;
   setTime: (count: number) => void;
   setIterations: (count: number) => void;
+  setGames: (count: number) => void;
   onPlay: () => void;
   onStop: () => void;
   onReset: () => void;
@@ -16,9 +19,11 @@ interface IAnimateScheme {
 
 export const useAnimateScheme = create<IAnimateScheme>((set) => ({
   iterations: 1,
+  games: 1,
   isPlay: false,
   isReset: false,
-  count: 0,
+  iterationsCount: 0,
+  gamesCount: 0,
   intervalId: null,
   time: 1,
   setTime: (count: number) => {
@@ -29,23 +34,28 @@ export const useAnimateScheme = create<IAnimateScheme>((set) => ({
       iterations: count,
     });
   },
+  setGames: (count: number) => {
+    set({
+      games: count,
+    });
+  },
   onPlay: () => {
     set((state) => {
-      if (!state.isPlay && state.count < state.iterations) {
+      if (!state.isPlay && state.iterationsCount < state.iterations) {
         const newIntervalId = setInterval(() => {
           set((state) => {
-            const newCount = state.count + 1;
+            const newCount = state.iterationsCount + 1;
             if (newCount === +state.iterations) {
               clearInterval(state.intervalId);
               return {
                 ...state,
-                count: newCount,
+                iterationsCount: newCount,
                 isPlay: false,
                 intervalId: null,
                 isReset: true
               };
             }
-            return { ...state, count: newCount };
+            return { ...state, iterationsCount: newCount };
           });
         }, state.time * 1000);
         return { ...state, isPlay: true, intervalId: newIntervalId, isReset: false };

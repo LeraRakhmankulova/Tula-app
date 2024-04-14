@@ -7,7 +7,7 @@ interface CustomInputProps {
 }
 
 const CustomInput = ({ label, placeholder }: CustomInputProps) => {
-  const { setIterations, setTime } = useAnimateScheme();
+  const { setIterations, setTime, setGames } = useAnimateScheme();
   const [value, setValue] = useState<number>(0);
 
   useEffect(() => {
@@ -16,6 +16,9 @@ const CustomInput = ({ label, placeholder }: CustomInputProps) => {
     }
     if (label === "Time(s)") {
       setTime(value);
+    }
+    if (label === "Games") {
+      setGames(value);
     }
   }, [value]);
 

@@ -7,6 +7,7 @@ import useStore from "@/app/store/use-store";
 import { useEffect } from "react";
 import { Iterations } from "../iterations";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
+import { Games } from "../games";
 
 export const BottomPanel = () => {
   const { isPlay, onPlay, onStop, onReset } = useAnimateScheme();
@@ -52,6 +53,7 @@ export const BottomPanel = () => {
           background="red"
         />
         <Iterations />
+        <Games />
         <div className="text-xs text-center px-1">
           <label>Total count</label>
           <div>{edges.length + nodes.length}</div>

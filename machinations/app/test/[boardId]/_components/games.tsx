@@ -2,16 +2,16 @@
 
 import { useAnimateScheme } from "@/app/store/use-animate-scheme";
 
-export const Iterations = () => {
-  const { iterationsCount, iterations } = useAnimateScheme();
+export const Games = () => {
+  const {  games } = useAnimateScheme();
 
   return (
     <div className="text-xs text-center px-4">
-      <label>Iterations</label>
+      <label>Games</label>
       <div className="flex gap-x-3 items-center">
-        <div>{iterationsCount}</div>
+        <div>{1}</div>
         <div>/</div>
-        <div>{iterations}</div>
+        <div>{games}</div>
       </div>
     </div>
   );

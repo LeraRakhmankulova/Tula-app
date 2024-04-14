@@ -1,4 +1,4 @@
-export const randomDistributionWithProbabilities = (value: number, edges: number[]) => {
+export const randomDistribution = (value: number, edges: number[]) => {
     let totalWeight = edges.reduce((acc, edge) => acc + edge, 0);
     let probabilities = edges.map(edge => edge / totalWeight);
 
