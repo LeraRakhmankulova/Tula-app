@@ -6,7 +6,7 @@ interface IAnimateScheme {
   iterationsCount: number;
   gamesCount: number;
   isPlay: boolean;
-  isReset: boolean,
+  isReset: boolean;
   intervalId: any;
   time: number;
   setTime: (count: number) => void;
@@ -46,23 +46,37 @@ export const useAnimateScheme = create<IAnimateScheme>((set) => ({
           set((state) => {
             const newCount = state.iterationsCount + 1;
             if (newCount === +state.iterations) {
-              clearInterval(state.intervalId);
-              return {
-                ...state,
-                iterationsCount: newCount,
-                isPlay: false,
-                intervalId: null,
-                isReset: true
-              };
+              if (state.gamesCount + 1 === +state.games) {
+                clearInterval(state.intervalId);
+                return {
+                  ...state,
+                  iterationsCount: newCount,
+                  isPlay: false,
+                  intervalId: null,
+                  isReset: true,
+                };
+              } else {
+                return {
+                  ...state,
+                  iterationsCount: 0,
+                  gamesCount: state.gamesCount + 1,
+                };
+              }
             }
             return { ...state, iterationsCount: newCount };
           });
         }, state.time * 1000);
-        return { ...state, isPlay: true, intervalId: newIntervalId, isReset: false };
+        return {
+          ...state,
+          isPlay: true,
+          intervalId: newIntervalId,
+          isReset: false,
+        };
       }
       return state;
     });
   },
+
   onStop: () => {
     set((state) => {
       if (state.intervalId) {
@@ -75,6 +89,12 @@ export const useAnimateScheme = create<IAnimateScheme>((set) => ({
   onReset: () =>
     set((state) => {
       clearInterval(state.intervalId);
-      return { isPlay: false, intervalId: null, count: 0, isReset: true };
+      return {
+        isPlay: false,
+        intervalId: null,
+        iterationsCount: 0,
+        gamesCount: 0,
+        isReset: true,
+      };
     }),
 }));
