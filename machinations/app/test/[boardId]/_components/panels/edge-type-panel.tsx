@@ -6,7 +6,7 @@ export const EdgeTypePanel = () => {
     
   const { onChangeType } = useChangeEdgeType();
   return (
-    <Panel position="top-left" className="flex gap-x-2 items-center">
+    <Panel position="bottom-left" className="flex gap-x-2 items-center">
       <button
         className="bg-white rounded-md p-2"
         onClick={() => onChangeType("Default")}

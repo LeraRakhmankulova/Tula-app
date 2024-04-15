@@ -67,7 +67,6 @@ const ConverterNode = ({
         minWidth={45}
         minHeight={45}
       />
-      <div>converter</div>
       <StyledNode struct={struct} label={label} name={name} />
     </>
   );

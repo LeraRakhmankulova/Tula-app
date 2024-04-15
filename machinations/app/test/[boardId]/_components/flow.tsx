@@ -24,6 +24,7 @@ import ContextMenu from "./context-menu";
 import { EdgeTypePanel } from "./panels/edge-type-panel";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import { Metrics } from "./metrics/metrics";
+import { InfoBoard } from "./info-board";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -62,8 +63,8 @@ const Flow = ({ boardId }: FlowProps) => {
       let menu = {
         id: node.id,
         top: event.clientY < pane.height - 200 && event.clientY,
-        left: event.clientX < pane.width + 200 && event.clientX - 120,
-        right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
+        left: event.clientX < pane.width + 200 && event.clientX,
+        right: event.clientX >= pane.width - 200 && pane.width - event.clientX ,
         bottom:
           event.clientY >= pane.height - 200 && pane.height - event.clientY,
       };
@@ -121,6 +122,10 @@ const Flow = ({ boardId }: FlowProps) => {
         {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
         <Controls position="bottom-right"/>
         {/* <MiniMap /> */}
+       <Panel position="top-left">
+        
+       <InfoBoard boardId={boardId} />
+       </Panel>
         <Background color="blue" gap={16} className="bg-blue-100" />
         {analytics && <Metrics/>}
         <BottomPanel />

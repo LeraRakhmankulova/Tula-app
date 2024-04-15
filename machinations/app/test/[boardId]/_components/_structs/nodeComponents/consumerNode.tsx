@@ -65,8 +65,6 @@ const ConsumerNode = ({ data: { label, struct, name }, selected }: DataProps) =>
         minWidth={45}
         minHeight={45}
       />
-      ConsumerNode
-
       <StyledNode struct={struct} label={label} name={name} />
     </>
   );

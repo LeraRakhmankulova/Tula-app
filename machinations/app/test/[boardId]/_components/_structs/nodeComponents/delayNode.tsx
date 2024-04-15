@@ -65,8 +65,6 @@ const DelayNode = ({ data: { label, struct, name }, selected }: DataProps) => {
         minWidth={45}
         minHeight={45}
       />
-      {label}
-
       <StyledNode struct={struct} label={label} name={name} />
     </>
   );

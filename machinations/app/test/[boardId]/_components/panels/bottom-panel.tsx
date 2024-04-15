@@ -10,7 +10,7 @@ import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import { Games } from "../games";
 
 export const BottomPanel = () => {
-  const { isPlay, onPlay, onStop, onReset } = useAnimateScheme();
+  const { isPlay, onPlay, onStop, onReset, time, iterations, games } = useAnimateScheme();
   const { setEdgeAnimated } = useStore();
   useEffect(() => {
     setEdgeAnimated(isPlay);
@@ -25,9 +25,9 @@ export const BottomPanel = () => {
     <Panel position="bottom-center">
       <div className="bg-white rounded-md flex gap-x-2 items-center shadow-md py-2 px-3">
         <div className="mr-5 flex gap-x-2 items-center">
-          <CustomInput label="Iterations" placeholder="10" />
-          <CustomInput label="Time(s)" placeholder="1s" />
-          <CustomInput label="Games" placeholder="1" />
+          <CustomInput label="Iterations" initialValue={iterations} />
+          <CustomInput label="Time(s)" initialValue={time} />
+          <CustomInput label="Games" initialValue={games} />
         </div>
         <ToolButton
           label="Play"

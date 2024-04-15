@@ -3,12 +3,12 @@ import { memo, useEffect, useState } from "react";
 
 interface CustomInputProps {
   label: string;
-  placeholder: string;
+  initialValue: number;
 }
 
-const CustomInput = ({ label, placeholder }: CustomInputProps) => {
+const CustomInput = ({ label, initialValue }: CustomInputProps) => {
   const { setIterations, setTime, setGames } = useAnimateScheme();
-  const [value, setValue] = useState<number>(0);
+  const [value, setValue] = useState<number>(initialValue);
 
   useEffect(() => {
     if (label === "Iterations") {
@@ -25,7 +25,6 @@ const CustomInput = ({ label, placeholder }: CustomInputProps) => {
   return (
     <div className="flex flex-col mx-1">
       <input
-        placeholder={placeholder}
         className="w-12 text-sm text-center px-1 border border-black rounded"
         value={value}
         onChange={(e: any) => setValue(e.target.value)}
