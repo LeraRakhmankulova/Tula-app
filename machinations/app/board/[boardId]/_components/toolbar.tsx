@@ -8,6 +8,7 @@ import {
   Type,
   Undo2
 } from "lucide-react";
+import { MoveUpRight } from 'lucide-react';
 
 import { ToolButton } from "./tool-button";
 import { CanvasMode, CanvasState, LayerType } from "@/app/types/canvas";
@@ -80,6 +81,18 @@ export const Toolbar = ({
           isActive={
             canvasState.mode === CanvasMode.Inserting &&
             canvasState.layerType === LayerType.Rectangle
+          }
+        />
+         <ToolButton
+          label="Arrow"
+          icon={MoveUpRight}
+          onClick={() => setCanvasState({
+            mode: CanvasMode.Inserting,
+            layerType: LayerType.Arrow,
+          })}
+          isActive={
+            canvasState.mode === CanvasMode.Inserting &&
+            canvasState.layerType === LayerType.Arrow
           }
         />
         <ToolButton

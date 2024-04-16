@@ -9,10 +9,17 @@ import {
   XYWH
 } from "@/app/types/canvas";
 import { type ClassValue, clsx } from "clsx"
+import { MarkerType } from "reactflow";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+export const markerEnd = {
+  type: MarkerType.ArrowClosed,
+  width: 20,
+  height: 20,
+  color: 'black',
 }
 
 const COLORS = [

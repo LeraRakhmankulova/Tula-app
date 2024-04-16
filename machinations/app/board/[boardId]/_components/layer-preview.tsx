@@ -11,6 +11,7 @@ import { Ellipse } from "./_layer-components.tsx/ellipse";
 import { TextComponent } from "./_layer-components.tsx/text";
 import { Note } from "./_layer-components.tsx/note";
 import { Triangle } from "./_layer-components.tsx/triangle";
+import Connector from "./_layer-components.tsx/connector/connector";
 
 interface LayerPreviewProps {
   id: string;
@@ -76,6 +77,15 @@ export const LayerPreview = memo(
             selectionColor={selectionColor}
           />
         );
+        case LayerType.Arrow:
+          return (
+            <Connector
+              id={id}
+              layer={layer}
+              onPointerDown={onLayerPointerDown}
+              selectionColor={selectionColor}
+            />
+          );
       default:
         console.warn("Unknown layer type");
         return null;
