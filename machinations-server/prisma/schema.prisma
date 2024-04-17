@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  email    String  @unique
+  name     String?
+  password String
+  Graph    Graph[]
+
+  @@map("user")
+}
+
+model Graph {
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  countComponents Int      @default(0)
+
+  owner   User @relation(fields: [ownerId], references: [id])
+  ownerId Int  @map("owner_id")
+
+  title       String
+  description String
+
+  @@map("graph")
+}
+
+model Edge{
+  id Int @id @default(autoincrement())
+  sourceNode  Node @relation(fields: [sourceId], references: [id], name: "source")
+  sourceId Int @map("source_id")
+  targetNode Node @relation(fields: [targetId], references: [id], name: "target")
+  targetId Int @map("target_id")
+  value String
+  
+  @@map("edge")
+}
+
+model Node{
+  id Int @id @default(autoincrement())
+  x Int
+  y Int
+  type String
+  name String
+  value String 
+  simulationsCount Int @map("simulations_count")
+  
+  sourceMatches Edge[]  @relation("source")
+  targetMatches Edge[]  @relation("target")
+  
+  @@map("node")
+}
