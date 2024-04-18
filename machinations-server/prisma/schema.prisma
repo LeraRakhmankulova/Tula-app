@@ -35,7 +35,7 @@ model Board {
   owner   User @relation(fields: [ownerId], references: [id])
   ownerId Int  @map("owner_id")
 
-  isFavorite Boolean @map("is_favorite")
+  isFavorite Boolean @default(false) @map("is_favorite")
   coverImage String @map("cover_image")
   title       String
   description String
@@ -48,8 +48,8 @@ model Board {
 
 model Simulation {
   id              Int      @id @default(autoincrement())
-  iterationCount Int @map("iteration_count")
-  simulationCount Int @map("simulation_count")
+  iterationCount Int @default(0) @map("iteration_count")
+  simulationCount Int @default(0) @map("simulation_count")
 
   board   Board @relation(fields: [boardId], references: [id])
   boardId Int  @map("board_id")
@@ -76,8 +76,8 @@ model Node {
 
 model SimulationResult {
   id              Int      @id @default(autoincrement())
-  round Int
-  resources Int
+  round Int @default(1)
+  resources Int @default(1) 
 
   simulation   Simulation @relation(fields: [simulationId], references: [id])
   simulationId Int  @map("simulation_id")
