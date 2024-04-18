@@ -20,49 +20,72 @@ model User {
 
   email    String  @unique
   name     String?
-  password String
-  Graph    Graph[]
+
+  boards Board[]
 
   @@map("user")
 }
 
-model Graph {
+model Board {
   id              Int      @id @default(autoincrement())
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
-  countComponents Int      @default(0)
+  countComponents Int      @default(0)  @map("count_components")
 
   owner   User @relation(fields: [ownerId], references: [id])
   ownerId Int  @map("owner_id")
 
+  isFavorite Boolean @map("is_favorite")
+  coverImage String @map("cover_image")
   title       String
   description String
 
-  @@map("graph")
+  simulations Simulation[]
+  nodes Node[]
+
+  @@map("board")
 }
 
-model Edge{
-  id Int @id @default(autoincrement())
-  sourceNode  Node @relation(fields: [sourceId], references: [id], name: "source")
-  sourceId Int @map("source_id")
-  targetNode Node @relation(fields: [targetId], references: [id], name: "target")
-  targetId Int @map("target_id")
-  value String
-  
-  @@map("edge")
+model Simulation {
+  id              Int      @id @default(autoincrement())
+  iterationCount Int @map("iteration_count")
+  simulationCount Int @map("simulation_count")
+
+  board   Board @relation(fields: [boardId], references: [id])
+  boardId Int  @map("board_id")
+
+  simulationResults SimulationResult[] 
+
+  startTime       DateTime @default(now()) @map("start_time")
+  endTime       DateTime @updatedAt @map("end_time")
+
+  @@map("simulation")
 }
 
-model Node{
-  id Int @id @default(autoincrement())
-  x Int
-  y Int
+model Node {
+  id              Int      @id @default(autoincrement())
   type String
-  name String
-  value String 
-  simulationsCount Int @map("simulations_count")
-  
-  sourceMatches Edge[]  @relation("source")
-  targetMatches Edge[]  @relation("target")
-  
+  label String
+
+  board   Board @relation(fields: [boardId], references: [id])
+  boardId Int  @map("board_id")
+  simulationResults SimulationResult[] 
+
   @@map("node")
 }
+
+model SimulationResult {
+  id              Int      @id @default(autoincrement())
+  round Int
+  resources Int
+
+  simulation   Simulation @relation(fields: [simulationId], references: [id])
+  simulationId Int  @map("simulation_id")
+
+  node   Node @relation(fields: [nodeId], references: [id])
+  nodeId Int  @map("node_id")
+
+  @@map("simulation_result")
+}
+
+
