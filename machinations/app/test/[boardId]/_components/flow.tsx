@@ -16,7 +16,7 @@ import { useMyPresence, useOthers } from "@/liveblocks.config";
 import { Cursor } from "./cursor";
 import { Toolbar } from "./panels/toolbar";
 import { BottomPanel } from "./panels/bottom-panel";
-import { TopPanel } from "./panels/top-panel";
+import { DownloadBtn } from "./ui/download-btn";
 import useStore, { RFState } from "@/app/store/use-store";
 import { CustomEdgesTypes, edgeTypes, nodeTypes } from "@/app/types/structs";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -25,6 +25,7 @@ import { EdgeTypePanel } from "./panels/edge-type-panel";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import { Metrics } from "./metrics/metrics";
 import { InfoBoard } from "./info-board";
+import Link from "next/link";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -64,7 +65,7 @@ const Flow = ({ boardId }: FlowProps) => {
         id: node.id,
         top: event.clientY < pane.height - 200 && event.clientY,
         left: event.clientX < pane.width + 200 && event.clientX,
-        right: event.clientX >= pane.width - 200 && pane.width - event.clientX ,
+        right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
         bottom:
           event.clientY >= pane.height - 200 && pane.height - event.clientY,
       };
@@ -120,16 +121,19 @@ const Flow = ({ boardId }: FlowProps) => {
         onNodeContextMenu={onNodeContextMenu}
       >
         {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
-        <Controls position="bottom-right"/>
-        {/* <MiniMap /> */}
-       <Panel position="top-left">
-        
-       <InfoBoard boardId={boardId} />
-       </Panel>
+        <Controls position="bottom-right" />
+        <Panel position="top-left">
+          <div className="bg-white rounded-md p-1.5 flex gap-x-2 items-center shadow-md">
+            <DownloadBtn />
+            <Link href="/editor" className="rounded-md p-1.5 py-2 bg-black">
+              <span className="text-white">Editor</span>
+            </Link>
+            <InfoBoard boardId={boardId} />
+          </div>
+        </Panel>
         <Background color="blue" gap={16} className="bg-blue-100" />
-        {analytics && <Metrics/>}
+        {analytics && <Metrics />}
         <BottomPanel />
-        <TopPanel />
         <EdgeTypePanel />
       </ReactFlow>
     </main>
