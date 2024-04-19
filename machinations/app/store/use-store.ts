@@ -23,7 +23,7 @@ export type RFState = {
   onEdgesChange: OnEdgesChange;
   deleteNode: (id: string) => void;
   setEdgeAnimated: (isPlay: boolean) => void;
-  setNodeLabel: (id: string, count: number, ) => void;
+  setNodeLabel: (id: string, count: number,) => void;
   onConnect: (connection: any) => void;
   addNode: (struct: StructType) => void;
   getEdgeValues: (id: string) => { sourceStruct: any, sourceValue: any, targetValue: any };
@@ -169,15 +169,15 @@ const useStore = create<RFState>((set, get) => ({
 
   addNode: (struct: StructType) => {
     let newNode;
-      newNode = {
-        id: nanoid(),
-        type: struct.toLowerCase() + "Node",
-        data: { label: '0', struct: struct, name: null },
-        position: {
-          x: (Math.random() * window.innerWidth / 2),
-          y: (Math.random() * window.innerHeight / 2),
-        },
-      };
+    newNode = {
+      id: nanoid(),
+      type: struct.toLowerCase() + "Node",
+      data: { label: '0', struct: struct, name: null },
+      position: {
+        x: (Math.random() * window.innerWidth / 2),
+        y: (Math.random() * window.innerHeight / 2),
+      },
+    };
 
     set({
       nodes: [...get().nodes, newNode],

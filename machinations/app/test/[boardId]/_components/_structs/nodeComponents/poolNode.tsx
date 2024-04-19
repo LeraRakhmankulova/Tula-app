@@ -24,14 +24,11 @@ interface DataProps {
 }
 
 const PoolNode = ({ data: { label, struct, name }, selected, id }: DataProps) => {
-  const { isPlay, onStop, onReset, time } = useAnimateScheme();
+  const { isPlay, onStop, onReset, time, gamesCount, resetNodes } = useAnimateScheme();
   const { setNodeLabel, getEdgeValues } = useStore();
   const nodeId = useNodeId();
   const edges = useEdges();
   const nodes = useNodes();
-
-
-
   useEffect(() => {
     let intervalId = null;
     if (isPlay) {
@@ -46,7 +43,7 @@ const PoolNode = ({ data: { label, struct, name }, selected, id }: DataProps) =>
       }, time * 1000);
     }
     return () => clearInterval(intervalId);
-  }, [isPlay, onStop, onReset, label]);
+  }, [isPlay, onStop, onReset, label, gamesCount]);
 
   return (
     <>

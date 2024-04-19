@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import useStore from "./use-store";
 
 interface IAnimateScheme {
   iterations: number;
@@ -9,6 +10,7 @@ interface IAnimateScheme {
   isReset: boolean;
   intervalId: any;
   time: number;
+  resetNodes: () => void;
   setTime: (count: number) => void;
   setIterations: (count: number) => void;
   setGames: (count: number) => void;
@@ -37,6 +39,20 @@ export const useAnimateScheme = create<IAnimateScheme>((set) => ({
   setGames: (count: number) => {
     set({
       games: count,
+    });
+  },
+  resetNodes: () => {
+    const nodes = useStore.getState().nodes;
+    const updatedNodes = nodes.map((node) => ({
+      ...node,
+      data: {
+        ...node.data,
+        label: "0",
+      },
+    }));
+
+    useStore.setState({
+      nodes: updatedNodes,
     });
   },
   onPlay: () => {
@@ -89,6 +105,7 @@ export const useAnimateScheme = create<IAnimateScheme>((set) => ({
   onReset: () =>
     set((state) => {
       clearInterval(state.intervalId);
+      state.resetNodes()
       return {
         isPlay: false,
         intervalId: null,
