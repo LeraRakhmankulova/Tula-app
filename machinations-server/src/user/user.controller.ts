@@ -2,14 +2,24 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateBoardDto } from 'src/board/dto/create-board.dto';
+import { BoardEntity } from 'src/board/entities/board.entity';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
+  }
+
+  @Post(':id/boards')
+  async createBoardForUser(
+    @Param('id') userId: number,
+    @Body() createBoardDto: CreateBoardDto,
+  ){
+    return this.userService.createBoardForUser(userId, createBoardDto);
   }
 
   @Get()

@@ -1,5 +1,5 @@
 import { BoardEntity } from "src/board/entities/board.entity";
-import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 export class UserEntity {
@@ -21,6 +21,7 @@ export class UserEntity {
     @CreateDateColumn()
     createdAt: Date
 
-    @OneToMany(() => BoardEntity, (board) => board.user)
-    boards: BoardEntity[]
+    @ManyToMany(() => BoardEntity, (board) => board.users)
+    @JoinTable()
+    boards: BoardEntity[];
 }

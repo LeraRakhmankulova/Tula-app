@@ -1,5 +1,5 @@
 import { UserEntity } from "src/user/entities/user.entity";
-import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 
 @Entity()
 export class BoardEntity {
@@ -12,8 +12,9 @@ export class BoardEntity {
     @UpdateDateColumn()
     updatedAt: Date
 
-    @ManyToOne(() => UserEntity, (user) => user.boards)
-    user: UserEntity
+    @ManyToMany(() => UserEntity, (user) => user.boards)
+    // @JoinTable()
+    users: UserEntity[];
 
     @Column({default: false})
     is_favorite: boolean
