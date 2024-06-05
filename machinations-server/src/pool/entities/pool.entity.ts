@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { GameSessionEntity } from "src/game-session/entities/game-session.entity";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 export class PoolEntity {
@@ -10,7 +11,7 @@ export class PoolEntity {
 
     @Column()
     value: number
-    
-    @Column()
-    session_id
+
+    @ManyToOne(() => GameSessionEntity, (game_session) => game_session.pools)
+    game_session: GameSessionEntity
 }

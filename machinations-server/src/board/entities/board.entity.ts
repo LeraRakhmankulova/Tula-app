@@ -1,4 +1,5 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import { UserEntity } from "src/user/entities/user.entity";
+import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 
 @Entity()
 export class BoardEntity {
@@ -11,8 +12,8 @@ export class BoardEntity {
     @UpdateDateColumn()
     updatedAt: Date
 
-    @Column({nullable: false})
-    owner_id: number
+    @ManyToOne(() => UserEntity, (user) => user.boards)
+    user: UserEntity
 
     @Column({default: false})
     is_favorite: boolean
