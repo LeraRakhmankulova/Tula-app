@@ -1,1 +1,4 @@
-export class CreateTeamDto {}
+import { IsEmail, IsNotEmpty } from "class-validator"
+
+export class CreateTeamDto {
+}
