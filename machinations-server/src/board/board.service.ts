@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { BoardEntity } from './entities/board.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BoardService {
-  create(createBoardDto: CreateBoardDto) {
-    return 'This action adds a new board';
+  constructor(@InjectRepository(BoardEntity)
+  private boardRepository: Repository<BoardEntity>) { }
+
+  async create(@Body() boardDto: CreateBoardDto) {
+    return this.boardRepository.save({
+      is_favorite: boardDto.is_favorite ,
+      cover_image: boardDto.cover_image,
+      title: boardDto.title,
+      description: boardDto.description
+    });
   }
 
-  findAll() {
-    return `This action returns all board`;
+  async findAll() {
+    return this.boardRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} board`;
+  async findOneById(id: number) {
+    const found = await this.boardRepository.findOneBy({ id })
+    if (!found) throw new NotFoundException("Not Found")
+    return found;
   }
 
-  update(id: number, updateBoardDto: UpdateBoardDto) {
-    return `This action updates a #${id} board`;
+  async update(id: number, updateBoardDto: UpdateBoardDto) {
+    const found = this.boardRepository.findOneBy({ id })
+    if (!found) throw new NotFoundException("Not Found")
+    return this.boardRepository.update(id, updateBoardDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} board`;
+  async remove(id: number) {
+    return this.boardRepository.delete(id);
   }
 }

@@ -5,7 +5,7 @@ import { UpdateBoardDto } from './dto/update-board.dto';
 
 @Controller('board')
 export class BoardController {
-  constructor(private readonly boardService: BoardService) {}
+  constructor(private readonly boardService: BoardService) { }
 
   @Post()
   create(@Body() createBoardDto: CreateBoardDto) {
@@ -19,7 +19,7 @@ export class BoardController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.boardService.findOne(+id);
+    return this.boardService.findOneById(+id);
   }
 
   @Patch(':id')

@@ -34,6 +34,7 @@ export class UserService {
     if (!found) throw new NotFoundException("Not Found")
     return found;
   }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     const found = this.userRepository.findOneBy({ id })
     if (!found) throw new NotFoundException("Not Found")
