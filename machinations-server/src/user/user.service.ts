@@ -31,7 +31,7 @@ export class UserService {
 
     const board = this.boardRepository.create({
       ...boardDto,
-      users: [{...user}],
+      users: [{ ...user }],
     });
 
     return this.boardRepository.save(board);
@@ -42,7 +42,14 @@ export class UserService {
   }
 
   async findOneById(id: number) {
-    const found = await this.userRepository.findOneBy({ id })
+    const found = this.userRepository.findOne(
+      {
+        where: { id },
+        relations: {
+          boards: true,
+        }
+      }
+    )
     if (!found) throw new NotFoundException("Not Found")
     return found;
   }
