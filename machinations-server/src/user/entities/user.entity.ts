@@ -1,5 +1,5 @@
 import { BoardEntity } from "src/board/entities/board.entity";
-import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 export class UserEntity {

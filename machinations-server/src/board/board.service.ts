@@ -1,5 +1,4 @@
-import { Body, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateBoardDto } from './dto/create-board.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { BoardEntity } from './entities/board.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,28 +8,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
 @Injectable()
 export class BoardService {
   constructor(@InjectRepository(BoardEntity)
-  private boardRepository: Repository<BoardEntity>,
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
-  ) { }
-
-  async create(@Body() boardDto: CreateBoardDto, userId: number) {
-    const user = await this.userRepository.findOneById(userId);
-    if (!user) {
-        throw new NotFoundException('User not found');
-    }
-
-    const board = this.boardRepository.create({
-      ...boardDto,
-      users: [user],
-  });
-
-  return this.boardRepository.save(board);
-  }
-
-  async findAll() {
-    return this.boardRepository.find();
-  }
+  private boardRepository: Repository<BoardEntity>) { }
 
   async findOneById(id: number) {
     const found = await this.boardRepository.findOneBy({ id })

@@ -8,7 +8,7 @@ export class GameSessionEntity {
     id: number
 
     @Column()
-    simulation_id: number
+    session_step: number
 
     @ManyToOne(() => GameSimulationEntity, (game_simulation) => game_simulation.game_sessions)
     game_simulation: GameSimulationEntity
