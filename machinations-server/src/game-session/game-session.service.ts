@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateGameSessionDto } from './dto/create-game-session.dto';
 import { UpdateGameSessionDto } from './dto/update-game-session.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameSessionEntity } from './entities/game-session.entity';
@@ -10,18 +9,26 @@ export class GameSessionService {
   constructor(@InjectRepository(GameSessionEntity)
   private sessionRepository: Repository<GameSessionEntity>) { }
 
-  async create(createGameSessionDto: CreateGameSessionDto) {
-    return this.sessionRepository.save(createGameSessionDto)
+  async findAll() {
+    return this.sessionRepository.find({ relations: ['game_simulation'] });
   }
 
-  async findAll() {
-    return this.sessionRepository.find();
+  async findAllBySimulationId(id: number) {
+    const found = await this.sessionRepository.find({
+      where: { game_simulation: { id } },
+      relations: ['pools'],
+    });
+    if (!found) throw new NotFoundException("Not Found")
+    return found;
   }
 
   async findOne(id: number) {
     const found = await this.sessionRepository.findOne(
       {
-        where: { id }
+        where: { id },
+        relations: {
+          pools: true,
+        }
       }
     )
     if (!found) throw new NotFoundException("Not Found")

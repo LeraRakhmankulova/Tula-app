@@ -1,20 +1,18 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { GameSessionService } from './game-session.service';
-import { CreateGameSessionDto } from './dto/create-game-session.dto';
 import { UpdateGameSessionDto } from './dto/update-game-session.dto';
 
-@Controller('game-session')
+@Controller('session')
 export class GameSessionController {
   constructor(private readonly gameSessionService: GameSessionService) {}
-
-  @Post()
-  create(@Body() createGameSessionDto: CreateGameSessionDto) {
-    return this.gameSessionService.create(createGameSessionDto);
-  }
 
   @Get()
   findAll() {
     return this.gameSessionService.findAll();
+  }
+  @Get('/all/:id')
+  findAllBySimulationId(@Param('id') id: string) {
+    return this.gameSessionService.findAllBySimulationId(+id);
   }
 
   @Get(':id')
