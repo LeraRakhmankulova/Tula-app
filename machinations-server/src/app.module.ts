@@ -14,6 +14,7 @@ import { PoolEntity } from './pool/entities/pool.entity';
 import { TeamEntity } from './team/entities/team.entity';
 import { GameSessionEntity } from './game-session/entities/game-session.entity';
 import { GameSimulationEntity } from './game-simulation/entities/game-simulation.entity';
+import { StatisticsModule } from './statistics/statistics.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { GameSimulationEntity } from './game-simulation/entities/game-simulation
     PoolModule,
     TeamModule,
     GameSessionModule,
-    GameSimulationModule,],
+    GameSimulationModule,
+    StatisticsModule,],
   controllers: [AppController],
   providers: [AppService],
 })
