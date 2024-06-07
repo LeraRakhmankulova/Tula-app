@@ -15,6 +15,7 @@ import { TeamEntity } from './team/entities/team.entity';
 import { GameSessionEntity } from './game-session/entities/game-session.entity';
 import { GameSimulationEntity } from './game-simulation/entities/game-simulation.entity';
 import { StatisticsModule } from './statistics/statistics.module';
+import { GameIterationModule } from './game-iteration/game-iteration.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { StatisticsModule } from './statistics/statistics.module';
     TeamModule,
     GameSessionModule,
     GameSimulationModule,
-    StatisticsModule,],
+    StatisticsModule,
+    GameIterationModule,],
   controllers: [AppController],
   providers: [AppService],
 })

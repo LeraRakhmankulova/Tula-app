@@ -31,6 +31,15 @@ export class PoolService {
     return savedPool;
   }
 
+  async findAllBySessionId(id: number) {
+    const found = this.poolRepository.find(
+      { where: { game_session: { id } } }
+    )
+    if (!found) throw new NotFoundException("Not Found")
+    return found;
+  }
+
+
   async findAll() {
     return this.poolRepository.find();
   }

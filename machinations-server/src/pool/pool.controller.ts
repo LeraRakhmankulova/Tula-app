@@ -7,9 +7,14 @@ import { UpdatePoolDto } from './dto/update-pool.dto';
 export class PoolController {
   constructor(private readonly poolService: PoolService) { }
 
-  @Post(':id/sessions')
-  create( @Param('id') sessionId: number,@Body() createPoolDto: CreatePoolDto) {
+  @Post('sessions/:id')
+  create(@Param('id') sessionId: number, @Body() createPoolDto: CreatePoolDto) {
     return this.poolService.createPoolForSession(sessionId, createPoolDto);
+  }
+
+  @Get('session/:id')
+  findAllBySessionId(@Param('id') id: string) {
+    return this.poolService.findAllBySessionId(+id);
   }
 
   @Get()
