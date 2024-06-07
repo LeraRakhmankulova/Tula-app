@@ -6,8 +6,8 @@ export class GameIterationEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => GameSessionEntity, (session) => session.iterations)
-    session: GameSessionEntity;
+    // @ManyToOne(() => GameSessionEntity, (session) => session.iterations)
+    // session: GameSessionEntity;
 
     @Column()
     value: number;    

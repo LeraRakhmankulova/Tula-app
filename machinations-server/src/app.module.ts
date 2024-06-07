@@ -16,6 +16,8 @@ import { GameSessionEntity } from './game-session/entities/game-session.entity';
 import { GameSimulationEntity } from './game-simulation/entities/game-simulation.entity';
 import { StatisticsModule } from './statistics/statistics.module';
 import { GameIterationModule } from './game-iteration/game-iteration.module';
+import { DataParserService } from './data-parser/data-parser.service';
+import { DataParserController } from './data-parser/data-parser.controller';
 
 @Module({
   imports: [
@@ -38,7 +40,7 @@ import { GameIterationModule } from './game-iteration/game-iteration.module';
     GameSimulationModule,
     StatisticsModule,
     GameIterationModule,],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, DataParserController],
+  providers: [AppService, DataParserService],
 })
 export class AppModule { }

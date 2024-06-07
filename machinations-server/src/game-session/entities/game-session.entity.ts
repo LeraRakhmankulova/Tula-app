@@ -17,6 +17,6 @@ export class GameSessionEntity {
     @OneToMany(() => PoolEntity, (pool) => pool.game_session)
     pools: PoolEntity[]
 
-    @OneToMany(() => GameIterationEntity, (iteration) => iteration.session)
-    iterations: GameIterationEntity[];
+    // @OneToMany(() => GameIterationEntity, (iteration) => iteration.session)
+    // iterations: GameIterationEntity[];
 }
