@@ -1,3 +1,4 @@
+import { GameIterationEntity } from "src/game-iteration/entities/game-iteration.entity"
 import { GameSimulationEntity } from "src/game-simulation/entities/game-simulation.entity"
 import { PoolEntity } from "src/pool/entities/pool.entity"
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
@@ -15,4 +16,7 @@ export class GameSessionEntity {
 
     @OneToMany(() => PoolEntity, (pool) => pool.game_session)
     pools: PoolEntity[]
+
+    @OneToMany(() => GameIterationEntity, (iteration) => iteration.session)
+    iterations: GameIterationEntity[];
 }
