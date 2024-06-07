@@ -1,3 +1,4 @@
+import { TeamEntity } from "src/team/entities/team.entity";
 import { UserEntity } from "src/user/entities/user.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
@@ -13,7 +14,6 @@ export class BoardEntity {
     updatedAt: Date
 
     @ManyToMany(() => UserEntity, (user) => user.boards, { cascade: true })
-    // @JoinTable()
     users: UserEntity[];
 
     @Column({ default: false })
@@ -27,4 +27,7 @@ export class BoardEntity {
 
     @Column()
     description: string
+
+    @ManyToOne(() => BoardEntity, (board) => board.team)
+    team: TeamEntity
 }

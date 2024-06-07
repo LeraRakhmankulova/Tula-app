@@ -10,6 +10,9 @@ export class PoolEntity {
     title: string
 
     @Column()
+    description:string
+
+    @Column()
     value: number
 
     @ManyToOne(() => GameSessionEntity, (game_session) => game_session.pools)

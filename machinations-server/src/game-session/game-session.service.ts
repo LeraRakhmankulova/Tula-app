@@ -1,26 +1,40 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateGameSessionDto } from './dto/create-game-session.dto';
 import { UpdateGameSessionDto } from './dto/update-game-session.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { GameSessionEntity } from './entities/game-session.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class GameSessionService {
-  create(createGameSessionDto: CreateGameSessionDto) {
-    return 'This action adds a new gameSession';
+  constructor(@InjectRepository(GameSessionEntity)
+  private sessionRepository: Repository<GameSessionEntity>) { }
+
+  async create(createGameSessionDto: CreateGameSessionDto) {
+    return this.sessionRepository.save(createGameSessionDto)
   }
 
-  findAll() {
-    return `This action returns all gameSession`;
+  async findAll() {
+    return this.sessionRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} gameSession`;
+  async findOne(id: number) {
+    const found = await this.sessionRepository.findOne(
+      {
+        where: { id }
+      }
+    )
+    if (!found) throw new NotFoundException("Not Found")
+    return found;
   }
 
-  update(id: number, updateGameSessionDto: UpdateGameSessionDto) {
-    return `This action updates a #${id} gameSession`;
+  async update(id: number, updateGameSessionDto: UpdateGameSessionDto) {
+    const found = this.sessionRepository.findOneBy({ id })
+    if (!found) throw new NotFoundException("Not Found")
+    return this.sessionRepository.update(id, updateGameSessionDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} gameSession`;
+  async remove(id: number) {
+    return this.sessionRepository.delete(id);
   }
 }

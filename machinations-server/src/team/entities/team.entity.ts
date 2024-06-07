@@ -1,5 +1,6 @@
+import { BoardEntity } from "src/board/entities/board.entity"
 import { UserEntity } from "src/user/entities/user.entity"
-import { CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity()
 export class TeamEntity {
@@ -9,7 +10,13 @@ export class TeamEntity {
     @CreateDateColumn()
     createdAt: Date
 
+    @Column()
+    title: string
+
     @ManyToMany(() => UserEntity)
     @JoinTable()
-    categories: UserEntity[]
+    users: UserEntity[]
+
+    @OneToMany(() => BoardEntity, (board) => board.team)
+    boards: BoardEntity[]
 }

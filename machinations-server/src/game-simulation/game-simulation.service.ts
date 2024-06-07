@@ -21,7 +21,7 @@ export class GameSimulationService {
     for (let i = 0; i < sessionsToCreate; i++) {
       const session = this.sessionRepository.create({
         game_simulation: savedSimulation,
-        session_step: i  + 1,
+        session_step: i + 1,
       });
       sessions.push(session);
     }
