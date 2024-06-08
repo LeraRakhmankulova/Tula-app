@@ -7,17 +7,19 @@ import styles from "./editor.module.scss";
 import { useRenameModal } from "@/app/store/use-rename-modal";
 import { ITemplate, generateSheme } from "@/app/services/generateSheme";
 import { useGenerate } from "@/app/store/use-boardInfo";
+import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 
 const EditorComponent = () => {
   const [code, setCode] = useState("");
-  const { setIsVisisble} = useRenameModal();
-  const {description, setDescription} = useGenerate()
+  const { setIsVisisble } = useRenameModal();
+  const { description, setDescription } = useGenerate();
+  const { onChangeType } = useChangeEdgeType();
   const handleCodeChange = (newCode: any) => {
     setCode(newCode);
   };
   const handleBuildScheme = () => {
-    const template: ITemplate | null= parseCodeToTemplate(code);
-    generateSheme(template, setDescription)
+    const template: ITemplate | null = parseCodeToTemplate(code);
+    generateSheme(template, setDescription, onChangeType);
   };
   return (
     <div className="flex flex-col h-full">
@@ -31,13 +33,21 @@ const EditorComponent = () => {
         onChange={handleCodeChange}
       />
       <div className={styles.editor_btn}>
-        <button onClick={() => { handleBuildScheme() }} className={styles.generate}>
+        <button
+          onClick={() => {
+            handleBuildScheme();
+          }}
+          className={styles.generate}
+        >
           Generate
         </button>
         <button onClick={() => setCode("")} className={styles.reset}>
           Reset
         </button>
-        <button onClick={() => console.log("downloaded")} className={styles.reset}>
+        <button
+          onClick={() => console.log("downloaded")}
+          className={styles.reset}
+        >
           Download
         </button>
       </div>
