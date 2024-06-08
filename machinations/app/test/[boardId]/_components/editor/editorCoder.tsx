@@ -10,21 +10,35 @@ import { useGenerate } from "@/app/store/use-boardInfo";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import { useAnimateScheme } from "@/app/store/use-animate-scheme";
 import useStore from "@/app/store/use-store";
-
+import { parserToJson } from "@/app/services/parserToJson";
 
 const EditorComponent = () => {
   const [code, setCode] = useState("");
   const { setIsVisisble } = useRenameModal();
-  const { setDescription } = useGenerate();
-  const {setTime, setGames, setIterations} = useAnimateScheme()
-  const {generateNode, generateEdge} = useStore()
-  const { onChangeType } = useChangeEdgeType();
+  const { setDescription, description } = useGenerate();
+  const { setTime, setGames, setIterations, iterations, games, time } = useAnimateScheme();
+  const { generateNode, generateEdge } = useStore();
+  const { onChangeType, currentType } = useChangeEdgeType();
   const handleCodeChange = (newCode: any) => {
     setCode(newCode);
   };
   const handleBuildScheme = () => {
     const template: ITemplate | null = parseCodeToTemplate(code);
-    generateSheme(template, setDescription, onChangeType, setGames, setIterations, setTime, generateNode, generateEdge);
+    generateSheme(
+      template,
+      setDescription,
+      onChangeType,
+      setGames,
+      setIterations,
+      setTime,
+      generateNode,
+      generateEdge
+    );
+  };
+
+  const handleBuildJson = () => {
+    const res = parserToJson(description, currentType, iterations, games, time);
+    setCode(res);
   };
   return (
     <div className="flex flex-col h-full">
@@ -49,11 +63,8 @@ const EditorComponent = () => {
         <button onClick={() => setCode("")} className={styles.reset}>
           Reset
         </button>
-        <button
-          onClick={() => console.log("downloaded")}
-          className={styles.reset}
-        >
-          Download
+        <button onClick={handleBuildJson} className={styles.reset}>
+          Build
         </button>
       </div>
     </div>

@@ -12,7 +12,7 @@ export const generateSheme = (template: ITemplate | null, setDescription: (text:
     let type: string | null = 'Default';
     if (template) {
         if(template.edgeType === 'default') type = 'Default'
-        if(template.edgeType === 'smooth') type = 'SmoothStep'
+        if(template.edgeType === 'smoothstep') type = 'SmoothStep'
         if(template.edgeType === 'bezier') type = 'Bezier'
         setDescription(template.description)
         onChangeType(type)
