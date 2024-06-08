@@ -7,9 +7,11 @@ import { useState } from "react";
 import { useSelf } from "@/liveblocks.config";
 import { useRenameModal } from "@/app/store/use-rename-modal";
 import { EdgeTypePanel } from "../panels/edge-type-panel";
+import { useGenerate } from "@/app/store/use-boardInfo";
 
 const InfoBoardComponent = ({ boardId }: any) => {
-  const [description, setDescription] = useState("Тестовая доска для показа");
+  // const [description, setDescription] = useState("Тестовая доска для показа");
+  const {description, setDescription} = useGenerate()
   const currentUser = useSelf();
   const { setIsVisisbleBoard } = useRenameModal();
 
