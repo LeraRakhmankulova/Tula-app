@@ -21,3 +21,10 @@
     background: rgb(234, 248, 252);
     border-radius: 8px;
   }
+
+.position_panel{
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  height: 785px !important;
+  z-index: 10000 !important;
+}

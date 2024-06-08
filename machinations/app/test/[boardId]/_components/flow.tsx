@@ -26,6 +26,8 @@ import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import { Metrics } from "./metrics/metrics";
 import { InfoBoard } from "./info-board";
 import Link from "next/link";
+import EditorComponent from "./editor/editorCoder";
+import "./../style-test.css"
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -99,7 +101,7 @@ const Flow = ({ boardId }: FlowProps) => {
     >
       <div className="z-10 w-full relative">
         <Participants />
-        <Toolbar />
+        {/* <Toolbar /> */}
       </div>
       {others.map(({ connectionId, presence }) => {
         if (presence.cursor === null) {
@@ -122,7 +124,10 @@ const Flow = ({ boardId }: FlowProps) => {
       >
         {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
         <Controls position="bottom-right" />
-        <Panel position="top-left">
+        <Panel position="top-left" className="position_panel">
+          <EditorComponent/>
+        </Panel>
+        {/* <Panel position="top-left">
           <div className="bg-white rounded-md p-1.5 flex gap-x-2 items-center shadow-md">
             <DownloadBtn />
             <Link href="/editor" className="rounded-md p-1.5 py-2 bg-black">
@@ -130,7 +135,7 @@ const Flow = ({ boardId }: FlowProps) => {
             </Link>
             <InfoBoard boardId={boardId} />
           </div>
-        </Panel>
+        </Panel> */}
         <Background color="blue" gap={16} className="bg-blue-100" />
         {analytics && <Metrics />}
         <BottomPanel />

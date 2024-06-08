@@ -2,6 +2,7 @@ import { create } from "zustand";
 import useStore from "./use-store";
 
 interface IAnimateScheme {
+  isVisibleEditor: boolean,
   iterations: number;
   games: number;
   iterationsCount: number;
@@ -20,6 +21,7 @@ interface IAnimateScheme {
 }
 
 export const useAnimateScheme = create<IAnimateScheme>((set) => ({
+  isVisibleEditor: false,
   iterations: 1,
   games: 1,
   isPlay: false,
