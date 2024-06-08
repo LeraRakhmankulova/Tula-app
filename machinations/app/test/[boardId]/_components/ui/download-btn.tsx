@@ -1,5 +1,4 @@
 import {
-  Panel,
   getTransformForBounds,
   useReactFlow,
   getRectOfNodes,
@@ -45,7 +44,7 @@ export const DownloadBtn = () => {
   return (
     <div>
       <ToolButton
-        label="Download"
+        label="Download PNG"
         onClick={onDownload}
         isActive={false}
         icon={Download}

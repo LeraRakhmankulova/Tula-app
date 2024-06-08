@@ -1,13 +1,6 @@
 "use client";
 import "reactflow/dist/style.css";
-import ReactFlow, {
-  Controls,
-  MiniMap,
-  Background,
-  Node,
-  useKeyPress,
-  Panel,
-} from "reactflow";
+import ReactFlow, { Controls, Background, Panel } from "reactflow";
 import { Participants } from "@/app/board/[boardId]/_components/participants";
 
 import { shallow } from "zustand/shallow";
@@ -21,14 +14,14 @@ import useStore, { RFState } from "@/app/store/use-store";
 import { CustomEdgesTypes, edgeTypes, nodeTypes } from "@/app/types/structs";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ContextMenu from "./context-menu";
-import { EdgeTypePanel } from "./panels/edge-type-panel";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
 import { Metrics } from "./metrics/metrics";
-import { InfoBoard } from "./info-board";
-import Link from "next/link";
 import EditorComponent from "./editor/editorCoder";
 import "./../style-test.css";
 import { useRenameModal } from "@/app/store/use-rename-modal";
+import InfoBoardComponent from "./infoBoard/infoBoard";
+import { ToolButton } from "./ui/tool-button";
+import { FileJson2, LayoutDashboard } from "lucide-react";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -56,7 +49,8 @@ const Flow = ({ boardId }: FlowProps) => {
     useStore(selector, shallow);
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
-  const { isVisibleEditor, setIsVisisble } = useRenameModal();
+  const { isVisibleEditor, setIsVisisble, isVisibleBoard, setIsVisisbleBoard } =
+    useRenameModal();
   const { analytics, setAnalytics } = useChangeEdgeType();
   const [menu, setMenu] = useState<IContextMenu | null>(null);
   const ref = useRef(null);
@@ -64,6 +58,7 @@ const Flow = ({ boardId }: FlowProps) => {
   const onNodeContextMenu = useCallback(
     (event: any, node: any) => {
       event.preventDefault();
+      //@ts-ignore
       const pane = ref.current?.getBoundingClientRect();
       let menu = {
         id: node.id,
@@ -81,7 +76,6 @@ const Flow = ({ boardId }: FlowProps) => {
 
   const onPaneClick = useCallback(() => {
     setMenu(null);
-    // setAnalytics(true);
   }, [setMenu]);
 
   return (
@@ -101,10 +95,13 @@ const Flow = ({ boardId }: FlowProps) => {
         })
       }
     >
-      <div className="z-10 w-full relative">
-        <Participants />
-        {/* <Toolbar /> */}
-      </div>
+      {!isVisibleEditor && (
+        <div className="z-10 w-full relative">
+          {/* <Participants/> */}
+          <Toolbar />
+        </div>
+      )}
+
       {others.map(({ connectionId, presence }) => {
         if (presence.cursor === null) {
           return null;
@@ -126,6 +123,7 @@ const Flow = ({ boardId }: FlowProps) => {
       >
         {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
         <Controls position="bottom-right" />
+
         {isVisibleEditor && (
           <Panel position="top-left" className="position_panel">
             <EditorComponent />
@@ -134,15 +132,30 @@ const Flow = ({ boardId }: FlowProps) => {
 
         <Panel position="top-center">
           <div className="bg-white rounded-md p-1.5 flex gap-x-2 items-center shadow-md">
+            <ToolButton
+              label="Editor"
+              onClick={setIsVisisble}
+              isActive={false}
+              icon={FileJson2}
+            />
             <DownloadBtn />
-            <button onClick={setIsVisisble} className="text-white bg-black py-2 px-1 rounded-md">Editor</button>
-            <InfoBoard boardId={boardId} />
+            <ToolButton
+              label="Board"
+              onClick={setIsVisisbleBoard}
+              isActive={false}
+              icon={LayoutDashboard}
+            />
           </div>
         </Panel>
+
+        {isVisibleBoard && (
+          <Panel position="top-right" className="info_panel">
+            <InfoBoardComponent boardId={boardId} />
+          </Panel>
+        )}
         <Background color="blue" gap={16} className="bg-blue-100" />
         {analytics && <Metrics />}
         <BottomPanel />
-        <EdgeTypePanel />
       </ReactFlow>
     </main>
   );

@@ -1,4 +1,4 @@
-import { InfoBoard } from "./_components/info-board";
+import { InfoBoard } from "./_components/infoBoard/info-board";
 import BoardSidebar from "./_components/sidebar/sidebar-board";
 
 interface DashboardLayoutProps {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { InfoBoard } from "../info-board";
+import { InfoBoard } from "../infoBoard/info-board";
 
 interface TestIdPageProps {
   params: {

@@ -26,5 +26,9 @@
   margin-top: 0 !important;
   margin-left: 0 !important;
   height: 785px !important;
-  z-index: 10000 !important;
+  z-index: 100 !important;
+}
+.info_panel{
+  margin-top: 0 !important;
+  margin-right: 0 !important;
 }

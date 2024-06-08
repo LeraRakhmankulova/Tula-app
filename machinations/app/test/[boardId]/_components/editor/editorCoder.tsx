@@ -4,9 +4,11 @@ import { parseCodeToTemplate } from "@/app/services/parserCode";
 import MonacoEditor from "@monaco-editor/react";
 import { useState } from "react";
 import styles from "./editor.module.scss";
+import { useRenameModal } from "@/app/store/use-rename-modal";
 
 const EditorComponent = () => {
   const [code, setCode] = useState("");
+  const { setIsVisisble} = useRenameModal();
   const handleCodeChange = (newCode: any) => {
     setCode(newCode);
   };
@@ -26,7 +28,7 @@ const EditorComponent = () => {
         onChange={handleCodeChange}
       />
       <div className={styles.editor_btn}>
-        <button onClick={handleBuildScheme} className={styles.generate}>
+        <button onClick={() => { handleBuildScheme(); setIsVisisble(); }} className={styles.generate}>
           Generate
         </button>
         <button onClick={() => setCode("")} className={styles.reset}>
