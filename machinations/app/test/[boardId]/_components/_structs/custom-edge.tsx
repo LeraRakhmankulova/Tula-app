@@ -13,7 +13,7 @@ import {
 } from "reactflow";
 
 export default function CustomEdge(props: EdgeProps) {
-  const [inputValue, setInputValue] = useState<number>(1);
+
   const { error, setError, currentType } = useChangeEdgeType();
   const [localError, setLocalError] = useState<string | null>(null);
 
@@ -26,7 +26,10 @@ export default function CustomEdge(props: EdgeProps) {
     targetY,
     targetPosition,
     id,
+    data
   } = props;
+  const initial = data.data 
+  const [inputValue, setInputValue] = useState<number>(initial);
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,

@@ -62,7 +62,9 @@ const useStore = create<RFState>((set, get) => ({
       key: "id" + new Date(),
       type: "custom", animated: false,
       markerEnd: markerEnd,
-      data: 1,
+      data: {
+        data: 1
+      },
     };
     set((state) => ({
       edges: [...get().edges, newEdge],
@@ -202,15 +204,18 @@ const useStore = create<RFState>((set, get) => ({
       nodes: [...get().nodes, newNode],
     });
   },
-  generateEdge(id: number, source: number, target: number, data: number){
+  generateEdge(id: number, source: number, target: number, value: number){
     const newEdge = {
       id: id.toString(),
       source: source.toString(),
       target: target.toString(),
       key: "id" + new Date(),
-      type: "custom", animated: false,
+      type: "custom", 
+      animated: false,
       markerEnd: markerEnd,
-      data: data,
+      data: {
+        data: value
+      },
     };
     set((state) => ({
       edges: [...get().edges, newEdge],
