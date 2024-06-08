@@ -17,14 +17,14 @@ const EditorComponent = () => {
   const { setIsVisisble } = useRenameModal();
   const { setDescription } = useGenerate();
   const {setTime, setGames, setIterations} = useAnimateScheme()
-  const {generateNode} = useStore()
+  const {generateNode, generateEdge} = useStore()
   const { onChangeType } = useChangeEdgeType();
   const handleCodeChange = (newCode: any) => {
     setCode(newCode);
   };
   const handleBuildScheme = () => {
     const template: ITemplate | null = parseCodeToTemplate(code);
-    generateSheme(template, setDescription, onChangeType, setGames, setIterations, setTime, generateNode);
+    generateSheme(template, setDescription, onChangeType, setGames, setIterations, setTime, generateNode, generateEdge);
   };
   return (
     <div className="flex flex-col h-full">

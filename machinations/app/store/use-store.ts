@@ -29,6 +29,7 @@ export type RFState = {
   getEdgeValues: (id: string) => { sourceStruct: any, sourceValue: any, targetValue: any };
   setNodeName: (id: string, name: string) => void
   generateNode: (id: number, struct: string, label: string) => void
+  generateEdge:(id: number, source: number, target: number, data: number) => void
 };
 
 const graph: Graph = {
@@ -201,6 +202,20 @@ const useStore = create<RFState>((set, get) => ({
       nodes: [...get().nodes, newNode],
     });
   },
+  generateEdge(id: number, source: number, target: number, data: number){
+    const newEdge = {
+      id: id.toString(),
+      source: source.toString(),
+      target: target.toString(),
+      key: "id" + new Date(),
+      type: "custom", animated: false,
+      markerEnd: markerEnd,
+      data: data,
+    };
+    set((state) => ({
+      edges: [...get().edges, newEdge],
+    }));
+  }
 }));
 
 export default useStore;

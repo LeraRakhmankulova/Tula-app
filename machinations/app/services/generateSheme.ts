@@ -8,7 +8,7 @@ export interface ITemplate {
     gamesCount: number;
     elements: any;
 }
-export const generateSheme = (template: ITemplate | null, setDescription: (text: string) => void, onChangeType: (type: string) => void, setGames: (count: number) => void, setIterations: (count: number) => void, setTime: (count: number) => void, generateNode: any) => {
+export const generateSheme = (template: ITemplate | null, setDescription: (text: string) => void, onChangeType: (type: string) => void, setGames: (count: number) => void, setIterations: (count: number) => void, setTime: (count: number) => void, generateNode: any, generateEdge:(id: number, source: number, target: number, data: number) => void) => {
     let type: string | null = 'Default';
     if (template) {
         if(template.edgeType === 'default') type = 'Default'
@@ -21,6 +21,9 @@ export const generateSheme = (template: ITemplate | null, setDescription: (text:
         setTime(template.timeStep)
         template.elements.map((el: any) => {
             el.element_type === "node" ? generateNode(el.id, el.struct, el.label) : "close"
+        })
+        template.elements.map((el: any) => {
+            el.element_type === "edge" ? generateEdge(el.id, el.source_id, el.target_id, el.value) : "close"
         })
     }
     return 'no correct data'

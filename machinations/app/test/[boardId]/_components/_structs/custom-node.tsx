@@ -49,16 +49,9 @@ const CustomNode = ({ data: { label, struct, name }, selected }: DataProps) => {
         setNodeLabel(nodeId!, (parseInt(label) + sumOfData).toString());
     };
 
-
-
     if (isPlay) {
       intervalId = setInterval(intervalCallback, time * 1000);
     }
-
-    // if (isReset) {
-    //   setNodeLabel(nodeId!, "0");
-    // }
-
     return () => {
       if (intervalId) {
         clearInterval(intervalId);
