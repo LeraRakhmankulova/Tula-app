@@ -32,6 +32,9 @@ const EditorComponent = () => {
         <button onClick={() => setCode("")} className={styles.reset}>
           Reset
         </button>
+        <button onClick={() => console.log("downloaded")} className={styles.reset}>
+          Download
+        </button>
       </div>
     </div>
   );

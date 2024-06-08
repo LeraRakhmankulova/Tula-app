@@ -27,7 +27,8 @@ import { Metrics } from "./metrics/metrics";
 import { InfoBoard } from "./info-board";
 import Link from "next/link";
 import EditorComponent from "./editor/editorCoder";
-import "./../style-test.css"
+import "./../style-test.css";
+import { useRenameModal } from "@/app/store/use-rename-modal";
 
 const selector = (state: RFState) => ({
   nodes: state.nodes,
@@ -55,6 +56,7 @@ const Flow = ({ boardId }: FlowProps) => {
     useStore(selector, shallow);
   const [{ cursor }, updateMyPresence] = useMyPresence();
   const others = useOthers();
+  const { isVisibleEditor, setIsVisisble } = useRenameModal();
   const { analytics, setAnalytics } = useChangeEdgeType();
   const [menu, setMenu] = useState<IContextMenu | null>(null);
   const ref = useRef(null);
@@ -124,18 +126,19 @@ const Flow = ({ boardId }: FlowProps) => {
       >
         {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
         <Controls position="bottom-right" />
-        <Panel position="top-left" className="position_panel">
-          <EditorComponent/>
-        </Panel>
-        {/* <Panel position="top-left">
+        {isVisibleEditor && (
+          <Panel position="top-left" className="position_panel">
+            <EditorComponent />
+          </Panel>
+        )}
+
+        <Panel position="top-center">
           <div className="bg-white rounded-md p-1.5 flex gap-x-2 items-center shadow-md">
             <DownloadBtn />
-            <Link href="/editor" className="rounded-md p-1.5 py-2 bg-black">
-              <span className="text-white">Editor</span>
-            </Link>
+            <button onClick={setIsVisisble} className="text-white bg-black py-2 px-1 rounded-md">Editor</button>
             <InfoBoard boardId={boardId} />
           </div>
-        </Panel> */}
+        </Panel>
         <Background color="blue" gap={16} className="bg-blue-100" />
         {analytics && <Metrics />}
         <BottomPanel />
