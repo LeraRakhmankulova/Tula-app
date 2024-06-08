@@ -8,18 +8,23 @@ import { useRenameModal } from "@/app/store/use-rename-modal";
 import { ITemplate, generateSheme } from "@/app/services/generateSheme";
 import { useGenerate } from "@/app/store/use-boardInfo";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
+import { useAnimateScheme } from "@/app/store/use-animate-scheme";
+import useStore from "@/app/store/use-store";
+
 
 const EditorComponent = () => {
   const [code, setCode] = useState("");
   const { setIsVisisble } = useRenameModal();
-  const { description, setDescription } = useGenerate();
+  const { setDescription } = useGenerate();
+  const {setTime, setGames, setIterations} = useAnimateScheme()
+  const {generateNode} = useStore()
   const { onChangeType } = useChangeEdgeType();
   const handleCodeChange = (newCode: any) => {
     setCode(newCode);
   };
   const handleBuildScheme = () => {
     const template: ITemplate | null = parseCodeToTemplate(code);
-    generateSheme(template, setDescription, onChangeType);
+    generateSheme(template, setDescription, onChangeType, setGames, setIterations, setTime, generateNode);
   };
   return (
     <div className="flex flex-col h-full">

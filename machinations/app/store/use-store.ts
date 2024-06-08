@@ -28,6 +28,7 @@ export type RFState = {
   addNode: (struct: StructType) => void;
   getEdgeValues: (id: string) => { sourceStruct: any, sourceValue: any, targetValue: any };
   setNodeName: (id: string, name: string) => void
+  generateNode: (id: number, struct: string, label: string) => void
 };
 
 const graph: Graph = {
@@ -173,6 +174,23 @@ const useStore = create<RFState>((set, get) => ({
       id: nanoid(),
       type: struct.toLowerCase() + "Node",
       data: { label: '0', struct: struct, name: null },
+      position: {
+        x: (Math.random() * window.innerWidth / 2),
+        y: (Math.random() * window.innerHeight / 2),
+      },
+    };
+
+    set({
+      nodes: [...get().nodes, newNode],
+    });
+  },
+  generateNode: (id: number, structString: string, label: string) => {
+    let struct = structString[0].toUpperCase() + structString.slice(1);
+    let newNode;
+    newNode = {
+      id: id.toString(),
+      type: struct.toLowerCase() + "Node",
+      data: { label: '0', struct: struct, name: label },
       position: {
         x: (Math.random() * window.innerWidth / 2),
         y: (Math.random() * window.innerHeight / 2),
