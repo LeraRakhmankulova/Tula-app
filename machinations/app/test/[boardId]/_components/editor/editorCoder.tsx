@@ -17,7 +17,7 @@ const EditorComponent = () => {
   const { setIsVisisble } = useRenameModal();
   const { setDescription, description } = useGenerate();
   const { setTime, setGames, setIterations, iterations, games, time } = useAnimateScheme();
-  const { generateNode, generateEdge } = useStore();
+  const { generateNode, generateEdge, getNodesJson , getEdgesJson} = useStore();
   const { onChangeType, currentType } = useChangeEdgeType();
   const handleCodeChange = (newCode: any) => {
     setCode(newCode);
@@ -37,7 +37,7 @@ const EditorComponent = () => {
   };
 
   const handleBuildJson = () => {
-    const res = parserToJson(description, currentType, iterations, games, time);
+    const res = parserToJson(description, currentType, iterations, games, time, getNodesJson, getEdgesJson);
     setCode(res);
   };
   return (

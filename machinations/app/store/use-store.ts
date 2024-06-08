@@ -30,6 +30,8 @@ export type RFState = {
   setNodeName: (id: string, name: string) => void
   generateNode: (id: number, struct: string, label: string) => void
   generateEdge: (id: number, source: number, target: number, data: number) => void
+  getNodesJson: () => any,
+  getEdgesJson: () => any
 };
 
 const graph: Graph = {
@@ -236,6 +238,29 @@ const useStore = create<RFState>((set, get) => ({
     set((state) => ({
       edges: [...get().edges, newEdge],
     }));
+  },
+  getNodesJson: () => {
+    const arr = get().nodes.map(el => {
+      return `{
+      "id": "${el.id}",
+      "element_type": "node",
+      "struct": "${el.data.struct.toLowerCase()}",
+      "label": " ${el.data.name ? el.data.name.toLowerCase() : "null"}"
+      }`
+    })
+    return arr
+  },
+  getEdgesJson: () => {
+    const arr = get().edges.map(el => {
+      return `{
+      "id": "${el.id}",
+      "element_type": "edge",
+      "source_id": "${el.source}",
+      "target_id": " ${el.target}",
+      "value": " ${el.data.data ? el.data.data : 1}"
+      }`
+    })
+    return arr
   }
 }));
 
