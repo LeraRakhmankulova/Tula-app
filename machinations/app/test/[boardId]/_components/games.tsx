@@ -6,7 +6,7 @@ export const Games = () => {
   const {  games, gamesCount } = useAnimateScheme();
 
   return (
-    <div className="text-xs text-center px-4">
+    <div className="text-xs text-center px-2">
       <label>Games</label>
       <div className="flex gap-x-3 items-center">
         <div>{gamesCount}</div>

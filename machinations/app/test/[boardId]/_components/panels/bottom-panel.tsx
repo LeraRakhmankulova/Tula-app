@@ -23,8 +23,8 @@ export const BottomPanel = () => {
 
   return (
     <Panel position="bottom-center">
-      <div className="bg-white rounded-md flex gap-x-2 items-center shadow-md py-2 px-3">
-        <div className="mr-5 flex gap-x-2 items-center">
+      <div className="bg-white rounded-md flex gap-x-2 items-center shadow-md py-2 px-2">
+        <div className="mr-2 flex gap-x-2 items-center">
           <CustomInput label="Iterations" initialValue={iterations} />
           <CustomInput label="Time(s)" initialValue={time} />
           <CustomInput label="Games" initialValue={games} />

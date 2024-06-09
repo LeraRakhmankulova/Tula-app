@@ -14,6 +14,8 @@ import {
 } from "recharts";
 import "./../../style-test.css";
 import { MetricsData } from "./metricsData";
+import { CircleChart } from "./circleChart";
+import { ChartCard } from "./chartCard";
 
 const data = [
   {
@@ -111,102 +113,47 @@ export const Metrics = () => {
   return (
     <Panel position="top-right" className="analytics_panel">
       <button
-        className="bg-black rounded py-1 px-2 text-white absolute top-2 right-2"
-        onClick={() => setAnalytics(false)}
-      >
-        &#x2716;
+        className="bg-black rounded py-1 px-2 text-white absolute top-2 left-2"
+        onClick={() => setAnalytics(false)} > &#x2716;
       </button>
-      {/* <Chart data={data} title="Max(wood)" key="qw" />
-      <Chart data={data} title="Min(wood)" key="qw2" />
-      <Chart data={data} title="AVR(wood)" key="qw3" />
-      <Chart data={data} title="Median(wood)" key="qw4" /> */}
-      <h2 className="pt-2 pb-4 text-center">
-        <strong>Node statistics</strong>
+      <h1 className="pt-2 text-center text-lg">
+        <strong>Node statistics (wood)</strong>
+      </h1>
+
+      <h2 className="pt-1 pb-4 text-center">
+        <strong>All games</strong>
       </h2>
-      <LineChart width={400} height={300} data={data}>
+      <small className="ml-10">
+        <strong>Value</strong>
+      </small>
+      <LineChart width={400} height={230} data={data} className="mt-2">
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-        <Legend />
+        {/* <Legend /> */}
         <Line type="monotone" dataKey="game1" stroke="#82ca9d" />
         <Line type="monotone" dataKey="game2" stroke="#8884d8" />
         <Line type="monotone" dataKey="game3" stroke="pink" />
         <Line type="monotone" dataKey="game4" stroke="blue" />
         <Line type="monotone" dataKey="game5" stroke="purple" />
       </LineChart>
-      <div className="values_analytics">
-        <div className="analytics__title">
-          <h2>
-            <strong>Metrics</strong>
-          </h2>
-          <h2>
-            <strong>Value</strong>
-          </h2>
-        </div>
-        <hr />
-        <div className="analytics__title">
-          <h2>Average value (AVR)</h2>
-          <h2>50</h2>
-        </div>
-        <div className="analytics__title">
-          <h2>Median (MEDIAN)</h2>
-          <h2>47</h2>
-        </div>
-        <div className="analytics__title">
-          <h2>Minimum value (MIN)</h2>
-          <h2>1</h2>
-        </div>
-        <div className="analytics__title">
-          <h2>Maximum value (MAX)</h2>
-          <h2>100</h2>
-        </div>
-      </div>
-      <h2 className="pt-2 pb-4 text-center">Game 1</h2>
-      <LineChart width={400} height={300} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="game1" stroke="#82ca9d" />
-      </LineChart>
-      <MetricsData average={100} median={50} min={1} max={100} />
-      <h2 className="pt-2 pb-4 text-center">Game 2</h2>
-      <LineChart width={400} height={300} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="game2" stroke="#8884d8" />
-      </LineChart>
-      <MetricsData average={100} median={50} min={1} max={100} />
-      <h2 className="pt-2 pb-4 text-center">Game 3</h2>
-      <LineChart width={400} height={300} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="game3" stroke="pink" />
-      </LineChart>
-      <MetricsData average={100} median={50} min={1} max={100} />
-      <h2 className="pt-2 pb-4 text-center">Game 4</h2>
-      <LineChart width={400} height={300} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="game4" stroke="blue" />
-      </LineChart>
-      <MetricsData average={100} median={50} min={1} max={100} />
-      <h2 className="pt-2 pb-4 text-center">Game 5</h2>
-      <LineChart width={400} height={300} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Line type="monotone" dataKey="game5" stroke="purple" />
-      </LineChart>
-      <MetricsData average={100} median={50} min={1} max={100} />
+      <small className="w-full flex justify-center items-center text-center m-0">
+        <strong>Iterations</strong>
+      </small>
+      <MetricsData
+        average={100}
+        median={50}
+        min={1}
+        max={100}
+        std={37}
+        range={1}
+      />
+      <ChartCard data={data} gameCount={1} stroke="#82ca9d" dataKey="game1" percent={14}/>
+      <ChartCard data={data} gameCount={2} stroke="#8884d8" dataKey="game2" percent={64}/>
+      <ChartCard data={data} gameCount={3} stroke="pink" dataKey="game3" percent={92}/>
+      <ChartCard data={data} gameCount={4} stroke="blue" dataKey="game4" percent={45}/>
+      <ChartCard data={data} gameCount={5} stroke="purple" dataKey="game5" percent={80}/>
     </Panel>
   );
 };

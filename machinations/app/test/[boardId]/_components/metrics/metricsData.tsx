@@ -1,16 +1,25 @@
 "use client";
 
 import { FC } from "react";
-import "./../../style-test.css"
+import "./../../style-test.css";
 
 interface MetricsDta {
-    average: number,
-    median: number,
-    min: number,
-    max: number
+  average: number;
+  median: number;
+  min: number;
+  max: number;
+  std?: number;
+  range?: number;
 }
 
-export const MetricsData: FC<MetricsDta> = ({average, median, max, min}) => {
+export const MetricsData: FC<MetricsDta> = ({
+  average,
+  median,
+  max,
+  min,
+  std,
+  range,
+}) => {
   return (
     <div className="values_analytics">
       <div className="analytics__title">
@@ -38,6 +47,19 @@ export const MetricsData: FC<MetricsDta> = ({average, median, max, min}) => {
         <h2>Maximum value (MAX)</h2>
         <h2>{max}</h2>
       </div>
+      {std && (
+        <div className="analytics__title">
+          <h2>Standard Deviation (STD)</h2>
+          <h2>{std}</h2>
+        </div>
+      )}
+      {range && (
+        <div className="analytics__title">
+          <h2>Range (RANGE)</h2>
+          <h2>{range}</h2>
+        </div>
+      )}
+      <hr/>
     </div>
   );
 };
