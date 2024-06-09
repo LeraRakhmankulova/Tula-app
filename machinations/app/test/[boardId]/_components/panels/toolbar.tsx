@@ -11,6 +11,7 @@ import {
   Redo,
   BadgePlus,
   BadgeMinus,
+  Eraser,
 } from "lucide-react";
 import useStore, { RFState } from "@/app/store/use-store";
 import { shallow } from "zustand/shallow";
@@ -33,10 +34,8 @@ const selector = (state: RFState) => ({
 });
 
 export const Toolbar = () => {
-  const { addNode } = useStore(
-    selector,
-    shallow
-  );
+  const { addNode } = useStore(selector, shallow);
+  const { deleteAll } = useStore();
 
   return (
     <div className="absolute top-40 left-2 flex flex-col gap-y-4">
@@ -103,6 +102,12 @@ export const Toolbar = () => {
           onClick={() => {}}
           isActive={false}
           icon={Redo}
+        />
+        <ToolButton
+          label="Eraser"
+          onClick={deleteAll}
+          isActive={false}
+          icon={Eraser}
         />
       </div>
     </div>

@@ -32,3 +32,20 @@
   margin-top: 0 !important;
   margin-right: 0 !important;
 }
+.analytics_panel{
+  background: white;
+  margin-top: 0 !important;
+  margin-right: 0 !important;
+  z-index: 10000 !important;
+  width: 450px;
+  height: 785px;
+  overflow-y: auto !important;
+  padding-top: 10px;
+}
+.values_analytics{
+  margin: 20px 50px;
+}
+.analytics__title{
+  display: flex;
+  justify-content: space-between;
+}

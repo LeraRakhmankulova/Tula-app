@@ -1,17 +1,14 @@
 "use client";
 import "reactflow/dist/style.css";
 import ReactFlow, { Controls, Background, Panel } from "reactflow";
-import { Participants } from "@/app/board/[boardId]/_components/participants";
-
 import { shallow } from "zustand/shallow";
-
 import { useMyPresence, useOthers } from "@/liveblocks.config";
 import { Cursor } from "./cursor";
 import { Toolbar } from "./panels/toolbar";
 import { BottomPanel } from "./panels/bottom-panel";
 import { DownloadBtn } from "./ui/download-btn";
 import useStore, { RFState } from "@/app/store/use-store";
-import { CustomEdgesTypes, edgeTypes, nodeTypes } from "@/app/types/structs";
+import { edgeTypes, nodeTypes } from "@/app/types/structs";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ContextMenu from "./context-menu";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
@@ -69,7 +66,6 @@ const Flow = ({ boardId }: FlowProps) => {
           event.clientY >= pane.height - 200 && pane.height - event.clientY,
       };
       setMenu(menu);
-      // setAnalytics(true);
     },
     [setMenu]
   );
@@ -97,7 +93,6 @@ const Flow = ({ boardId }: FlowProps) => {
     >
       {!isVisibleEditor && (
         <div className="z-10 w-full relative">
-          {/* <Participants/> */}
           <Toolbar />
         </div>
       )}
@@ -148,7 +143,7 @@ const Flow = ({ boardId }: FlowProps) => {
           </div>
         </Panel>
 
-        {isVisibleBoard && (
+        {!analytics && isVisibleBoard && (
           <Panel position="top-right" className="info_panel">
             <InfoBoardComponent boardId={boardId} />
           </Panel>

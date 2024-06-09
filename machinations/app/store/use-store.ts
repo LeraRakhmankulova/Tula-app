@@ -32,6 +32,7 @@ export type RFState = {
   generateEdge: (id: number, source: number, target: number, data: number) => void
   getNodesJson: () => any,
   getEdgesJson: () => any
+  deleteAll: () => any
 };
 
 const graph: Graph = {
@@ -261,6 +262,12 @@ const useStore = create<RFState>((set, get) => ({
       }`
     })
     return arr
+  },
+  deleteAll: () => {
+    set((state) => ({
+      edges: [],
+      nodes: []
+    }));
   }
 }));
 

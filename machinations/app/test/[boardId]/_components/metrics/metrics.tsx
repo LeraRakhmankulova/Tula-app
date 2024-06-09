@@ -1,10 +1,8 @@
 "use client";
 
 import { Panel } from "reactflow";
-import { Chart } from "./chart";
 import { useChangeEdgeType } from "@/app/store/use-custom-edge";
-import { ResponsiveContainer } from "recharts";
-import React, { PureComponent } from "react";
+import React from "react";
 import {
   LineChart,
   Line,
@@ -13,8 +11,9 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ReferenceLine,
 } from "recharts";
+import "./../../style-test.css";
+import { MetricsData } from "./metricsData";
 
 const data = [
   {
@@ -110,22 +109,21 @@ const data = [
 export const Metrics = () => {
   const { analytics, setAnalytics } = useChangeEdgeType();
   return (
-    <Panel
-      position="top-right"
-      className="bg-white p-2 rounded overflow-y-auto h-[750px]"
-    >
+    <Panel position="top-right" className="analytics_panel">
       <button
-        className="bg-black rounded py-1 px-2 text-white"
+        className="bg-black rounded py-1 px-2 text-white absolute top-2 right-2"
         onClick={() => setAnalytics(false)}
       >
-        Close analytics
+        &#x2716;
       </button>
       {/* <Chart data={data} title="Max(wood)" key="qw" />
       <Chart data={data} title="Min(wood)" key="qw2" />
       <Chart data={data} title="AVR(wood)" key="qw3" />
       <Chart data={data} title="Median(wood)" key="qw4" /> */}
-      <h2 className="pt-2 pb-4 text-center">Node(wood)</h2>
-      <LineChart width={500} height={300} data={data}>
+      <h2 className="pt-2 pb-4 text-center">
+        <strong>Node statistics</strong>
+      </h2>
+      <LineChart width={400} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
@@ -137,82 +135,78 @@ export const Metrics = () => {
         <Line type="monotone" dataKey="game4" stroke="blue" />
         <Line type="monotone" dataKey="game5" stroke="purple" />
       </LineChart>
-      <div className="px-10 pt-5 pb-2">
-        <h2>AVR(wood) = 50</h2>
-        <h2>MEDIAN(wood) = 47</h2>
-        <h2>MIN(wood) = 1</h2>
-        <h2>MAX(wood) = 100</h2>
+      <div className="values_analytics">
+        <div className="analytics__title">
+          <h2>
+            <strong>Metrics</strong>
+          </h2>
+          <h2>
+            <strong>Value</strong>
+          </h2>
+        </div>
+        <hr />
+        <div className="analytics__title">
+          <h2>Average value (AVR)</h2>
+          <h2>50</h2>
+        </div>
+        <div className="analytics__title">
+          <h2>Median (MEDIAN)</h2>
+          <h2>47</h2>
+        </div>
+        <div className="analytics__title">
+          <h2>Minimum value (MIN)</h2>
+          <h2>1</h2>
+        </div>
+        <div className="analytics__title">
+          <h2>Maximum value (MAX)</h2>
+          <h2>100</h2>
+        </div>
       </div>
       <h2 className="pt-2 pb-4 text-center">Game 1</h2>
-      <LineChart width={500} height={300} data={data}>
+      <LineChart width={400} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
         <Line type="monotone" dataKey="game1" stroke="#82ca9d" />
       </LineChart>
-      <div className="px-10 py-5">
-        <h2>AVR(wood) = 50</h2>
-        <h2>MEDIAN(wood) = 70</h2>
-        <h2>MIN(wood) = 10</h2>
-        <h2>MAX(wood) = 150</h2>
-      </div>
+      <MetricsData average={100} median={50} min={1} max={100} />
       <h2 className="pt-2 pb-4 text-center">Game 2</h2>
-      <LineChart width={500} height={300} data={data}>
+      <LineChart width={400} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
         <Line type="monotone" dataKey="game2" stroke="#8884d8" />
       </LineChart>
-      <div className="px-10 py-5">
-        <h2>AVR(wood) = 15</h2>
-        <h2>MEDIAN(wood) = 26</h2>
-        <h2>MIN(wood) = 5</h2>
-        <h2>MAX(wood) = 47</h2>
-      </div>
+      <MetricsData average={100} median={50} min={1} max={100} />
       <h2 className="pt-2 pb-4 text-center">Game 3</h2>
-      <LineChart width={500} height={300} data={data}>
+      <LineChart width={400} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
         <Line type="monotone" dataKey="game3" stroke="pink" />
       </LineChart>
-      <div className="px-10 py-5">
-        <h2>AVR(wood) = 25</h2>
-        <h2>MEDIAN(wood) = 18</h2>
-        <h2>MIN(wood) = 5</h2>
-        <h2>MAX(wood) = 30</h2>
-      </div>
+      <MetricsData average={100} median={50} min={1} max={100} />
       <h2 className="pt-2 pb-4 text-center">Game 4</h2>
-      <LineChart width={500} height={300} data={data}>
+      <LineChart width={400} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
         <Line type="monotone" dataKey="game4" stroke="blue" />
       </LineChart>
-      <div className="px-10 py-5">
-        <h2>AVR(wood) = 13</h2>
-        <h2>MEDIAN(wood) = 30</h2>
-        <h2>MIN(wood) = 2</h2>
-        <h2>MAX(wood) = 58</h2>
-      </div>
+      <MetricsData average={100} median={50} min={1} max={100} />
       <h2 className="pt-2 pb-4 text-center">Game 5</h2>
-      <LineChart width={500} height={300} data={data}>
+      <LineChart width={400} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
         <Line type="monotone" dataKey="game5" stroke="purple" />
       </LineChart>
-      <div className="px-10 py-5">
-        <h2>AVR(wood) = 40</h2>
-        <h2>MEDIAN(wood) = 50</h2>
-        <h2>MIN(wood) = 10</h2>
-        <h2>MAX(wood) = 90</h2>
-      </div>
+      <MetricsData average={100} median={50} min={1} max={100} />
     </Panel>
   );
 };
